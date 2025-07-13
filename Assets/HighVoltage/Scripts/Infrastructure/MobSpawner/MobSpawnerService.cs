@@ -6,15 +6,14 @@ using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using Unity.VisualScripting;
 
 namespace HighVoltage.Infrastructure.MobSpawning
 {
     public class MobSpawnerService : IMobSpawnerService
     {
-        private readonly IGameFactory _factory;
         private readonly IStaticDataService _staticDataService;
         private readonly List<MobBrain> _currentlyAliveMobs;
+        private readonly IGameFactory _factory;
 
         public event EventHandler<int> AnotherMobDied = delegate { };
 
@@ -43,7 +42,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
         private void SpawnMob(MobConfig which, Vector3 where, GameObject toAttackTarget)
         {
             MobBrain mob = _factory.CreateMobOn(which.EnemyPrefab, where);
-            mob.Initialize(toAttackTarget);
+            mob.Initialize(toAttackTarget, which);
             mob.OnMobDied += HandleMobDeath;
             _currentlyAliveMobs.Add(mob);
         }

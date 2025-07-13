@@ -17,4 +17,4 @@ MonoBehaviour:
   maxHealth: 0
   damage: 0
   reward: 0
-  moveSpeed: 0
+  moveSpeed: 2
