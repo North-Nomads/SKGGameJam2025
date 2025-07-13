@@ -3,6 +3,7 @@ using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
+using UnityEngine;
 
 namespace HighVoltage.StaticData
 {
@@ -17,5 +18,7 @@ namespace HighVoltage.StaticData
         EnemyConfig ForEnemyID(int zombieId);
         void LoadLevelTasks();
         LevelTaskConfig GetRandomLevelTask();
+        Texture2D GetTileAtlas();
+        void LoadTileAtlas();
     }
 }

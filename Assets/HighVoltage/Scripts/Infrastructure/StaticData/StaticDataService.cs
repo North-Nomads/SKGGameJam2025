@@ -16,6 +16,7 @@ namespace HighVoltage.StaticData
         private Dictionary<int, LevelConfig> _levels;
         private int _totalWeapon;
         private Dictionary<int, LevelTaskConfig> _levelTasks;
+        private Texture2D _tileAtlas;
 
         public int TotalWeapons => _totalWeapon;
 
@@ -48,5 +49,9 @@ namespace HighVoltage.StaticData
 
         public LevelTaskConfig GetRandomLevelTask()
             => _levelTasks.ElementAt(Random.Range(0, _levelTasks.Count)).Value;
+
+        public Texture2D GetTileAtlas() => _tileAtlas;
+
+        public void LoadTileAtlas() => _tileAtlas = Resources.Load<Texture2D>("Textures/Tiles/TileAtlas.png");
     }
 }

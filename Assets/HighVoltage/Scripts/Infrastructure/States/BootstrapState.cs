@@ -8,6 +8,7 @@ using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
+using HighVoltage.Map;
 using HighVoltage.Services.Inputs;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
@@ -71,6 +72,7 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<ICameraService>(),
                                                                           _allServices.Single<IModelDisplayService>(),
                                                                           _allServices.Single<IHubVFX>()));
+            _allServices.RegisterSingle<ITileGenerator>(new TileGenerator(_allServices.Single<IStaticDataService>()));
         }
 
         private void RegisterStaticDataService()
@@ -80,6 +82,7 @@ namespace HighVoltage.Infrastructure.States
             staticData.LoadWindows();
             staticData.LoadGameWindows();
             staticData.LoadLevelTasks();
+            staticData.LoadTileAtlas();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
 

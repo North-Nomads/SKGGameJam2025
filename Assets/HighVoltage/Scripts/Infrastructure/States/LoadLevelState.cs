@@ -8,6 +8,7 @@ using HighVoltage.Level;
 using HighVoltage.StaticData;
 using HighVoltage.UI.GameWindows;
 using System;
+using HighVoltage.Map;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -23,11 +24,12 @@ namespace HighVoltage.Infrastructure.States
         private readonly IMobSpawnerService _mobSpawner;
         private readonly ILevelProgress _levelProgress;
         private readonly IStaticDataService _staticData;
+        private readonly ITileGenerator _tileGenerator;
         private InGameHUD _hud;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IUIFactory uiFactory,
-            IMobSpawnerService mobSpawner, ILevelProgress levelProgress, IStaticDataService staticData)
+            IMobSpawnerService mobSpawner, ILevelProgress levelProgress, IStaticDataService staticData, ITileGenerator tileGenerator)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -38,6 +40,7 @@ namespace HighVoltage.Infrastructure.States
             _mobSpawner = mobSpawner;
             _levelProgress = levelProgress;
             _staticData = staticData;
+            _tileGenerator = tileGenerator;
 
             _levelProgress.LevelFinishedWithReward += OnLevelFinished;
         }
@@ -72,7 +75,13 @@ namespace HighVoltage.Infrastructure.States
             InstantiateUI();
             InitializeLevelTask();
             InformProgressReaders();
+            GenerateWorldMap();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void GenerateWorldMap()
+        {
+            _tileGenerator.LoadAndGenerateMap($"Maps/{_progressService.Progress.CurrentLevel}.chertanovo");
         }
 
         private void InitializeLevelTask()
