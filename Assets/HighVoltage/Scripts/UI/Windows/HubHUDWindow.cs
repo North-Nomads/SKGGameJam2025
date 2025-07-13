@@ -1,8 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
-using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Services.Progress;
 using HighVoltage.UI.Services.Windows;
@@ -17,10 +15,9 @@ namespace HighVoltage.Assets.Wizard.Scripts.UI.Windows
 
         public override void ConstructWindow(IPlayerProgressService progressService,
                                              WindowId windowId, IWindowService windowService, ISaveLoadService saveLoadService,
-                                             IGameFactory gameFactory, IModelDisplayService _modelDisplayService, IHubVFX hubVFX)
+                                             IGameFactory gameFactory)
         {
-            base.ConstructWindow(progressService, windowId, windowService, saveLoadService, gameFactory,
-                                 _modelDisplayService, hubVFX);
+            base.ConstructWindow(progressService, windowId, windowService, saveLoadService, gameFactory);
         }
     }
 }

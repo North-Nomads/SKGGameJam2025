@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using HighVoltage.Data;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
-using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Services.Progress;
 using HighVoltage.UI.PopUps;
@@ -27,22 +24,17 @@ namespace HighVoltage.UI.Services.Windows
         private readonly ISaveLoadService _saveLoadService;
         private readonly IGameFactory _gameFactory;
         private readonly ICameraService _cameraService;
-        private readonly IModelDisplayService _modelDisplayService;
-        private readonly IHubVFX _hubVFX;
 
         public WindowService(IUIFactory uiFactory, IPlayerProgressService progressService,
-            ISaveLoadService saveLoadService, IGameFactory gameFactory, ICameraService cameraService,
-            IModelDisplayService modelDisplayService, IHubVFX hubVFX)
+            ISaveLoadService saveLoadService, IGameFactory gameFactory, ICameraService cameraService)
         {
             _uiFactory = uiFactory;
             _progressService = progressService;
             _saveLoadService = saveLoadService;
-            _windows = new();
-            _popupWindows = new();
+            _windows = new Dictionary<WindowId, WindowBase>();
+            _popupWindows = new Dictionary<PopupWindowId, PopupWindow>();
             _gameFactory = gameFactory;
             _cameraService = cameraService;
-            _modelDisplayService = modelDisplayService;
-            _hubVFX = hubVFX;
         }
 
         public void CleanUp()
@@ -58,7 +50,7 @@ namespace HighVoltage.UI.Services.Windows
             if (window == null)
             {
                 window = _uiFactory.InstantiateWindow(windowID);
-                window.ConstructWindow(_progressService, windowID, this, _saveLoadService, _gameFactory, _modelDisplayService, _hubVFX);
+                window.ConstructWindow(_progressService, windowID, this, _saveLoadService, _gameFactory);
                 _windows[windowID] = window;
             }
 

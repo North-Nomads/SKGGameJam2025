@@ -1,10 +1,8 @@
 ﻿using HighVoltage.Infrastructure.AssetManagement;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
 using HighVoltage.Infrastructure.InGameTime;
-using HighVoltage.Infrastructure.MobSpawnerService;
-using HighVoltage.Infrastructure.ModelDisplayService;
+using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
@@ -42,7 +40,6 @@ namespace HighVoltage.Infrastructure.States
         private void RegisterServies()
         {
             RegisterStaticDataService();
-            _allServices.RegisterSingle<IHubVFX>(new HubVFX());
             _allServices.RegisterSingle<IInGameTimeService>(new InGameTimeService());
 
             _allServices.RegisterSingle<IInputService>(GetInputService());
@@ -51,10 +48,9 @@ namespace HighVoltage.Infrastructure.States
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
             _allServices.RegisterSingle<IGameFactory>(new GameFactory(_allServices.Single<IAssetProvider>(),
                                                                       _allServices.Single<IPlayerProgressService>()));
-            _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawner(_allServices.Single<IGameFactory>()));
+            _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawnerService(
+                _allServices.Single<IGameFactory>(), _allServices.Single<IStaticDataService>()));
             _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>()));
-            _allServices.RegisterSingle<IModelDisplayService>(new InGameModelDisplayService(_allServices.Single<IGameFactory>(),
-                                                                                            _allServices.Single<IPlayerProgressService>()));
             _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(_allServices.Single<IPlayerProgressService>(),
                                                                                          _allServices.Single<IGameFactory>(),
                                                                                          _allServices.SaveWriterServices));
@@ -68,18 +64,14 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<IPlayerProgressService>(),
                                                                           _allServices.Single<ISaveLoadService>(),
                                                                           _allServices.Single<IGameFactory>(),
-                                                                          _allServices.Single<ICameraService>(),
-                                                                          _allServices.Single<IModelDisplayService>(),
-                                                                          _allServices.Single<IHubVFX>()));
+                                                                          _allServices.Single<ICameraService>()));
         }
 
         private void RegisterStaticDataService()
         {
             var staticData = new StaticDataService();
             staticData.LoadLevels();
-            staticData.LoadWindows();
-            staticData.LoadGameWindows();
-            staticData.LoadLevelTasks();
+            staticData.LoadEnemies();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
 

@@ -2,7 +2,6 @@ using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using HighVoltage.Infrastructure.MobSpawnerService;
 using HighVoltage.Level;
 
 namespace HighVoltage.UI.GameWindows

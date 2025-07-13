@@ -1,18 +1,15 @@
 using HighVoltage.Infrastructure.AssetManagement;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
-using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Services.Progress;
-using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using HighVoltage.Infrastructure.MobSpawnerService;
+using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 
@@ -40,15 +37,12 @@ namespace HighVoltage.Infrastructure.States
                                                   services.Single<IWindowService>(),
                                                   services.SaveReaderServices,
                                                   services.Single<ICameraService>(),
-                                                  services.Single<IModelDisplayService>(),
-                                                  services.Single<IHubVFX>(),
                                                   services.Single<IAssetProvider>()),
                 [typeof(LoadLevelState)] = new LoadLevelState(this,
                                                               sceneLoader,
                                                               loadingCurtain,
                                                               services.Single<IGameFactory>(),
                                                               services.Single<IPlayerProgressService>(),
-                                                              services.Single<IUIFactory>(),
                                                               services.Single<IMobSpawnerService>(),
                                                               services.Single<ILevelProgress>(),
                                                               services.Single<IStaticDataService>()),
