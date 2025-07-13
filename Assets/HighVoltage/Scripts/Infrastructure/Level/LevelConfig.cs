@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace HighVoltage.Level
 {
@@ -7,16 +8,24 @@ namespace HighVoltage.Level
     public class LevelConfig : ScriptableObject
     {
         [SerializeField] private int levelID = 0;
-        [SerializeField] private LevelEnemy[] enemies;
         [SerializeField] private float deltaBetweenSpawns;
+        [SerializeField] private Gate[] gates;
 
         public int LevelID => levelID;
-        public LevelEnemy[] Enemies => enemies;
         public float DeltaBetweenSpawns => deltaBetweenSpawns;
+        public Gate[] Gates => gates;
     }
 
     [Serializable]
-    public class LevelEnemy
+    public class Gate
+    {
+        [SerializeField] private EnemyEntry[] levelEnemies;
+
+        public EnemyEntry[] LevelEnemies => levelEnemies;
+    }
+
+    [Serializable]
+    public class EnemyEntry
     {
         [SerializeField] private int quantity;
         [SerializeField] private int enemyID;

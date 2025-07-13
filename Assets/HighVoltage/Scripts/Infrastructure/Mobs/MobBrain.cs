@@ -1,43 +1,39 @@
-﻿using System;
+using System;
+using HighVoltage.Enemy;
 using UnityEngine;
-using HighVoltage.Infrastructure.MobSpawnerService;
-using HighVoltage.Infrastructure.Services;
 
 namespace HighVoltage.Infrastructure.Mobs
 {
-    [RequireComponent(typeof(MobAnimator), typeof(MobCombat))]
-    public abstract class MobBrain : MonoBehaviour
+    public class MobBrain : MonoBehaviour
     {
-        protected MobCombat MobCombat;
-        protected MobAnimator MobAnimator;
-        protected MobStateMachine StateMachine;
-        protected IMobSpawnerService MobSpawner;
-
         public event EventHandler<MobBrain> OnMobDied = delegate { };
+        private const float MinDistanceToWaypoint = 0.01f;
 
-        protected abstract void OnStart();
+        private MobConfig _config;
+        private Transform[] _waypoints;
+        private Transform _target;
+        private int _waypointIndex;
 
-        private void Awake()
+        public void Initialize(Transform[] waypoints, MobConfig config)
         {
-            MobSpawner = AllServices.Container.Single<IMobSpawnerService>();
+            _waypoints = waypoints;
+            _target = waypoints[0];
+            _waypointIndex = 0;
+            _config = config;
         }
 
-        private void Start()
+        private void Update()
         {
-            MobCombat = GetComponent<MobCombat>();
-            MobCombat.MobHealthBelowZero += HandleMobDeath;
-            MobAnimator = GetComponent<MobAnimator>();
-
-            OnStart();
+            if (Vector3.Distance(transform.position, _target.position) <= MinDistanceToWaypoint)
+                MoveToNextTargetWaypoint();
+            else
+                transform.Translate(Time.deltaTime * _config.MoveSpeed * (_target.position - transform.position).normalized);
         }
 
-        private void HandleMobDeath(object sender, EventArgs e)
+        private void MoveToNextTargetWaypoint()
         {
-            Destroy(gameObject);
-            OnMobDied(null, this);
+            _waypointIndex++;
+            _target = _waypoints[_waypointIndex];
         }
-
-        private void Update() 
-            => StateMachine.Update();
     }
 }

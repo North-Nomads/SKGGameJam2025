@@ -1,17 +1,13 @@
 ﻿using HighVoltage.Infrastructure.AssetManagement;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
-using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Services.Progress;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using System.Collections.Generic;
 using UnityEngine;
-using HighVoltage.Services;
 using HighVoltage.UI.Windows;
 using System;
-using Random = UnityEngine.Random;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -26,8 +22,6 @@ namespace HighVoltage.Infrastructure.States
         private readonly IWindowService _windowService;
         private readonly List<ISavedProgressReader> _saveReaderServices;
         private readonly ICameraService _cameraService;
-        private readonly IModelDisplayService _displayService;
-        private readonly IHubVFX _hubVFX;
         private readonly IAssetProvider _assetProvider;
         private GameObject _mainMenu;
         private HubMenu gameMenu;
@@ -35,7 +29,7 @@ namespace HighVoltage.Infrastructure.States
         public HubState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IUIFactory uiFactory, 
             IWindowService windowService, List<ISavedProgressReader> saveReaderServices, ICameraService cameraService,
-            IModelDisplayService displayService, IHubVFX hubVFX, IAssetProvider assetProvider)
+            IAssetProvider assetProvider)
         {
             _stateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -46,18 +40,15 @@ namespace HighVoltage.Infrastructure.States
             _windowService = windowService;
             _saveReaderServices = saveReaderServices;
             _cameraService = cameraService;
-            _displayService = displayService;
-            _hubVFX = hubVFX;
             _assetProvider = assetProvider;
         }
 
         public void Enter()
         {
-
             _windowService.CleanUp();
-            //_sceneLoader.Load(Constants.HubSceneName, onLoaded: InitializeScene);
             _stateMachine.Enter<LoadLevelState, string>($"Test");
-            _loadingCurtain.gameObject.SetActive(false);
+            //_sceneLoader.Load(Constants.HubSceneName, onLoaded: InitializeScene);
+            // _loadingCurtain.gameObject.SetActive(false);
         }
 
         public void Exit()
@@ -92,7 +83,7 @@ namespace HighVoltage.Infrastructure.States
         {
             gameMenu = _windowService.GetWindow(WindowId.Hub).GetComponent<HubMenu>();
             gameMenu.gameObject.SetActive(true);
-            gameMenu.PlayerLaunchedGame += OnPlayerLaunchedGame;
+            // gameMenu.PlayerLaunchedGame += OnPlayerLaunchedGame;
             gameMenu.PlayerLaunchedGame += OnPlayerLaunchedTutorial;
             var settingsMenu = _windowService.GetWindow(WindowId.Settings).GetComponent<SettingsMenu>();
             settingsMenu.MuteToggled += OnMuteToggled;
@@ -108,8 +99,5 @@ namespace HighVoltage.Infrastructure.States
         {
             //
         }
-
-        private void OnPlayerLaunchedGame(object sender, EventArgs e) 
-            => _stateMachine.Enter<LoadLevelState, string>($"{Constants.GameplayScene}{Random.Range(1, Constants.GameplayScenesCount)}");
     }
 }

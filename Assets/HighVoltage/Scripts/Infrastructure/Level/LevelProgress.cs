@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using HighVoltage.Infrastructure.MobSpawnerService;
+using HighVoltage.Infrastructure.MobSpawning;
 
 namespace HighVoltage.Level
 {

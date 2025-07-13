@@ -1,7 +1,5 @@
 using UnityEngine;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Infrastructure.HubVisuals;
-using HighVoltage.Infrastructure.ModelDisplayService;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Services.Progress;
 using HighVoltage.UI.Services.Windows;
@@ -16,20 +14,15 @@ namespace HighVoltage.UI.Windows
         protected IWindowService WindowService;
         protected ISaveLoadService SaveLoad;
         protected IGameFactory GameFactory;
-        protected IModelDisplayService ModelDisplayService;
-        protected IHubVFX HubVFX;
 
         public virtual void ConstructWindow(IPlayerProgressService progressService,
-            WindowId windowId, IWindowService windowService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
-            IModelDisplayService _modelDisplayService, IHubVFX hubVFX)
+            WindowId windowId, IWindowService windowService, ISaveLoadService saveLoadService, IGameFactory gameFactory)
         {
             PlayerProgress = progressService;
             ThisWindowId = windowId;
             WindowService = windowService;
             SaveLoad = saveLoadService;
             GameFactory = gameFactory;
-            ModelDisplayService = _modelDisplayService;
-            HubVFX = hubVFX;
         }
 
         public virtual void OnOpened() { }
