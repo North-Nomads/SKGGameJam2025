@@ -11,7 +11,7 @@ namespace HighVoltage.Infrastructure.Factory
         GameObject CreatePlayerCore(GameObject at);
         List<ISavedProgressReader> ProgressReaders { get; } 
         List<IProgressUpdater> ProgressWriters { get; }
-        MobBrain CreateMobOn(GameObject whichEnemyPrefab, Vector3 point);
+        MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 point);
         void CleanUp();
     }
 }

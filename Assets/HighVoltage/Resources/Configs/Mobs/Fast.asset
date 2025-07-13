@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fast
   m_EditorClassIdentifier: 
   enemyId: 1
-  enemyPrefab: {fileID: 7777716937566599898, guid: 099785f3647d4964faa1b0dd85618a60, type: 3}
+  enemyPrefab: {fileID: 5063907846708874565, guid: 099785f3647d4964faa1b0dd85618a60, type: 3}
   maxHealth: 0
   damage: 0
   reward: 0

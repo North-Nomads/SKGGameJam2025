@@ -34,7 +34,7 @@ namespace HighVoltage.Infrastructure.Factory
             ProgressWriters.Clear();
         }
         
-        public MobBrain CreateMobOn(GameObject whichEnemyPrefab, Vector3 at) 
-            => Object.Instantiate(_mobPrototypes[Random.Range(0, _mobPrototypes.Length)], at, Quaternion.identity);
+        public MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 at) 
+            => Object.Instantiate(whichEnemyPrefab, at, Quaternion.identity);
     }
 }

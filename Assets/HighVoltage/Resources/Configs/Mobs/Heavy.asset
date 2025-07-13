@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Heavy
   m_EditorClassIdentifier: 
   enemyId: 3
-  enemyPrefab: {fileID: 2957672240232531141, guid: 52a625610bb323a4196d7ff342493d66, type: 3}
+  enemyPrefab: {fileID: 1789942109112110855, guid: 52a625610bb323a4196d7ff342493d66, type: 3}
   maxHealth: 0
   damage: 0
   reward: 0
