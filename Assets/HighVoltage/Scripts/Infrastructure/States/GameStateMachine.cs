@@ -12,6 +12,7 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
+using HighVoltage.Map;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -44,8 +45,8 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IGameFactory>(),
                                                               services.Single<IPlayerProgressService>(),
                                                               services.Single<IMobSpawnerService>(),
-                                                              services.Single<ILevelProgress>(),
-                                                              services.Single<IStaticDataService>()),
+                                                              services.Single<IStaticDataService>(),
+                                                              services.Single<ITileGenerator>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>()),
                 [typeof(GameFinishedState)] = new GameFinishedState(this,

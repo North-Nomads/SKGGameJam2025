@@ -4,7 +4,8 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using HighVoltage.UI.GameWindows;
+using System;
+using HighVoltage.Map;
 using HighVoltage.Services;
 
 namespace HighVoltage.Infrastructure.States
@@ -15,15 +16,13 @@ namespace HighVoltage.Infrastructure.States
         private readonly IMobSpawnerService _mobSpawnerService;
         private readonly GameStateMachine _gameStateMachine;
         private readonly IStaticDataService _staticData;
-        private readonly ILevelProgress _levelProgress;
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
-        private InGameHUD _hud;
+        private readonly ITileGenerator _tileGenerator;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
-            IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
-            ILevelProgress levelProgress, IStaticDataService staticData)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain, IGameFactory gameFactory, IPlayerProgressService progressService,
+            IMobSpawnerService mobSpawnerService, IStaticDataService staticData, ITileGenerator tileGenerator)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -31,10 +30,8 @@ namespace HighVoltage.Infrastructure.States
             _gameFactory = gameFactory;
             _progressService = progressService;
             _mobSpawnerService = mobSpawnerService;
-            _levelProgress = levelProgress;
             _staticData = staticData;
-
-            _levelProgress.LevelFinishedWithReward += OnLevelFinished;
+            _tileGenerator = tileGenerator;
         }
 
         private void OnLevelFinished(object sender, bool shouldGiveReward)
@@ -45,7 +42,6 @@ namespace HighVoltage.Infrastructure.States
                 return;
             }
             _progressService.IncrementCurrentLevel(shouldGiveReward);
-            _hud.UpdateOnLevelFinished(shouldGiveReward, _progressService.Progress.RemainingTasks);
             _gameStateMachine.Enter<GameFinishedState>();
         }
 
@@ -65,7 +61,12 @@ namespace HighVoltage.Infrastructure.States
         {
             GameObject playerCore = InitializePlayerBase();
             InitializeMobSpawners(playerCore);
+            GenerateWorldMap();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+        private void GenerateWorldMap()
+        {
+            _tileGenerator.LoadAndGenerateMap(_progressService.Progress.CurrentLevel);
         }
 
         private GameObject InitializePlayerBase() 
