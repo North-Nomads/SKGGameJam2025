@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using HighVoltage.Enemy;
+using HighVoltage.HighVoltage.Scripts.Sentry;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
@@ -15,6 +16,7 @@ namespace HighVoltage.StaticData
         private Dictionary<int, MobConfig> _zombieConfigs;
         private Dictionary<int, LevelConfig> _levels;
         private Dictionary<int, LevelTaskConfig> _levelTasks;
+        private Dictionary<int, SentryConfig> _sentryConfigs;
         private Texture2D _tileAtlas;
 
         public void LoadLevels()
@@ -40,6 +42,13 @@ namespace HighVoltage.StaticData
         public Texture2D GetTileAtlas() => _tileAtlas;
 
         public void LoadTileAtlas() => _tileAtlas = Resources.Load<Texture2D>("Textures/Tiles/TileAtlas");
+
+        public SentryConfig ForSentryID(int sentryConfigID)
+            => _sentryConfigs.GetValueOrDefault(sentryConfigID);
+        
+        public void LoadSentries()
+            => _sentryConfigs = Resources.LoadAll<SentryConfig>("Configs/Sentries").ToDictionary(x => x.SentryId, x => x);
+
         public MobConfig ForEnemyID(int zombieId)
             => _zombieConfigs.GetValueOrDefault(zombieId);
     }

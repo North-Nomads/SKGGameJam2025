@@ -13,12 +13,13 @@ namespace HighVoltage.Infrastructure.MobSpawning
 {
     public class MobSpawnerService : IMobSpawnerService
     {
+        public List<MobBrain> CurrentlyAliveMobs => _currentlyAliveMobs;
+        public event EventHandler<int> AnotherMobDied = delegate { };
+        
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly List<MobBrain> _currentlyAliveMobs;
         private readonly IGameFactory _factory;
-
-        public event EventHandler<int> AnotherMobDied = delegate { };
 
         public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
@@ -36,7 +37,13 @@ namespace HighVoltage.Infrastructure.MobSpawning
                     spawnerSpots[gateIndex], levelConfig));
             }
         }
-        
+
+        public void HandleMobReachedCore(MobBrain mob)
+        {
+            mob.HandleHit(int.MaxValue);
+            // Handle core damage
+        }
+
         private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, LevelConfig levelConfig)
         {
             int mobNameIndex = 0;
@@ -60,14 +67,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
                 }
             }
         }
-
-
-        public void HandleMobReachedCore(MobBrain mob)
-        {
-            mob.HandleHit(int.MaxValue);
-            // Handle core damage
-        }
-
+        
         private void SpawnMob(MobConfig which, Vector3 where, Transform[] pathFromGate, int nameIndex)
         {
             MobBrain mob = _factory.CreateMobOn(which.EnemyPrefab, where);

@@ -79,6 +79,7 @@ namespace HighVoltage.Infrastructure.States
             staticData.LoadEnemies();
             staticData.LoadWindows();
             staticData.LoadGameWindows();
+            staticData.LoadSentries();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
     }

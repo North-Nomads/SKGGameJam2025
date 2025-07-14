@@ -8,6 +8,7 @@ TagManager:
   - NextLevelPortalSpawnPoint
   - CoreSpawnPoint
   - Mob
+  - DEBUG_SentrySpawn
   layers:
   - Default
   - TransparentFX
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Mobs
     uniqueID: 2570956297
+    locked: 0
+  - name: Bullet
+    uniqueID: 2799467399
     locked: 0

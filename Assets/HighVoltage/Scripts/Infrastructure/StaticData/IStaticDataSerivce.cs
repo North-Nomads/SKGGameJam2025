@@ -1,4 +1,5 @@
 using HighVoltage.Enemy;
+using HighVoltage.HighVoltage.Scripts.Sentry;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
@@ -17,5 +18,7 @@ namespace HighVoltage.StaticData
         MobConfig ForEnemyID(int zombieId);
         Texture2D GetTileAtlas();
         void LoadTileAtlas();
+        SentryConfig ForSentryID(int sentryConfigID);
+        void LoadSentries();
     }
 }

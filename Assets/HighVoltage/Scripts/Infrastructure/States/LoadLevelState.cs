@@ -5,6 +5,7 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System;
+using HighVoltage.HighVoltage.Scripts.Sentry;
 using HighVoltage.Services;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
@@ -66,11 +67,26 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLoaded()
         {
+            var playerCore = InitializeGameWorld();
+            InitializeInGameHUD(playerCore);
+            _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private PlayerCore InitializeGameWorld()
+        {
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializePlayerBase(config);
             InitializeMobSpawners(config);
-            InitializeInGameHUD(playerCore);
-            _gameStateMachine.Enter<GameLoopState>();
+            DEBUG_InitializeSentry();
+            return playerCore;
+        }
+
+        private void DEBUG_InitializeSentry()
+        {
+            const int DEBUG_SentryID = 1;
+            SentryConfig config = _staticData.ForSentryID(DEBUG_SentryID);
+            SentryTower sentry = _gameFactory.CreateSentry(GameObject.FindGameObjectWithTag(Constants.DEBUG_SentrySpawn));
+            sentry.Initialize(config, _mobSpawnerService, _gameFactory);
         }
 
         private void InitializeInGameHUD(PlayerCore playerCore)

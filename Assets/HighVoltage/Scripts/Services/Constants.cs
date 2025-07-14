@@ -14,5 +14,6 @@ namespace HighVoltage.Services
         public const float Epsilon = 0.00001f;
         public const float TimeToTick = .1f;
         public const string MobTag = "Mob";
+        public const string DEBUG_SentrySpawn = "DEBUG_SentrySpawn";
     }
 }
