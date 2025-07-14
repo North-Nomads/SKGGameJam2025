@@ -29,3 +29,4 @@ MonoBehaviour:
       enemyID: 2
     - quantity: 2
       enemyID: 3
+  coreHealth: 100

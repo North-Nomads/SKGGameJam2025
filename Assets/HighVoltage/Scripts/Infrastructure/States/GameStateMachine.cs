@@ -10,9 +10,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
-using HighVoltage.Level;
 using HighVoltage.StaticData;
-using HighVoltage.Map;
+using HighVoltage.UI.Services;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -21,11 +20,12 @@ namespace HighVoltage.Infrastructure.States
         private readonly Dictionary<Type, IExitableState> _states;
         private IExitableState _currentState;
 
-        public GameStateMachine(SceneLoader sceneLoader, Canvas loadingCurtain, AllServices services)
+        public GameStateMachine(SceneLoader sceneLoader, Canvas loadingCurtain, AllServices services,
+            ICoroutineRunner coroutineRunner)
         {
             _states = new Dictionary<Type, IExitableState>()
             {
-                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+                [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
                 [typeof(LoadProgressState)] = new LoadProgressState(this,
                                                                     services.Single<IPlayerProgressService>(),
                                                                     services.Single<ISaveLoadService>()),
@@ -46,7 +46,8 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IPlayerProgressService>(),
                                                               services.Single<IMobSpawnerService>(),
                                                               services.Single<IStaticDataService>(),
-                                                              services.Single<ITileGenerator>()),
+                                                              services.Single<IGameWindowService>(),
+                                                              services.Single<IUIFactory>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>()),
                 [typeof(GameFinishedState)] = new GameFinishedState(this,

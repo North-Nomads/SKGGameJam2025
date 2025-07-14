@@ -28,6 +28,8 @@ namespace HighVoltage.Infrastructure.Mobs
             }
         }
 
+        public int CoreDamage => _config.Damage;
+
         private void HandleMobDeath()
         {
             Destroy(gameObject);

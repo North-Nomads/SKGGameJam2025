@@ -5,8 +5,11 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System;
-using HighVoltage.Map;
 using HighVoltage.Services;
+using HighVoltage.UI.GameWindows;
+using HighVoltage.UI.Services;
+using HighVoltage.UI.Services.Factory;
+using HighVoltage.UI.Services.GameWindows;
 using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
@@ -15,15 +18,17 @@ namespace HighVoltage.Infrastructure.States
     {
         private readonly IPlayerProgressService _progressService;
         private readonly IMobSpawnerService _mobSpawnerService;
+        private readonly IGameWindowService _gameWindowService;
+        private readonly IUIFactory _uiFactory;
         private readonly GameStateMachine _gameStateMachine;
         private readonly IStaticDataService _staticData;
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
-        private readonly ITileGenerator _tileGenerator;
 
-        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain, IGameFactory gameFactory, IPlayerProgressService progressService,
-            IMobSpawnerService mobSpawnerService, IStaticDataService staticData, ITileGenerator tileGenerator)
+        public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
+            IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
+            IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -32,7 +37,8 @@ namespace HighVoltage.Infrastructure.States
             _progressService = progressService;
             _mobSpawnerService = mobSpawnerService;
             _staticData = staticData;
-            _tileGenerator = tileGenerator;
+            _gameWindowService = gameWindowService;
+            _uiFactory = uiFactory;
         }
 
         private void OnLevelFinished(object sender, bool shouldGiveReward)
@@ -60,23 +66,36 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLoaded()
         {
-            PlayerCore playerBase = InitializePlayerBase();
-            InitializeMobSpawners(playerBase);
+            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
+            PlayerCore playerCore = InitializePlayerBase(config);
+            InitializeMobSpawners(config);
+            InitializeInGameHUD(playerCore);
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        private PlayerCore InitializePlayerBase()
+        private void InitializeInGameHUD(PlayerCore playerCore)
+        {
+            _uiFactory.CreateUIRoot();
+            
+            _gameWindowService.GetWindow(GameWindowId.InGameHUD)
+                .GetComponent<InGameHUD>()
+                .ProvidePlayerCore(playerCore);
+            _gameWindowService.Open(GameWindowId.InGameHUD);
+        }
+
+        private PlayerCore InitializePlayerBase(LevelConfig config)
         {
             PlayerCore playerCore = _gameFactory.CreatePlayerCore(GameObject.FindGameObjectWithTag(Constants.CoreSpawnPoint));
-            playerCore.Initialize(_mobSpawnerService);
+            
+            playerCore.Initialize(_mobSpawnerService, config);
             return playerCore;
         }
 
 
-        private void InitializeMobSpawners(PlayerCore playerBase)
+        private void InitializeMobSpawners(LevelConfig config)
         {
             WaypointHolder[] spawnerSpots = Object.FindObjectsByType<WaypointHolder>(FindObjectsSortMode.None);
-            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
+            
             if (spawnerSpots.Length != config.Gates.Length)
             {
                 Debug.LogError("Gates number and level config gates number must be same. " + 

@@ -10,10 +10,12 @@ namespace HighVoltage.Level
         [SerializeField] private int levelID = 0;
         [SerializeField] private float deltaBetweenSpawns;
         [SerializeField] private Gate[] gates;
+        [SerializeField] private int coreHealth;
 
         public int LevelID => levelID;
         public float DeltaBetweenSpawns => deltaBetweenSpawns;
         public Gate[] Gates => gates;
+        public int CoreHealth => coreHealth;
     }
 
     [Serializable]

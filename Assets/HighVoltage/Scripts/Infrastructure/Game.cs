@@ -10,7 +10,7 @@ namespace HighVoltage.Infrastructure
 
         public Game(ICoroutineRunner coroutineRunner, Canvas loadCurtain)
         {
-            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadCurtain, AllServices.Container);
+            StateMachine = new GameStateMachine(new SceneLoader(coroutineRunner), loadCurtain, AllServices.Container, coroutineRunner);
         }
     }
 }
