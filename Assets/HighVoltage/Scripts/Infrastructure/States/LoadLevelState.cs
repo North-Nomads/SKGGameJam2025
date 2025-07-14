@@ -61,12 +61,7 @@ namespace HighVoltage.Infrastructure.States
         {
             GameObject playerCore = InitializePlayerBase();
             InitializeMobSpawners(playerCore);
-            GenerateWorldMap();
             _gameStateMachine.Enter<GameLoopState>();
-        }
-        private void GenerateWorldMap()
-        {
-            _tileGenerator.LoadAndGenerateMap(_progressService.Progress.CurrentLevel);
         }
 
         private GameObject InitializePlayerBase() 

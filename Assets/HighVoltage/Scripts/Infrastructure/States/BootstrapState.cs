@@ -66,7 +66,7 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<ISaveLoadService>(),
                                                                           _allServices.Single<IGameFactory>(),
                                                                           _allServices.Single<ICameraService>()));
-            _allServices.RegisterSingle<ITileGenerator>(new TileGenerator(_allServices.Single<IStaticDataService>()));
+            //_allServices.RegisterSingle<ITileGenerator>(new TileGenerator(_allServices.Single<IStaticDataService>()));
         }
 
         private void RegisterStaticDataService()
