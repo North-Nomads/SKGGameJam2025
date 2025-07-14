@@ -8,7 +8,9 @@ namespace HighVoltage.HighVoltage.Scripts.Sentry
 {
     public abstract class SentryTower : MonoBehaviour
     {
+        [SerializeField] private Transform rotatingPart;
         private const float OneSecond = 1;
+
         protected Transform LockedTarget;
         protected IMobSpawnerService MobSpawnerService;
         protected SentryConfig Config;
@@ -42,7 +44,6 @@ namespace HighVoltage.HighVoltage.Scripts.Sentry
         }
 
         protected abstract void PerformAction();
-        protected abstract void KeepTrackingEnemy();
 
         protected virtual void Update()
         {
@@ -89,7 +90,18 @@ namespace HighVoltage.HighVoltage.Scripts.Sentry
 
         protected virtual void DestroyBuilding()
         {
-            Debug.Log("Building destroyed");
+            Destroy(gameObject);
+        }
+        
+        protected virtual void KeepTrackingEnemy()
+        {
+            if (LockedTarget == null)
+                return;
+            
+            Vector3 direction = LockedTarget.position - transform.position;
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            float AngleOffset = 90f;
+            rotatingPart.rotation = Quaternion.Euler(0, 0, angle + AngleOffset);
         }
     }
 }

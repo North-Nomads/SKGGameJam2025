@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace HighVoltage.HighVoltage.Scripts.Sentry
 {
@@ -10,6 +11,12 @@ namespace HighVoltage.HighVoltage.Scripts.Sentry
         [SerializeField] private int damage;
         [SerializeField] private int decayPerSecond;
         [SerializeField] private int sentryId;
+        [SerializeField] private int bulletsPerAction = 1;
+        [SerializeField] private float bulletsAngleOffset = 1;
+
+        public float BulletsAngleOffset => bulletsAngleOffset;
+
+        public int BulletsPerAction => bulletsPerAction;
 
         public float TimeBetweenActions => timeBetweenActions;
 

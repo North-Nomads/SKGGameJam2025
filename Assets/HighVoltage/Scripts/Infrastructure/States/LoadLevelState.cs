@@ -83,7 +83,7 @@ namespace HighVoltage.Infrastructure.States
 
         private void DEBUG_InitializeSentry()
         {
-            const int DEBUG_SentryID = 1;
+            const int DEBUG_SentryID = 2;
             SentryConfig config = _staticData.ForSentryID(DEBUG_SentryID);
             SentryTower sentry = _gameFactory.CreateSentry(GameObject.FindGameObjectWithTag(Constants.DEBUG_SentrySpawn));
             sentry.Initialize(config, _mobSpawnerService, _gameFactory);

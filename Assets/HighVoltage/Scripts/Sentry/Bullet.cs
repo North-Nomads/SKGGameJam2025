@@ -31,10 +31,5 @@ namespace HighVoltage.HighVoltage.Scripts.Sentry
             
             other.GetComponent<MobBrain>().HandleHit(_bulletDamage);
         }
-
-        private void OnDrawGizmos()
-        {
-            Gizmos.DrawLine(transform.position, transform.forward * 10);
-        }
     }
 }

@@ -5,6 +5,6 @@
         public const string PlayerCorePrefabPath = "Prefabs/Buildings/Core";
         public const string MobPath = "Prefabs/Mobs/";
         public const string BulletPrefab = "Prefabs/Sentries/Bullet";
-        public const string SentryPrefab = "Prefabs/Sentries/Sentry";
+        public const string SentryPrefab = "Prefabs/Sentries/SentryShotgun";
     }
 }

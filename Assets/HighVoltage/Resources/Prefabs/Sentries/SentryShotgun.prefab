@@ -126,9 +126,9 @@ GameObject:
   m_Component:
   - component: {fileID: 502827662028249600}
   - component: {fileID: 376189782751003696}
-  - component: {fileID: 1288593593139877954}
+  - component: {fileID: 5963175928648131307}
   m_Layer: 0
-  m_Name: Sentry
+  m_Name: SentryShotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0.6938925, a: 1}
+  m_Color: {r: 0, g: 0.5224285, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -202,7 +202,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1288593593139877954
+--- !u!114 &5963175928648131307
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5137622353348788599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f018865b7561478cb010982bb96595ce, type: 3}
+  m_Script: {fileID: 11500000, guid: a1bf0d9d10764eb3aa51058f45949ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingPart: {fileID: 3611747566714607411}

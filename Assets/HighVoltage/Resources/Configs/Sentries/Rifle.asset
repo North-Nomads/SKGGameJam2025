@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 932b77ec312442668a7ab7fbad091beb, type: 3}
-  m_Name: SentryConfig
+  m_Name: Rifle
   m_EditorClassIdentifier: 
   timeBetweenActions: 0.5
   maxDurability: 100
