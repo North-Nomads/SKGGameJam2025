@@ -1,4 +1,6 @@
 using System;
+using System.Linq;
+using System.Linq.Expressions;
 using HighVoltage.Enemy;
 using UnityEngine;
 
@@ -13,6 +15,31 @@ namespace HighVoltage.Infrastructure.Mobs
         private Transform[] _waypoints;
         private Transform _target;
         private int _waypointIndex;
+
+        public int CurrentHealth
+        {
+            get => _currentHealth;
+            private set
+            {
+                _currentHealth = value;
+                if (_currentHealth <= 0)
+                    HandleMobDeath();
+                
+            }
+        }
+
+        private void HandleMobDeath()
+        {
+            Destroy(gameObject);
+            OnMobDied(this, this);
+        }
+
+        private int _currentHealth;
+
+        public void HandleHit(int damage)
+        {
+            CurrentHealth -= damage;
+        }
 
         public void Initialize(Transform[] waypoints, MobConfig config)
         {
@@ -33,6 +60,8 @@ namespace HighVoltage.Infrastructure.Mobs
         private void MoveToNextTargetWaypoint()
         {
             _waypointIndex++;
+            if (_waypointIndex >= _waypoints.Length)
+                return;
             _target = _waypoints[_waypointIndex];
         }
     }

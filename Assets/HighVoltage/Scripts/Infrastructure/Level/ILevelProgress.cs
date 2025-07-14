@@ -7,7 +7,7 @@ namespace HighVoltage.Level
     {
         bool RewardGranted { get; }
 
-        event EventHandler<bool> LevelFinishedWithReward;
+        event EventHandler LevelFinishedWithReward;
         void UpdateOnNewLevel(LevelTaskConfig taskConfig);
     }
 }

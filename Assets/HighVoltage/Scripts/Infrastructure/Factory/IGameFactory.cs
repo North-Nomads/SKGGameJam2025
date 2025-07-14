@@ -8,7 +8,7 @@ namespace HighVoltage.Infrastructure.Factory
 {
     public interface IGameFactory : IService
     {
-        GameObject CreatePlayerCore(GameObject at);
+        PlayerCore CreatePlayerCore(GameObject at);
         List<ISavedProgressReader> ProgressReaders { get; } 
         List<IProgressUpdater> ProgressWriters { get; }
         MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 point);

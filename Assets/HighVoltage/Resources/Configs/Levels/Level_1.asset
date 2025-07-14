@@ -24,3 +24,8 @@ MonoBehaviour:
       enemyID: 1
     - quantity: 1
       enemyID: 1
+  - levelEnemies:
+    - quantity: 1
+      enemyID: 2
+    - quantity: 2
+      enemyID: 3

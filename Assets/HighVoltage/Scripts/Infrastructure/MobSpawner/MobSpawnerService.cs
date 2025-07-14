@@ -6,7 +6,6 @@ using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.MobSpawning
 {
@@ -25,30 +24,39 @@ namespace HighVoltage.Infrastructure.MobSpawning
             _currentlyAliveMobs = new List<MobBrain>();
         }
         
-        public void LoadConfigToSpawners(LevelConfig levelConfig, GameObject[] spawnerSpots, GameObject playerCore)
+        public void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots)
         {
             int gateIndex = 0;
-
-            // Replace with tile service
-            WaypointHolder waypointHolder = Object.FindObjectOfType<WaypointHolder>();
+            int mobNameIndex = 0;
 
             foreach (Gate gate in levelConfig.Gates)
             {
                 foreach (EnemyEntry enemy in gate.LevelEnemies)
                 {
                     MobConfig mobConfig = _staticDataService.ForEnemyID(enemy.EnemyID);
-                    for (int i = 0; i < enemy.Quantity; i++) 
-                        SpawnMob(mobConfig, spawnerSpots[gateIndex].transform.position, waypointHolder.Waypoints);
+                    for (int i = 0; i < enemy.Quantity; i++)
+                    {
+                        SpawnMob(mobConfig, spawnerSpots[gateIndex].Waypoints[0].position,
+                            spawnerSpots[gateIndex].Waypoints, mobNameIndex);
+                        mobNameIndex++;
+                    }
                 }
                 gateIndex++;
             }
         }
-        
-        private void SpawnMob(MobConfig which, Vector3 where, Transform[] pathFromGate)
+
+        public void HandleMobReachedCore(MobBrain mob)
+        {
+            mob.HandleHit(int.MaxValue);
+            // Handle core damage
+        }
+
+        private void SpawnMob(MobConfig which, Vector3 where, Transform[] pathFromGate, int nameIndex)
         {
             MobBrain mob = _factory.CreateMobOn(which.EnemyPrefab, where);
             mob.Initialize(pathFromGate, which);
             mob.OnMobDied += HandleMobDeath;
+            mob.name = $"{which.name} [{nameIndex}]";
             _currentlyAliveMobs.Add(mob);
         }
 

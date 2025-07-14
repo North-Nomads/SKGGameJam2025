@@ -7,6 +7,7 @@ using HighVoltage.StaticData;
 using System;
 using HighVoltage.Map;
 using HighVoltage.Services;
+using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -59,20 +60,30 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLoaded()
         {
-            GameObject playerCore = InitializePlayerBase();
-            InitializeMobSpawners(playerCore);
+            PlayerCore playerBase = InitializePlayerBase();
+            InitializeMobSpawners(playerBase);
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        private GameObject InitializePlayerBase() 
-            => _gameFactory.CreatePlayerCore(GameObject.FindGameObjectWithTag(Constants.CoreSpawnPoint));
-
-
-        private void InitializeMobSpawners(GameObject playerCore)
+        private PlayerCore InitializePlayerBase()
         {
-            GameObject[] spawnerSpots = GameObject.FindGameObjectsWithTag(Constants.MobSpawnerTag);
+            PlayerCore playerCore = _gameFactory.CreatePlayerCore(GameObject.FindGameObjectWithTag(Constants.CoreSpawnPoint));
+            playerCore.Initialize(_mobSpawnerService);
+            return playerCore;
+        }
+
+
+        private void InitializeMobSpawners(PlayerCore playerBase)
+        {
+            WaypointHolder[] spawnerSpots = Object.FindObjectsByType<WaypointHolder>(FindObjectsSortMode.None);
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
-            _mobSpawnerService.LoadConfigToSpawners(config, spawnerSpots, playerCore);
+            if (spawnerSpots.Length != config.Gates.Length)
+            {
+                Debug.LogError("Gates number and level config gates number must be same. " + 
+                                $"Spawner spots count: {spawnerSpots.Length} & Config gates: {config.Gates.Length}");
+                return;
+            }
+            _mobSpawnerService.LoadConfigToSpawners(config, spawnerSpots);
         }
     }
 }

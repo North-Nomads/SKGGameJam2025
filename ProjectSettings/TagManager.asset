@@ -7,6 +7,7 @@ TagManager:
   - MobSpawnPoint
   - NextLevelPortalSpawnPoint
   - CoreSpawnPoint
+  - Mob
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 1188626129
+    locked: 0
+  - name: Mobs
+    uniqueID: 2570956297
     locked: 0

@@ -25,8 +25,10 @@ namespace HighVoltage.Infrastructure.Factory
             _mobPrototypes = Resources.LoadAll<MobBrain>(AssetPath.MobPath);
         }
 
-        public GameObject CreatePlayerCore(GameObject at) 
-            => _assets.Instantiate(AssetPath.PlayerCorePrefabPath, at.transform.position);
+        public PlayerCore CreatePlayerCore(GameObject at)
+        {
+            return _assets.Instantiate<PlayerCore>(AssetPath.PlayerCorePrefabPath, at.transform.position);
+        }
 
         public void CleanUp()
         {
