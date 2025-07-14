@@ -49,7 +49,7 @@ namespace HighVoltage.Map
                 for(int j = 0; j < mapSize[0]; j++)
                 {
                     int tileID = _savedMap[i*mapSize[0]+j] - '0';
-
+                    //place waypoints and core items accordingly
                     Color[] pixels = _tileAtlas.GetPixels(tileID * _tileSize, 0, _tileSize, _tileSize);
                     mapTexture.SetPixels(j * _tileSize, i * _tileSize, _tileSize, _tileSize, pixels);
                 }
