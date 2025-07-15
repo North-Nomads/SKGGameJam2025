@@ -10,6 +10,7 @@ using HighVoltage.UI.Windows;
 using System;
 using HighVoltage.Services;
 using HighVoltage.UI.Elements;
+using UnityEngine.SceneManagement;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -52,6 +53,7 @@ namespace HighVoltage.Infrastructure.States
 
         public void Exit()
         {
+            
         }
 
 
@@ -93,7 +95,7 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnPlayerLaunchedGame(object sender, EventArgs e)
         {
-            // load first level
+            _stateMachine.Enter<LoadLevelState, string>("Level1");
         }
     }
 }

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/HighVoltage/Scenes/Menu.unity
     guid: ebc61a2570ae60f44a2f085de4d48d9a
   - enabled: 1
-    path: Assets/HighVoltage/Scenes/Test.unity
+    path: Assets/HighVoltage/Scenes/Level1.unity
     guid: 033d7ec8ccbdc27438b305e08d4bddbe
   m_configObjects: {}
