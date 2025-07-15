@@ -11,6 +11,8 @@ namespace HighVoltage.UI.GameWindows
     {
         [SerializeField] private Button continueButton;
         [SerializeField] private Button exitButton;
+        [SerializeField] private Button restartButton; 
+        [SerializeField] private Button closeButton; 
         private IInGameTimeService _timeService;
 
         private void Awake()
