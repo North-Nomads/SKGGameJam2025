@@ -20,5 +20,7 @@ namespace HighVoltage.StaticData
         void LoadTileAtlas();
         SentryConfig ForSentryID(int sentryConfigID);
         void LoadSentries();
+        void LoadBuildingPrefabs();
+        GameObject GetBuildingPrefab(int prefabID);
     }
 }

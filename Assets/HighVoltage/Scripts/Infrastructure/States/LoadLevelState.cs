@@ -7,6 +7,8 @@ using HighVoltage.StaticData;
 using System;
 using HighVoltage.HighVoltage.Scripts.Sentry;
 using HighVoltage.Services;
+using HighVoltage.Map.Building;
+using UnityEngine.Tilemaps;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
@@ -26,10 +28,12 @@ namespace HighVoltage.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
+        private readonly IPlayerBuildingService _buildingService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
-            IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory)
+            IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory,
+            IPlayerBuildingService buildingService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -40,6 +44,7 @@ namespace HighVoltage.Infrastructure.States
             _staticData = staticData;
             _gameWindowService = gameWindowService;
             _uiFactory = uiFactory;
+            _buildingService = buildingService;
         }
 
         private void OnLevelFinished(object sender, bool shouldGiveReward)
@@ -69,7 +74,16 @@ namespace HighVoltage.Infrastructure.States
         {
             var playerCore = InitializeGameWorld();
             InitializeInGameHUD(playerCore);
+            InitializeMobSpawners(playerCore);
+            _buildingService.MapTilemap = UnityEngine.Object.FindObjectOfType<Tilemap>(); //if it works
+            InitializeBuilder();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+        
+        private void InitializeBuilder()
+        {
+            PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
+            playerBuildBehaviour.Initialize(_staticData, _buildingService);
         }
 
         private PlayerCore InitializeGameWorld()
