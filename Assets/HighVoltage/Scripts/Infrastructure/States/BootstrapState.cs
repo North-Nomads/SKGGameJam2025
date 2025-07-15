@@ -70,7 +70,8 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<ISaveLoadService>(),
                                                                           _allServices.Single<IGameFactory>(),
                                                                           _allServices.Single<ICameraService>()));
-            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService());
+            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService(_allServices.Single<IStaticDataService>(),
+                _allServices.Single<IGameFactory>(), _allServices.Single<IMobSpawnerService>()));
         }
 
         private void RegisterStaticDataService()

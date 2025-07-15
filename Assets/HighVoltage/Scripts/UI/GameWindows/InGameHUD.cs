@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.Sentry;
+using HighVoltage.Map.Building;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,8 @@ namespace HighVoltage.UI.GameWindows
             LayoutRebuilder.ForceRebuildLayoutImmediate(buildingCardParent.GetComponent<RectTransform>());
         }
 
-        public void ProvideSceneData(PlayerCore playerCore, List<SentryConfig> availableSentries)
+        public void ProvideSceneData(PlayerCore playerCore, List<SentryConfig> availableSentries,
+            IPlayerBuildingService buildingService)
         {
             SetupPlayerCoreObserver();
             BuildBuildingUI();
@@ -25,7 +27,11 @@ namespace HighVoltage.UI.GameWindows
             void BuildBuildingUI()
             {
                 foreach (SentryConfig sentry in availableSentries)
-                    GameWindowService.CreateBuildingCard(sentry, buildingCardParent);
+                {
+                    BuildingCard buildingCard = GameWindowService.CreateBuildingCard(sentry, buildingCardParent);
+                    buildingCard.OnCardSelected += (sender, selectedSentry) =>
+                        buildingService.SelectedSentryChanged(selectedSentry);
+                }
             }
 
             void SetupPlayerCoreObserver()

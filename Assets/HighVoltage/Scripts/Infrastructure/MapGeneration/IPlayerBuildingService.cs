@@ -7,7 +7,7 @@ namespace HighVoltage.Map.Building
     public interface IPlayerBuildingService : IService
     {
         public Tilemap MapTilemap { get; set; }
-        public void BuildStructure(Vector3 worldCoordinates, GameObject building);
-        
+        public void BuildStructure(Vector3 worldCoordinates);
+        public void SelectedSentryChanged(int selectedSentry);
     }
 }

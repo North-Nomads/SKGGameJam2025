@@ -6,7 +6,6 @@
         public const string MobPath = "Prefabs/Mobs/";
         public const string BuilderPrefabPath = "Prefabs/Other/Builder";
         public const string BulletPrefab = "Prefabs/Sentries/Bullet";
-        public const string SentryPrefab = "Prefabs/Sentries/SentryShotgun";
         public const string BuildingCard = "Prefabs/UI/Building Card";
     }
 }

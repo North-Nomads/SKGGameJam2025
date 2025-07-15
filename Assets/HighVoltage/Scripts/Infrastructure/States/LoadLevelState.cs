@@ -96,16 +96,7 @@ namespace HighVoltage.Infrastructure.States
         {
             PlayerCore playerCore = InitializePlayerBase(config);
             InitializeMobSpawners(config);
-            DEBUG_InitializeSentry();
             return playerCore;
-        }
-
-        private void DEBUG_InitializeSentry()
-        {
-            const int DEBUG_SentryID = 2;
-            SentryConfig config = _staticData.ForSentryID(DEBUG_SentryID);
-            SentryTower sentry = _gameFactory.CreateSentry(GameObject.FindGameObjectWithTag(Constants.DEBUG_SentrySpawn));
-            sentry.Initialize(config, _mobSpawnerService, _gameFactory);
         }
 
         private void InitializeInGameHUD(PlayerCore playerCore, List<SentryConfig> thisLevelSentries)
@@ -114,7 +105,7 @@ namespace HighVoltage.Infrastructure.States
             
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvideSceneData(playerCore, thisLevelSentries);
+                .ProvideSceneData(playerCore, thisLevelSentries, _buildingService);
             _gameWindowService.Open(GameWindowId.InGameHUD);
         }
 

@@ -12,6 +12,6 @@ namespace HighVoltage.UI.Services
         GameWindowBase GetWindow(GameWindowId endGame);
         void Open(GameWindowId windowId);
         void ReturnToPreviousWindow();
-        void CreateBuildingCard(SentryConfig building, Transform parent);
+        BuildingCard CreateBuildingCard(SentryConfig building, Transform parent);
     }
 }

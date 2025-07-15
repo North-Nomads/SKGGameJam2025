@@ -16,6 +16,6 @@ namespace HighVoltage.Infrastructure.Factory
         void CleanUp();
         PlayerBuildBehaviour CreateBuilder();
         Bullet CreateBullet(Transform at);
-        SentryTower CreateSentry(GameObject spawnPosition);
+        SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
     }
 }

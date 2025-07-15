@@ -52,8 +52,7 @@ namespace HighVoltage
 
         private void OnPlayerBuild(InputAction.CallbackContext obj)
         {
-            _buildingService.BuildStructure(GetSelectedCellWorldPosition(), 
-                _dataService.GetBuildingPrefab(_selectedBuildingID));
+            _buildingService.BuildStructure(GetSelectedCellWorldPosition());
         }
 
         public void Initialize(IStaticDataService dataService, IPlayerBuildingService buildingService)

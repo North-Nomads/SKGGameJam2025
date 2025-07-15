@@ -5,6 +5,7 @@ namespace HighVoltage.Infrastructure.Sentry
     [CreateAssetMenu(fileName = "SentryConfig", menuName = "Config/Sentry Config", order = 2)]
     public class SentryConfig : ScriptableObject
     {
+        [SerializeField] private SentryTower sentryPrefab;
         [Header("Combat settings")]
         [SerializeField] private float timeBetweenActions;
         [SerializeField] private int maxDurability;
@@ -33,5 +34,7 @@ namespace HighVoltage.Infrastructure.Sentry
         public Sprite SentryIcon => sentryIcon;
 
         public int BuildPrice => buildPrice;
+
+        public SentryTower SentryPrefab => sentryPrefab;
     }
 }
