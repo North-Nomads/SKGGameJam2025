@@ -14,6 +14,9 @@ namespace HighVoltage.Infrastructure.Sentry
         [SerializeField] private int sentryId;
         [SerializeField] private int bulletsPerAction = 1;
         [SerializeField] private float bulletsAngleOffset = 1;
+        [Header("Power")]
+        [SerializeField] private float powerConsumption;
+        [SerializeField] private float stunTime;
         [Header("UI settings")]
         [SerializeField] private Sprite sentryIcon;
         [SerializeField] private int buildPrice;
@@ -36,5 +39,9 @@ namespace HighVoltage.Infrastructure.Sentry
         public int BuildPrice => buildPrice;
 
         public SentryTower SentryPrefab => sentryPrefab;
+
+        public float PowerConsumption => powerConsumption;
+
+        public float StunTime => stunTime;
     }
 }

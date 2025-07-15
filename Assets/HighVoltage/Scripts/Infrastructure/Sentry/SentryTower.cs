@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Runtime.Serialization;
 using HighVoltage.Infrastructure.Factory;
@@ -6,7 +7,7 @@ using UnityEngine;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
-    public abstract class SentryTower : MonoBehaviour
+    public abstract class SentryTower : MonoBehaviour, ICurrentReciever
     {
         [SerializeField] private Transform rotatingPart;
         private const float OneSecond = 1;
@@ -25,6 +26,8 @@ namespace HighVoltage.Infrastructure.Sentry
 
         
         private float _decayCooldownTimeLeft;
+        private ICurrentSource _currentProvider;
+        private float _stunnedTimeLeft;
 
         public void Initialize(SentryConfig config, IMobSpawnerService mobSpawnerService, IGameFactory gameFactory)
         {
@@ -48,6 +51,13 @@ namespace HighVoltage.Infrastructure.Sentry
         protected virtual void Update()
         {
             KeepDecay();
+
+            if (_stunnedTimeLeft >= 0)
+            {
+                _stunnedTimeLeft -= Time.deltaTime;
+                return;
+            }
+            
             ScanForTarget();
             KeepTrackingEnemy();
             if (IsActionOnCooldown)
@@ -82,6 +92,7 @@ namespace HighVoltage.Infrastructure.Sentry
                 return;
             }
             
+            _currentProvider.RequestPower(Config.PowerConsumption);
             _decayCooldownTimeLeft = OneSecond;
             CurrentDurability -= DecayPerSecond;
             if (CurrentDurability <= 0)
@@ -102,6 +113,19 @@ namespace HighVoltage.Infrastructure.Sentry
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             float AngleOffset = 90f;
             rotatingPart.rotation = Quaternion.Euler(0, 0, angle + AngleOffset);
+        }
+
+        public ICurrentSource CurrentProvider => _currentProvider;
+
+        public void AttachToSource(ICurrentSource currentProvider)
+        {
+            _currentProvider = currentProvider;
+            _currentProvider.OnOverload += HandleOverload;
+        }
+
+        private void HandleOverload(object sender, EventArgs e)
+        {
+            _stunnedTimeLeft = Config.StunTime;
         }
     }
 }

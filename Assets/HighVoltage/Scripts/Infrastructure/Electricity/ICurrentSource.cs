@@ -5,11 +5,10 @@ namespace HighVoltage
 {
     public interface ICurrentSource
     {
-        public List<ICurrentReciever> Recievers { get; }
-
+        public List<ICurrentReciever> Receivers { get; }
         public event EventHandler OnOverload;
         public float Output { get; }
-        public void AttachReciever(ICurrentReciever reciever);
-        public void RequestPower();
+        public void AttachReceiver(ICurrentReciever receiver);
+        public void RequestPower(float configPowerConsumption);
     }
 }
