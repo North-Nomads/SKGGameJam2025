@@ -10,5 +10,6 @@ namespace HighVoltage
         public event EventHandler OnOverload;
         public float Output { get; }
         public void AttachReciever(ICurrentReciever reciever);
+        public void RequestPower();
     }
 }
