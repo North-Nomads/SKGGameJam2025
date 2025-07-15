@@ -8,23 +8,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.UI.Windows;
 using System;
+using HighVoltage.Services;
+using HighVoltage.UI.Elements;
+using UnityEngine.SceneManagement;
 
 namespace HighVoltage.Infrastructure.States
 {
     public class HubState : IState
     {
-        private readonly GameStateMachine _stateMachine;
-        private readonly SceneLoader _sceneLoader;
-        private readonly Canvas _loadingCurtain;
-        private readonly IGameFactory _gameFactory;
-        private readonly IPlayerProgressService _progressService;
-        private readonly IUIFactory _uiFactory;
-        private readonly IWindowService _windowService;
         private readonly List<ISavedProgressReader> _saveReaderServices;
+        private readonly IPlayerProgressService _progressService;
+        private readonly GameStateMachine _stateMachine;
+        private readonly IWindowService _windowService;
         private readonly ICameraService _cameraService;
         private readonly IAssetProvider _assetProvider;
-        private GameObject _mainMenu;
-        private HubMenu gameMenu;
+        private readonly IGameFactory _gameFactory;
+        private readonly SceneLoader _sceneLoader;
+        private readonly Canvas _loadingCurtain;
+        private readonly IUIFactory _uiFactory;
 
         public HubState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IUIFactory uiFactory, 
@@ -46,26 +47,25 @@ namespace HighVoltage.Infrastructure.States
         public void Enter()
         {
             _windowService.CleanUp();
-            _stateMachine.Enter<LoadLevelState, string>($"Test");
-            //_sceneLoader.Load(Constants.HubSceneName, onLoaded: InitializeScene);
-            // _loadingCurtain.gameObject.SetActive(false);
+            _sceneLoader.Load(Constants.HubSceneName, onLoaded: InitializeScene);
+            _loadingCurtain.gameObject.SetActive(false);
         }
 
         public void Exit()
         {
+            
         }
 
 
         private void InitializeScene()
         {
-            InitializeGameWorld();
             InitializeUI();
         }
 
         private void InitializeUI()
         {
             _uiFactory.CreateUIRoot();
-            InitalizeMenuWindows();
+            InitializeMenuWindows();
         }
 
         private void InformProgressReaders()
@@ -74,19 +74,35 @@ namespace HighVoltage.Infrastructure.States
                 saveService.LoadProgress(_progressService.Progress);
         }
 
-        private void InitializeGameWorld()
+        private void InitializeMenuWindows()
         {
-
+            SetupStartMenu();
+            SetupLevelsSelectMenu();
         }
 
-        private void InitalizeMenuWindows()
+        private void SetupLevelsSelectMenu()
         {
-            gameMenu = _windowService.GetWindow(WindowId.Hub).GetComponent<HubMenu>();
+            var levelsMenu = _windowService.GetWindow(WindowId.Levels).GetComponent<LevelsWindow>();
+            levelsMenu.gameObject.SetActive(false);
+            levelsMenu.LevelLaunched += OnLevelLaunched;
+
+            foreach (OpenWindowButton button in levelsMenu.GetComponentsInChildren<OpenWindowButton>()) 
+                button.Construct(_windowService);
+        }
+
+        private void SetupStartMenu()
+        {
+            var gameMenu = _windowService.GetWindow(WindowId.Hub).GetComponent<HubMenu>();
             gameMenu.gameObject.SetActive(true);
-            // gameMenu.PlayerLaunchedGame += OnPlayerLaunchedGame;
-            gameMenu.PlayerLaunchedGame += OnPlayerLaunchedTutorial;
-            var settingsMenu = _windowService.GetWindow(WindowId.Settings).GetComponent<SettingsMenu>();
-            settingsMenu.MuteToggled += OnMuteToggled;
+            gameMenu.PlayerLaunchedGame += OnPlayerLaunchedGame;
+
+            foreach (OpenWindowButton button in gameMenu.GetComponentsInChildren<OpenWindowButton>()) 
+                button.Construct(_windowService);
+        }
+
+        private void OnLevelLaunched(object sender, int levelIndex)
+        {
+            _stateMachine.Enter<LoadLevelState, string>($"Level{levelIndex}");
         }
 
         private void OnMuteToggled(object sender, bool e)
@@ -95,9 +111,9 @@ namespace HighVoltage.Infrastructure.States
             audio.IsMuted = e;
         }
 
-        private void OnPlayerLaunchedTutorial(object sender, EventArgs e)
+        private void OnPlayerLaunchedGame(object sender, EventArgs e)
         {
-            //
+            _stateMachine.Enter<LoadLevelState, string>("Level1");
         }
     }
 }

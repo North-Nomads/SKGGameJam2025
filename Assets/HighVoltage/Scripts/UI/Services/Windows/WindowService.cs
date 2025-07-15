@@ -50,7 +50,7 @@ namespace HighVoltage.UI.Services.Windows
             if (window == null)
             {
                 window = _uiFactory.InstantiateWindow(windowID);
-                window.ConstructWindow(_progressService, windowID, this, _saveLoadService, _gameFactory);
+                window.ConstructWindow(_progressService, windowID, this, _saveLoadService, _gameFactory, _uiFactory);
                 _windows[windowID] = window;
             }
 
