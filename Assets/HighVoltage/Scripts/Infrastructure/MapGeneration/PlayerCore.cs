@@ -37,6 +37,7 @@ namespace HighVoltage
 
         private void OnTriggerEnter2D(Collider2D other)
         {
+            print($"Other trigger entered: {other.name}");
             if (other.CompareTag(Constants.MobTag))
             {
                 MobBrain mobBrain = other.GetComponent<MobBrain>();

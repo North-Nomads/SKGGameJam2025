@@ -126,9 +126,9 @@ GameObject:
   m_Component:
   - component: {fileID: 502827662028249600}
   - component: {fileID: 376189782751003696}
-  - component: {fileID: 5963175928648131307}
+  - component: {fileID: 3293749472009735155}
   m_Layer: 0
-  m_Name: SentryShotgun
+  m_Name: SentrySniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0, g: 0.5224285, b: 1, a: 1}
+  m_Color: {r: 0.16517472, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -202,7 +202,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5963175928648131307
+--- !u!114 &3293749472009735155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -211,10 +211,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5137622353348788599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1bf0d9d10764eb3aa51058f45949ceb, type: 3}
+  m_Script: {fileID: 11500000, guid: 33eb430223cf4a38a465162e5dfe8995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingPart: {fileID: 3611747566714607411}
-  bulletPrefab: {fileID: 1563872610485020097, guid: b0e890bb87ccc3045b2bb21bc2851f16, type: 3}
-  scanRadius: 2
+  bulletPrefab: {fileID: -8056474331501318046, guid: 4bff9a68a8608e545a57d58ef2438abd, type: 3}
+  scanRadius: 6
   bulletSpawnPoint: {fileID: 6663315526061819139}

@@ -14,7 +14,7 @@ namespace HighVoltage.Infrastructure.Sentry
         {
             for (int i = 0; i < Config.BulletsPerAction; i++)
             {
-                Bullet bulletInstance = GameFactory.CreateBullet(at: bulletSpawnPoint);
+                Bullet bulletInstance = GameFactory.CreateBullet(at: bulletSpawnPoint, BulletPrefab);
                 Vector3 direction = TargetPositionWithOffset();
                 _bulletDirections.Add(direction);
                 bulletInstance.Initialize(direction, Damage);
