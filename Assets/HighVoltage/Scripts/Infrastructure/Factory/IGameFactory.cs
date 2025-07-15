@@ -13,5 +13,6 @@ namespace HighVoltage.Infrastructure.Factory
         List<IProgressUpdater> ProgressWriters { get; }
         MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 point);
         void CleanUp();
+        PlayerBuildBehaviour CreateBuilder();
     }
 }

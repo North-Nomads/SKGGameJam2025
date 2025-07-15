@@ -16,6 +16,8 @@ namespace HighVoltage.StaticData
         private Dictionary<int, LevelConfig> _levels;
         private Dictionary<int, LevelTaskConfig> _levelTasks;
         private Texture2D _tileAtlas;
+        private List<GameObject> _buildingPrefabs;
+        //public IEnumerable<GameObject> BuildgPrefabs { get => _buildngPrefabs; }
 
         public void LoadLevels()
             => _levels = Resources.LoadAll<LevelConfig>("Configs/Levels").ToDictionary(x => x.LevelID, x => x);
@@ -42,5 +44,8 @@ namespace HighVoltage.StaticData
         public void LoadTileAtlas() => _tileAtlas = Resources.Load<Texture2D>("Textures/Tiles/TileAtlas");
         public MobConfig ForEnemyID(int zombieId)
             => _zombieConfigs.GetValueOrDefault(zombieId);
+        public void LoadBuildingPrefabs() => _buildingPrefabs = Resources.LoadAll<GameObject>("Prefabs/Buildings").ToList();
+
+        public GameObject GetBuildingPrefab(int prefabID) => prefabID >= _buildingPrefabs.Count? null : _buildingPrefabs[prefabID];
     }
 }

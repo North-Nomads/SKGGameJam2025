@@ -17,5 +17,7 @@ namespace HighVoltage.StaticData
         MobConfig ForEnemyID(int zombieId);
         Texture2D GetTileAtlas();
         void LoadTileAtlas();
+        void LoadBuildingPrefabs();
+        GameObject GetBuildingPrefab(int prefabID);
     }
 }

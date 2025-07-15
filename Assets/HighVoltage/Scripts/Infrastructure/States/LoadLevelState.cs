@@ -7,6 +7,8 @@ using HighVoltage.StaticData;
 using System;
 using HighVoltage.Map;
 using HighVoltage.Services;
+using HighVoltage.Map.Building;
+using UnityEngine.Tilemaps;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -19,10 +21,10 @@ namespace HighVoltage.Infrastructure.States
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
-        private readonly ITileGenerator _tileGenerator;
+        private readonly IPlayerBuildingService _buildingService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain, IGameFactory gameFactory, IPlayerProgressService progressService,
-            IMobSpawnerService mobSpawnerService, IStaticDataService staticData, ITileGenerator tileGenerator)
+            IMobSpawnerService mobSpawnerService, IStaticDataService staticData, IPlayerBuildingService buildingService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -31,7 +33,7 @@ namespace HighVoltage.Infrastructure.States
             _progressService = progressService;
             _mobSpawnerService = mobSpawnerService;
             _staticData = staticData;
-            _tileGenerator = tileGenerator;
+            _buildingService = buildingService;
         }
 
         private void OnLevelFinished(object sender, bool shouldGiveReward)
@@ -61,7 +63,15 @@ namespace HighVoltage.Infrastructure.States
         {
             GameObject playerCore = InitializePlayerBase();
             InitializeMobSpawners(playerCore);
+            _buildingService.MapTilemap = UnityEngine.Object.FindObjectOfType<Tilemap>(); //if it works
+            InitializeBuilder();
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void InitializeBuilder()
+        {
+            PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
+            playerBuildBehaviour.Initialize(_staticData, _buildingService);
         }
 
         private GameObject InitializePlayerBase() 

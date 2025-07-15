@@ -7,6 +7,7 @@ using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
 using HighVoltage.Map;
+using HighVoltage.Map.Building;
 using HighVoltage.Services.Inputs;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
@@ -67,6 +68,7 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<IGameFactory>(),
                                                                           _allServices.Single<ICameraService>()));
             //_allServices.RegisterSingle<ITileGenerator>(new TileGenerator(_allServices.Single<IStaticDataService>()));
+            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService());
         }
 
         private void RegisterStaticDataService()
@@ -75,6 +77,7 @@ namespace HighVoltage.Infrastructure.States
             staticData.LoadLevels();
             staticData.LoadTileAtlas();
             staticData.LoadEnemies();
+            staticData.LoadBuildingPrefabs();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
 

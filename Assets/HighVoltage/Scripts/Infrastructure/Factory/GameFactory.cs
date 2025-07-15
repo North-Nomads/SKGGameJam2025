@@ -36,5 +36,11 @@ namespace HighVoltage.Infrastructure.Factory
         
         public MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 at) 
             => Object.Instantiate(whichEnemyPrefab, at, Quaternion.identity);
+
+        public PlayerBuildBehaviour CreateBuilder()
+        {
+            return _assets.Instantiate<PlayerBuildBehaviour>(AssetPath.BuilderPrefabPath, Vector3.zero);
+            
+        }
     }
 }
