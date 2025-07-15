@@ -76,19 +76,28 @@ namespace HighVoltage.Infrastructure.States
 
         private void InitializeMenuWindows()
         {
+            SetupStartMenu();
+            SetupLevelsSelectMenu();
+        }
+
+        private void SetupLevelsSelectMenu()
+        {
+            var levelsMenu = _windowService.GetWindow(WindowId.Levels).GetComponent<LevelsWindow>();
+            levelsMenu.gameObject.SetActive(false);
+            levelsMenu.LevelLaunched += OnLevelLaunched;
+
+            foreach (OpenWindowButton button in levelsMenu.GetComponentsInChildren<OpenWindowButton>()) 
+                button.Construct(_windowService);
+        }
+
+        private void SetupStartMenu()
+        {
             var gameMenu = _windowService.GetWindow(WindowId.Hub).GetComponent<HubMenu>();
             gameMenu.gameObject.SetActive(true);
             gameMenu.PlayerLaunchedGame += OnPlayerLaunchedGame;
 
             foreach (OpenWindowButton button in gameMenu.GetComponentsInChildren<OpenWindowButton>()) 
                 button.Construct(_windowService);
-
-            var levelsMenu = _windowService.GetWindow(WindowId.Levels).GetComponent<LevelsWindow>();
-            levelsMenu.gameObject.SetActive(false);
-            levelsMenu.LevelLaunched += OnLevelLaunched;
-
-            /*var settingsMenu = _windowService.GetWindow(WindowId.Settings).GetComponent<SettingsMenu>();
-            settingsMenu.MuteToggled += OnMuteToggled;*/
         }
 
         private void OnLevelLaunched(object sender, int levelIndex)
