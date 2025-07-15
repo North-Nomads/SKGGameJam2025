@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.Infrastructure.AssetManagement;
 using HighVoltage.Services.Progress;
@@ -6,7 +7,6 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
 using HighVoltage.UI.Windows;
-using UnityEditor;
 using PopupWindow = HighVoltage.UI.PopUps.PopupWindow;
 
 namespace HighVoltage.UI.Services.Factory
@@ -33,6 +33,7 @@ namespace HighVoltage.UI.Services.Factory
 
         public WindowBase InstantiateWindow(WindowId windowID)
         {
+            Debug.Log($"trying to instantiate window={windowID}");
             var window = CreateSpecificWindow(windowID);
             window.transform.SetAsFirstSibling();
             window.gameObject.SetActive(false);
@@ -44,9 +45,17 @@ namespace HighVoltage.UI.Services.Factory
                 {
                     WindowId.Hub => CreateHubMenu(),
                     WindowId.Settings => CreateSettingsMenu(),
+                    WindowId.Levels => CreateLevelsMenu(),
                     _ => null,
                 };
             }
+        }
+
+        private WindowBase CreateLevelsMenu()
+        {
+            WindowConfig config = _staticData.ForWindow(WindowId.Levels);
+            var window = Object.Instantiate(config.Prefab, _uiRoot);
+            return window;
         }
 
         private WindowBase CreateSettingsMenu()
@@ -106,6 +115,24 @@ namespace HighVoltage.UI.Services.Factory
 
         public BuildingCard InstantiateBuildingCard(Transform buildingCardParent) 
             => _assets.Instantiate<BuildingCard>(AssetPath.BuildingCard, buildingCardParent);
+
+        public List<LevelSelectButton> InstantiateLevelButtons(int totalLevels)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<LevelSelectButton> InstantiateLevelButtons(int totalLevels, Transform parent)
+        {
+            List<LevelSelectButton> buttons = new();
+            for (int i = 1; i < totalLevels + 1; i++)
+            {
+                LevelSelectButton button = _assets.Instantiate<LevelSelectButton>(AssetPath.LevelSelectButton, parent);
+                button.Construct(i);
+                buttons.Add(button);
+            }
+
+            return buttons;
+        }
 
         private GameWindowBase CreateEndGame()
         {

@@ -82,9 +82,18 @@ namespace HighVoltage.Infrastructure.States
 
             foreach (OpenWindowButton button in gameMenu.GetComponentsInChildren<OpenWindowButton>()) 
                 button.Construct(_windowService);
-            
+
+            var levelsMenu = _windowService.GetWindow(WindowId.Levels).GetComponent<LevelsWindow>();
+            levelsMenu.gameObject.SetActive(false);
+            levelsMenu.LevelLaunched += OnLevelLaunched;
+
             /*var settingsMenu = _windowService.GetWindow(WindowId.Settings).GetComponent<SettingsMenu>();
             settingsMenu.MuteToggled += OnMuteToggled;*/
+        }
+
+        private void OnLevelLaunched(object sender, int levelIndex)
+        {
+            _stateMachine.Enter<LoadLevelState, string>($"Level{levelIndex}");
         }
 
         private void OnMuteToggled(object sender, bool e)

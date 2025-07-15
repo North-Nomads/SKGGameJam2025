@@ -1,4 +1,5 @@
-﻿using HighVoltage.Infrastructure.Services;
+﻿using System.Collections.Generic;
+using HighVoltage.Infrastructure.Services;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.PopUps;
 using HighVoltage.UI.Services.GameWindows;
@@ -15,5 +16,6 @@ namespace HighVoltage.UI.Services.Factory
         GameWindowBase InstantiateWindow(GameWindowId windowID);
         PopupWindow InstantiatePopupWindow(PopupWindowId popupWindowId);
         BuildingCard InstantiateBuildingCard(Transform buildingCardParent);
+        List<LevelSelectButton> InstantiateLevelButtons(int totalLevels, Transform parent);
     }
 }

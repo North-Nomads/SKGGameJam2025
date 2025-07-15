@@ -7,5 +7,6 @@
         public const string BuilderPrefabPath = "Prefabs/Other/Builder";
         public const string BulletPrefab = "Prefabs/Sentries/Bullet";
         public const string BuildingCard = "Prefabs/UI/Building Card";
+        public const string LevelSelectButton = "Prefabs/UI/LevelSelectButton";
     }
 }
