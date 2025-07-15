@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Configs:
   - WindowId: 1
-    Prefab: {fileID: 0}
+    Prefab: {fileID: 6013827969287196140, guid: 533a40e1d03bee845bc976ef346dfaeb, type: 3}
   - WindowId: 2
+    Prefab: {fileID: 0}
+  - WindowId: 3
     Prefab: {fileID: 0}
