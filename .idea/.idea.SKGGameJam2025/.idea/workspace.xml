@@ -6,14 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/GameBootstrapper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/GameBootstrapper.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/ICoroutineRunner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/ICoroutineRunner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MobSpawner/MobSpawnerService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MobSpawner/MobSpawnerService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGamePauseMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGamePauseMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/GameWindowService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/GameWindowService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/IGameWindowService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/IGameWindowService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
