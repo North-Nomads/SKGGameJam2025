@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace HighVoltage.HighVoltage.Scripts.Sentry
+namespace HighVoltage.Infrastructure.Sentry
 {
     public class SentryRifle : SentryTower
     {

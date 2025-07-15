@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using HighVoltage.Enemy;
-using HighVoltage.HighVoltage.Scripts.Sentry;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;

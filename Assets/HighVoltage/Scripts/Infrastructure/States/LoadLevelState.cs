@@ -5,7 +5,7 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System;
-using HighVoltage.HighVoltage.Scripts.Sentry;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Services;
 using HighVoltage.Map.Building;
 using UnityEngine.Tilemaps;
@@ -72,11 +72,12 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLoaded()
         {
-            var playerCore = InitializeGameWorld();
-            InitializeInGameHUD(playerCore);
-            InitializeMobSpawners(playerCore);
-            _buildingService.MapTilemap = UnityEngine.Object.FindObjectOfType<Tilemap>(); //if it works
+            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
+            PlayerCore playerCore = InitializeGameWorld(config);
+            InitializeMobSpawners(config);
+            _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
+            InitializeInGameHUD(playerCore);
             _gameStateMachine.Enter<GameLoopState>();
         }
         
@@ -86,9 +87,8 @@ namespace HighVoltage.Infrastructure.States
             playerBuildBehaviour.Initialize(_staticData, _buildingService);
         }
 
-        private PlayerCore InitializeGameWorld()
+        private PlayerCore InitializeGameWorld(LevelConfig config)
         {
-            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializePlayerBase(config);
             InitializeMobSpawners(config);
             DEBUG_InitializeSentry();

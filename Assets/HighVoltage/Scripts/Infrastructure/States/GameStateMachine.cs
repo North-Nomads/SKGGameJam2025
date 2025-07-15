@@ -48,7 +48,7 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IMobSpawnerService>(),
                                                               services.Single<IStaticDataService>(),
                                                               services.Single<IGameWindowService>(),
-                                                              services.Single<IUIFactory>()),
+                                                              services.Single<IUIFactory>(),
                                                               services.Single<IPlayerBuildingService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>()),

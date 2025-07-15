@@ -4,21 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryShotgun.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryShotgun.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Sentries/SentryConfig.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Sentries/SentryConfig.asset.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/Sentry.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/Sentry.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/Bullet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/Bullet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryConfig.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryConfig.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryRifle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryRifle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryTower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Sentry/SentryTower.cs" afterDir="false" />
-    </list>
+    <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,14 +14,27 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="sentry" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;TaggedDev&quot;
-  }
-}</component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {}
+}]]></component>
+  <component name="GitHubPullRequestState"><![CDATA[{
+  "prStates": [
+    {
+      "id": {
+        "id": "PR_kwDOPLyp186e7IAO",
+        "number": 3
+      },
+      "lastSeen": 1752562578544
+    }
+  ]
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/North-Nomads/SKGGameJam2025.git&quot;,
@@ -45,8 +44,21 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/17484a9af6b944dea5cd9be4dbb0da2c171c00/5f/248b42cc/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/17484a9af6b944dea5cd9be4dbb0da2c171c00/fb/86084870/Transform.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/Factory/IGameFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/Factory/IGameFactory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/BootstrapState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/BootstrapState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/StaticData/IStaticDataSerivce.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/StaticData/IStaticDataSerivce.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
 }</component>
@@ -60,7 +72,7 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "sentry",
+    "git-widget-placeholder": "MapGeneration",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -97,10 +109,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="13804">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="13804" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -126,6 +138,7 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
@@ -146,24 +159,5 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs</url>
-          <line>87</line>
-          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\States\LoadLevelState.cs" containingFunctionPresentation="Method 'DEBUG_InitializeSentry'">
-            <startOffsets>
-              <option value="3288" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3398" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

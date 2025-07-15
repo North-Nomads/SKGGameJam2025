@@ -1,5 +1,5 @@
 using HighVoltage.Enemy;
-using HighVoltage.HighVoltage.Scripts.Sentry;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;

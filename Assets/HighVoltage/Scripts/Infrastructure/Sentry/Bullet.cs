@@ -3,7 +3,7 @@ using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Services;
 using UnityEngine;
 
-namespace HighVoltage.HighVoltage.Scripts.Sentry
+namespace HighVoltage.Infrastructure.Sentry
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]

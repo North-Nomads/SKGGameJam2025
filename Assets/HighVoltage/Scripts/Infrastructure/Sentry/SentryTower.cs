@@ -4,7 +4,7 @@ using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.MobSpawning;
 using UnityEngine;
 
-namespace HighVoltage.HighVoltage.Scripts.Sentry
+namespace HighVoltage.Infrastructure.Sentry
 {
     public abstract class SentryTower : MonoBehaviour
     {

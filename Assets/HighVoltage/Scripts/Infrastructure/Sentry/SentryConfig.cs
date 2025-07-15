@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace HighVoltage.HighVoltage.Scripts.Sentry
+namespace HighVoltage.Infrastructure.Sentry
 {
     [CreateAssetMenu(fileName = "SentryConfig", menuName = "Config/Sentry Config", order = 2)]
     public class SentryConfig : ScriptableObject

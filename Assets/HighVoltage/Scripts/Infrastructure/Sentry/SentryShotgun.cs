@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace HighVoltage.HighVoltage.Scripts.Sentry
+namespace HighVoltage.Infrastructure.Sentry
 {
     public class SentryShotgun : SentryTower
     {

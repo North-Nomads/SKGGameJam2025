@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using HighVoltage.HighVoltage.Scripts.Sentry;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Services.Progress;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Infrastructure.AssetManagement;
