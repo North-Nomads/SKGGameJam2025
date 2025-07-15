@@ -28,8 +28,11 @@ namespace HighVoltage.UI.Windows
         private void CloseGame() 
             => Application.Quit();
 
-        private void DisplaySettingsWindow() 
-            => WindowService.Open(WindowId.Settings);
+        private void DisplaySettingsWindow()
+        {
+            return; // Temporary solution. 
+            WindowService.Open(WindowId.Settings);
+        }
 
         private void LaunchGame() 
             => PlayerLaunchedGame(null, null);

@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/LevelsWindow.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/LevelsWindow.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/UI/Windows.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/UI/Windows.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/Constants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/Constants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/IUIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/IUIFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/WindowService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Windows/WindowService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubHUDWindow.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubHUDWindow.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/WindowBase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/WindowBase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubMenu.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +129,7 @@
       <workItem from="1752495246588" duration="11549000" />
       <workItem from="1752514157683" duration="3928000" />
       <workItem from="1752522690470" duration="11212000" />
-      <workItem from="1752586547340" duration="4655000" />
+      <workItem from="1752586547340" duration="5014000" />
     </task>
     <servers />
   </component>
@@ -199,19 +186,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs</url>
-          <line>86</line>
-          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\States\HubState.cs" containingFunctionPresentation="Method 'InitializeMenuWindows'">
-            <startOffsets>
-              <option value="3164" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3203" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
