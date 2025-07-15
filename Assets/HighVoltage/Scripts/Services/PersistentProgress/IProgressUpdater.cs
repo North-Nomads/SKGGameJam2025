@@ -1,4 +1,4 @@
-﻿using HighVoltage.Scripts.Data;
+﻿using HighVoltage.Data;
 
 namespace HighVoltage.Services.Progress
 {

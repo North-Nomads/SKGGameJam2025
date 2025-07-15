@@ -1,5 +1,5 @@
 ﻿using HighVoltage.Infrastructure.SaveLoad;
-using HighVoltage.Scripts.Data;
+using HighVoltage.Data;
 using HighVoltage.Services.Progress;
 
 namespace HighVoltage.Infrastructure.States

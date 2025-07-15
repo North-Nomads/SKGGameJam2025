@@ -7,6 +7,8 @@ TagManager:
   - MobSpawnPoint
   - NextLevelPortalSpawnPoint
   - CoreSpawnPoint
+  - Mob
+  - DEBUG_SentrySpawn
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - Buildings
   - 
   - 
   - 
@@ -41,6 +43,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Tilemap
+    uniqueID: 3598737915
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Map
+    uniqueID: 1188626129
+    locked: 0
+  - name: Mobs
+    uniqueID: 2570956297
+    locked: 0
+  - name: Bullet
+    uniqueID: 2799467399
     locked: 0

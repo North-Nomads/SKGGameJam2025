@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using HighVoltage.UI.Windows;
 
-namespace HighVoltage.Scripts.UI.Windows
+namespace HighVoltage.UI.Windows
 {
     public class MapMenuWindow : WindowBase
     {

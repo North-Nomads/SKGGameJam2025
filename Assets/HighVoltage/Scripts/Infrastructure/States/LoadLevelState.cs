@@ -4,8 +4,16 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using HighVoltage.UI.GameWindows;
+using System;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Services;
+using HighVoltage.Map.Building;
+using UnityEngine.Tilemaps;
+using HighVoltage.UI.GameWindows;
+using HighVoltage.UI.Services;
+using HighVoltage.UI.Services.Factory;
+using HighVoltage.UI.Services.GameWindows;
+using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -13,17 +21,19 @@ namespace HighVoltage.Infrastructure.States
     {
         private readonly IPlayerProgressService _progressService;
         private readonly IMobSpawnerService _mobSpawnerService;
+        private readonly IGameWindowService _gameWindowService;
+        private readonly IUIFactory _uiFactory;
         private readonly GameStateMachine _gameStateMachine;
         private readonly IStaticDataService _staticData;
-        private readonly ILevelProgress _levelProgress;
         private readonly IGameFactory _gameFactory;
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
-        private InGameHUD _hud;
+        private readonly IPlayerBuildingService _buildingService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
-            ILevelProgress levelProgress, IStaticDataService staticData)
+            IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory,
+            IPlayerBuildingService buildingService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -31,10 +41,10 @@ namespace HighVoltage.Infrastructure.States
             _gameFactory = gameFactory;
             _progressService = progressService;
             _mobSpawnerService = mobSpawnerService;
-            _levelProgress = levelProgress;
             _staticData = staticData;
-
-            _levelProgress.LevelFinishedWithReward += OnLevelFinished;
+            _gameWindowService = gameWindowService;
+            _uiFactory = uiFactory;
+            _buildingService = buildingService;
         }
 
         private void OnLevelFinished(object sender, bool shouldGiveReward)
@@ -45,7 +55,6 @@ namespace HighVoltage.Infrastructure.States
                 return;
             }
             _progressService.IncrementCurrentLevel(shouldGiveReward);
-            _hud.UpdateOnLevelFinished(shouldGiveReward, _progressService.Progress.RemainingTasks);
             _gameStateMachine.Enter<GameFinishedState>();
         }
 
@@ -63,20 +72,67 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLoaded()
         {
-            GameObject playerCore = InitializePlayerBase();
-            InitializeMobSpawners(playerCore);
+            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
+            PlayerCore playerCore = InitializeGameWorld(config);
+            InitializeMobSpawners(config);
+            _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
+            InitializeBuilder();
+            InitializeInGameHUD(playerCore);
             _gameStateMachine.Enter<GameLoopState>();
         }
-
-        private GameObject InitializePlayerBase() 
-            => _gameFactory.CreatePlayerCore(GameObject.FindGameObjectWithTag(Constants.CoreSpawnPoint));
-
-
-        private void InitializeMobSpawners(GameObject playerCore)
+        
+        private void InitializeBuilder()
         {
-            GameObject[] spawnerSpots = GameObject.FindGameObjectsWithTag(Constants.MobSpawnerTag);
-            LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
-            _mobSpawnerService.LoadConfigToSpawners(config, spawnerSpots, playerCore);
+            PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
+            playerBuildBehaviour.Initialize(_staticData, _buildingService);
+        }
+
+        private PlayerCore InitializeGameWorld(LevelConfig config)
+        {
+            PlayerCore playerCore = InitializePlayerBase(config);
+            InitializeMobSpawners(config);
+            DEBUG_InitializeSentry();
+            return playerCore;
+        }
+
+        private void DEBUG_InitializeSentry()
+        {
+            const int DEBUG_SentryID = 2;
+            SentryConfig config = _staticData.ForSentryID(DEBUG_SentryID);
+            SentryTower sentry = _gameFactory.CreateSentry(GameObject.FindGameObjectWithTag(Constants.DEBUG_SentrySpawn));
+            sentry.Initialize(config, _mobSpawnerService, _gameFactory);
+        }
+
+        private void InitializeInGameHUD(PlayerCore playerCore)
+        {
+            _uiFactory.CreateUIRoot();
+            
+            _gameWindowService.GetWindow(GameWindowId.InGameHUD)
+                .GetComponent<InGameHUD>()
+                .ProvidePlayerCore(playerCore);
+            _gameWindowService.Open(GameWindowId.InGameHUD);
+        }
+
+        private PlayerCore InitializePlayerBase(LevelConfig config)
+        {
+            PlayerCore playerCore = _gameFactory.CreatePlayerCore(GameObject.FindGameObjectWithTag(Constants.CoreSpawnPoint));
+            
+            playerCore.Initialize(_mobSpawnerService, config);
+            return playerCore;
+        }
+
+
+        private void InitializeMobSpawners(LevelConfig config)
+        {
+            WaypointHolder[] spawnerSpots = Object.FindObjectsByType<WaypointHolder>(FindObjectsSortMode.None);
+            
+            if (spawnerSpots.Length != config.Gates.Length)
+            {
+                Debug.LogError("Gates number and level config gates number must be same. " + 
+                                $"Spawner spots count: {spawnerSpots.Length} & Config gates: {config.Gates.Length}");
+                return;
+            }
+            _mobSpawnerService.LoadConfigToSpawners(config, spawnerSpots);
         }
     }
 }

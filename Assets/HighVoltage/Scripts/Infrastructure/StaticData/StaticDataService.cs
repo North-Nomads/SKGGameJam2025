@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using HighVoltage.Enemy;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
@@ -14,8 +15,11 @@ namespace HighVoltage.StaticData
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
         private Dictionary<int, MobConfig> _zombieConfigs;
         private Dictionary<int, LevelConfig> _levels;
-        private int _totalWeapon;
         private Dictionary<int, LevelTaskConfig> _levelTasks;
+        private Dictionary<int, SentryConfig> _sentryConfigs;
+        private Texture2D _tileAtlas;
+        private List<GameObject> _buildingPrefabs;
+        //public IEnumerable<GameObject> BuildgPrefabs { get => _buildngPrefabs; }
 
         public void LoadLevels()
             => _levels = Resources.LoadAll<LevelConfig>("Configs/Levels").ToDictionary(x => x.LevelID, x => x);
@@ -37,8 +41,20 @@ namespace HighVoltage.StaticData
 
         public void LoadEnemies()
             => _zombieConfigs = Resources.LoadAll<MobConfig>("Configs/Mobs").ToDictionary(x => x.EnemyId, x => x);
+        public Texture2D GetTileAtlas() => _tileAtlas;
+
+        public void LoadTileAtlas() => _tileAtlas = Resources.Load<Texture2D>("Textures/Tiles/TileAtlas");
+
+        public SentryConfig ForSentryID(int sentryConfigID)
+            => _sentryConfigs.GetValueOrDefault(sentryConfigID);
+        
+        public void LoadSentries()
+            => _sentryConfigs = Resources.LoadAll<SentryConfig>("Configs/Sentries").ToDictionary(x => x.SentryId, x => x);
 
         public MobConfig ForEnemyID(int zombieId)
             => _zombieConfigs.GetValueOrDefault(zombieId);
+        public void LoadBuildingPrefabs() => _buildingPrefabs = Resources.LoadAll<GameObject>("Prefabs/Buildings").ToList();
+
+        public GameObject GetBuildingPrefab(int prefabID) => prefabID >= _buildingPrefabs.Count? null : _buildingPrefabs[prefabID];
     }
 }

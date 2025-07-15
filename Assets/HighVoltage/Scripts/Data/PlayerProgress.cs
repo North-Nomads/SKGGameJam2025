@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HighVoltage.Scripts.Data
+namespace HighVoltage.Data
 {
     [Serializable]
     public class PlayerProgress

@@ -6,6 +6,8 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
+using HighVoltage.Map;
+using HighVoltage.Map.Building;
 using HighVoltage.Services.Inputs;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
@@ -20,13 +22,16 @@ namespace HighVoltage.Infrastructure.States
         private readonly GameStateMachine _gameStateMachine;
         private readonly SceneLoader _sceneLoader;
         private readonly AllServices _allServices;
+        private readonly ICoroutineRunner _coroutineRunner;
 
-        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services)
+        public BootstrapState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, AllServices services, 
+            ICoroutineRunner coroutineRunner)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _allServices = services;
-            RegisterServies();
+            _coroutineRunner = coroutineRunner;
+            RegisterServices();
         }
 
         public void Enter() 
@@ -37,19 +42,19 @@ namespace HighVoltage.Infrastructure.States
         private void EnterHub()
             => _gameStateMachine.Enter<LoadProgressState>();
 
-        private void RegisterServies()
+        private void RegisterServices()
         {
             RegisterStaticDataService();
             _allServices.RegisterSingle<IInGameTimeService>(new InGameTimeService());
 
-            _allServices.RegisterSingle<IInputService>(GetInputService());
+            _allServices.RegisterSingle<IInputService>(new DesktopInputService());
             
             _allServices.RegisterSingle<IAssetProvider>(new AssetProvider());
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
             _allServices.RegisterSingle<IGameFactory>(new GameFactory(_allServices.Single<IAssetProvider>(),
                                                                       _allServices.Single<IPlayerProgressService>()));
             _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawnerService(
-                _allServices.Single<IGameFactory>(), _allServices.Single<IStaticDataService>()));
+                _allServices.Single<IGameFactory>(), _allServices.Single<IStaticDataService>(), _coroutineRunner));
             _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>()));
             _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(_allServices.Single<IPlayerProgressService>(),
                                                                                          _allServices.Single<IGameFactory>(),
@@ -65,22 +70,20 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<ISaveLoadService>(),
                                                                           _allServices.Single<IGameFactory>(),
                                                                           _allServices.Single<ICameraService>()));
+            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService());
         }
 
         private void RegisterStaticDataService()
         {
             var staticData = new StaticDataService();
             staticData.LoadLevels();
+            staticData.LoadTileAtlas();
             staticData.LoadEnemies();
+            staticData.LoadWindows();
+            staticData.LoadGameWindows();
+            staticData.LoadSentries();
+            staticData.LoadBuildingPrefabs();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
-        }
-
-        private static IInputService GetInputService()
-        {
-            return new DesktopInputService();
-            /*if (Application.isEditor)
-            else
-                return new MobileInputService();*/
         }
     }
 }

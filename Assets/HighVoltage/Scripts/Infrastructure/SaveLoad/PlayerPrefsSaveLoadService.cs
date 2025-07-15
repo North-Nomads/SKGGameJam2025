@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.Infrastructure.Factory;
-using HighVoltage.Scripts.Data;
+using HighVoltage.Data;
 using HighVoltage.Services.Progress;
 
 namespace HighVoltage.Infrastructure.SaveLoad

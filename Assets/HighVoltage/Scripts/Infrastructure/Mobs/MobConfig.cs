@@ -7,14 +7,14 @@ namespace HighVoltage.Enemy
     public class MobConfig : ScriptableObject
     {
         public int EnemyId => enemyId;
-        public GameObject EnemyPrefab => enemyPrefab;
+        public MobBrain EnemyPrefab => enemyPrefab;
         public int MaxHealth => maxHealth;
         public int Damage => damage;
         public int Reward => reward;
         public float MoveSpeed => moveSpeed;
 
         [SerializeField] private int enemyId;
-        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private MobBrain enemyPrefab;
         [SerializeField] private int maxHealth;
         [SerializeField] private int damage;
         [SerializeField] private int reward;

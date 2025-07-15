@@ -1,8 +1,10 @@
 using HighVoltage.Enemy;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
+using UnityEngine;
 
 namespace HighVoltage.StaticData
 {
@@ -14,5 +16,11 @@ namespace HighVoltage.StaticData
         GameWindowConfig ForGameWindow(GameWindowId endGame);
         void LoadEnemies();
         MobConfig ForEnemyID(int zombieId);
+        Texture2D GetTileAtlas();
+        void LoadTileAtlas();
+        SentryConfig ForSentryID(int sentryConfigID);
+        void LoadSentries();
+        void LoadBuildingPrefabs();
+        GameObject GetBuildingPrefab(int prefabID);
     }
 }

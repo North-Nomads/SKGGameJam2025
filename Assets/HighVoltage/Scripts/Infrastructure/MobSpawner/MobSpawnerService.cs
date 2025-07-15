@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using HighVoltage.Enemy;
 using UnityEngine;
@@ -12,39 +13,67 @@ namespace HighVoltage.Infrastructure.MobSpawning
 {
     public class MobSpawnerService : IMobSpawnerService
     {
-        private readonly IGameFactory _factory;
-        private readonly IStaticDataService _staticDataService;
-        private readonly List<MobBrain> _currentlyAliveMobs;
-
+        public List<MobBrain> CurrentlyAliveMobs => _currentlyAliveMobs;
         public event EventHandler<int> AnotherMobDied = delegate { };
+        
+        private readonly IStaticDataService _staticDataService;
+        private readonly ICoroutineRunner _coroutineRunner;
+        private readonly List<MobBrain> _currentlyAliveMobs;
+        private readonly IGameFactory _factory;
 
-        public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService)
+        public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _factory = factory;
+            _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
-            _currentlyAliveMobs = new();
+            _currentlyAliveMobs = new List<MobBrain>();
         }
         
-        public void LoadConfigToSpawners(LevelConfig levelConfig, GameObject[] spawnerSpots, GameObject playerCore)
+        public void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots)
         {
-            int gateIndex = 0;
-            foreach (Gate gate in levelConfig.Gates)
+            for (int gateIndex = 0; gateIndex < levelConfig.Gates.Length; gateIndex++)
             {
-                foreach (EnemyEntry enemy in gate.LevelEnemies)
+                _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
+                    spawnerSpots[gateIndex], levelConfig));
+            }
+        }
+
+        public void HandleMobReachedCore(MobBrain mob)
+        {
+            mob.HandleHit(int.MaxValue);
+            // Handle core damage
+        }
+
+        private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, LevelConfig levelConfig)
+        {
+            int mobNameIndex = 0;
+
+            foreach (EnemyEntry entry in gate.LevelEnemies)
+            {
+                MobConfig mobConfig = _staticDataService.ForEnemyID(entry.EnemyID);
+
+                for (int i = 0; i < entry.Quantity; i++)
                 {
-                    MobConfig mobConfig = _staticDataService.ForEnemyID(enemy.EnemyID);
-                    for (int i = 0; i < enemy.Quantity; i++) 
-                        SpawnMob(mobConfig, spawnerSpots[gateIndex].transform.position, playerCore);
+                    SpawnMob(
+                        mobConfig,
+                        spawnerSpot.Waypoints[0].position,
+                        spawnerSpot.Waypoints,
+                        mobNameIndex
+                    );
+
+                    mobNameIndex++;
+
+                    yield return new WaitForSeconds(levelConfig.DeltaBetweenSpawns);
                 }
-                gateIndex++;
             }
         }
         
-        private void SpawnMob(MobConfig which, Vector3 where, GameObject toAttackTarget)
+        private void SpawnMob(MobConfig which, Vector3 where, Transform[] pathFromGate, int nameIndex)
         {
             MobBrain mob = _factory.CreateMobOn(which.EnemyPrefab, where);
-            mob.Initialize(toAttackTarget);
+            mob.Initialize(pathFromGate, which);
             mob.OnMobDied += HandleMobDeath;
+            mob.name = $"{which.name} [{nameIndex}]";
             _currentlyAliveMobs.Add(mob);
         }
 
