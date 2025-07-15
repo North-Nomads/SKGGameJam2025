@@ -79,7 +79,6 @@ namespace HighVoltage.Infrastructure.States
             List<SentryConfig> thisLevelSentries = config.SentryIDs
                 .Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
 
-            InitializeMobSpawners(config);
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore, thisLevelSentries);
@@ -89,7 +88,7 @@ namespace HighVoltage.Infrastructure.States
         private void InitializeBuilder()
         {
             PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
-            playerBuildBehaviour.Initialize(_staticData, _buildingService);
+            playerBuildBehaviour.Initialize(_staticData, _buildingService, _gameWindowService);
         }
 
         private PlayerCore InitializeGameWorld(LevelConfig config)

@@ -18,23 +18,30 @@ namespace HighVoltage.Infrastructure.MobSpawning
         
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly List<MobBrain> _currentlyAliveMobs;
         private readonly IGameFactory _factory;
+        
+        private List<MobBrain> _currentlyAliveMobs = new();
+        private List<Coroutine> _runningGateCoroutines = new();
 
         public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _factory = factory;
             _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
-            _currentlyAliveMobs = new List<MobBrain>();
         }
         
         public void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots)
         {
+            _currentlyAliveMobs = new List<MobBrain>();
+            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
+                _coroutineRunner.StopCoroutine(runningGateCoroutine);
+            _runningGateCoroutines = new List<Coroutine>();
+
             for (int gateIndex = 0; gateIndex < levelConfig.Gates.Length; gateIndex++)
             {
-                _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
+                Coroutine coroutine = _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
                     spawnerSpots[gateIndex], levelConfig));
+                _runningGateCoroutines.Add(coroutine);
             }
         }
 
@@ -54,14 +61,33 @@ namespace HighVoltage.Infrastructure.MobSpawning
 
                 for (int i = 0; i < entry.Quantity; i++)
                 {
-                    SpawnMob(
-                        mobConfig,
-                        spawnerSpot.Waypoints[0].position,
-                        spawnerSpot.Waypoints,
-                        mobNameIndex
-                    );
-
-                    mobNameIndex++;
+                    try
+                    {
+                        SpawnMob(
+                            mobConfig,
+                            spawnerSpot.Waypoints[0].position,
+                            spawnerSpot.Waypoints,
+                            mobNameIndex
+                        );
+                        mobNameIndex++;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log($"Mob Config: {mobNameIndex}");
+                        Debug.Log($"Mob Config: {mobConfig}");
+                        Debug.Log($"Mob Config: {spawnerSpot.Waypoints[0].position}");
+                        Debug.Log($"Mob Config: {spawnerSpot.Waypoints}");
+                        
+                        SpawnMob(
+                            mobConfig,
+                            spawnerSpot.Waypoints[0].position,
+                            spawnerSpot.Waypoints,
+                            mobNameIndex
+                        );
+                        
+                        mobNameIndex++;
+                    }
+                    
 
                     yield return new WaitForSeconds(levelConfig.DeltaBetweenSpawns);
                 }

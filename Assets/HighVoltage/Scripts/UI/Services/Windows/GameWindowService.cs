@@ -33,6 +33,9 @@ namespace HighVoltage.UI.Services
             _windows.Clear();
         }
 
+        public bool HasOpenedWindows()
+            => _currentWindow != GameWindowId.InGameHUD; // if hud is opened, player is busy
+
         public GameWindowBase GetWindow(GameWindowId windowID)
         {
             _windows.TryGetValue(windowID, out var window);

@@ -30,6 +30,7 @@ namespace HighVoltage.UI.GameWindows
             continueButton.onClick.AddListener(ResumeGame);
             
             restartButton.onClick.AddListener(() => ReloadButtonPressed(this, EventArgs.Empty));
+            restartButton.onClick.AddListener(() => Debug.Log("Restart game"));
             exitButton.onClick.AddListener(() => ReturnToMenuButtonPressed(this, EventArgs.Empty));
             _inputActions = new PlayerInput();
             _inputActions.Enable();
