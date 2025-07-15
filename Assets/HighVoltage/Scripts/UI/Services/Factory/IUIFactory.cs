@@ -4,6 +4,7 @@ using HighVoltage.UI.PopUps;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
 using HighVoltage.UI.Windows;
+using UnityEngine;
 
 namespace HighVoltage.UI.Services.Factory
 {
@@ -13,5 +14,6 @@ namespace HighVoltage.UI.Services.Factory
         WindowBase InstantiateWindow(WindowId windowID);
         GameWindowBase InstantiateWindow(GameWindowId windowID);
         PopupWindow InstantiatePopupWindow(PopupWindowId popupWindowId);
+        BuildingCard InstantiateBuildingCard(Transform buildingCardParent);
     }
 }

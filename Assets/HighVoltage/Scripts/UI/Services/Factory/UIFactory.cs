@@ -3,10 +3,11 @@ using HighVoltage.Infrastructure.AssetManagement;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
 using HighVoltage.UI.GameWindows;
-using HighVoltage.UI.PopUps;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
 using HighVoltage.UI.Windows;
+using UnityEditor;
+using PopupWindow = HighVoltage.UI.PopUps.PopupWindow;
 
 namespace HighVoltage.UI.Services.Factory
 {
@@ -102,6 +103,9 @@ namespace HighVoltage.UI.Services.Factory
                 };
             }
         }
+
+        public BuildingCard InstantiateBuildingCard(Transform buildingCardParent) 
+            => _assets.Instantiate<BuildingCard>(AssetPath.BuildingCard, buildingCardParent);
 
         private GameWindowBase CreateEndGame()
         {

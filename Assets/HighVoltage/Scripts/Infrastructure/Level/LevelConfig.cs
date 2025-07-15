@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -11,7 +12,9 @@ namespace HighVoltage.Level
         [SerializeField] private float deltaBetweenSpawns;
         [SerializeField] private Gate[] gates;
         [SerializeField] private int coreHealth;
+        [SerializeField] private List<int> sentryIDs;
 
+        public List<int> SentryIDs => sentryIDs;
         public int LevelID => levelID;
         public float DeltaBetweenSpawns => deltaBetweenSpawns;
         public Gate[] Gates => gates;

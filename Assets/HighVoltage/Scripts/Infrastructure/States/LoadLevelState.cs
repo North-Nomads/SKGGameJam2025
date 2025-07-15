@@ -5,6 +5,8 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Services;
 using HighVoltage.Map.Building;
@@ -74,10 +76,13 @@ namespace HighVoltage.Infrastructure.States
         {
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializeGameWorld(config);
+            List<SentryConfig> thisLevelSentries = config.SentryIDs
+                .Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
+
             InitializeMobSpawners(config);
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
-            InitializeInGameHUD(playerCore);
+            InitializeInGameHUD(playerCore, thisLevelSentries);
             _gameStateMachine.Enter<GameLoopState>();
         }
         
@@ -103,13 +108,13 @@ namespace HighVoltage.Infrastructure.States
             sentry.Initialize(config, _mobSpawnerService, _gameFactory);
         }
 
-        private void InitializeInGameHUD(PlayerCore playerCore)
+        private void InitializeInGameHUD(PlayerCore playerCore, List<SentryConfig> thisLevelSentries)
         {
             _uiFactory.CreateUIRoot();
             
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvidePlayerCore(playerCore);
+                .ProvideSceneData(playerCore, thisLevelSentries);
             _gameWindowService.Open(GameWindowId.InGameHUD);
         }
 

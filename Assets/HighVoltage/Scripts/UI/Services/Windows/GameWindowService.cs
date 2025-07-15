@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace HighVoltage.UI.Services
 {
@@ -54,11 +57,17 @@ namespace HighVoltage.UI.Services
             _previousWindow = _currentWindow;
             _currentWindow = windowId;
 
-            window.OnOpened();
             window.gameObject.SetActive(true);
+            window.OnOpened();
         }
 
         public void ReturnToPreviousWindow()
             => Open(_previousWindow);
+
+        public void CreateBuildingCard(SentryConfig building, Transform parent)
+        {
+            BuildingCard card = _uiFactory.InstantiateBuildingCard(parent);
+            card.Initialize(building);
+        }
     }
 }

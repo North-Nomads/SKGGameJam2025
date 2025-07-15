@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
     [CreateAssetMenu(fileName = "SentryConfig", menuName = "Config/Sentry Config", order = 2)]
     public class SentryConfig : ScriptableObject
     {
+        [Header("Combat settings")]
         [SerializeField] private float timeBetweenActions;
         [SerializeField] private int maxDurability;
         [SerializeField] private int damage;
@@ -13,6 +13,9 @@ namespace HighVoltage.Infrastructure.Sentry
         [SerializeField] private int sentryId;
         [SerializeField] private int bulletsPerAction = 1;
         [SerializeField] private float bulletsAngleOffset = 1;
+        [Header("UI settings")]
+        [SerializeField] private Sprite sentryIcon;
+        [SerializeField] private int buildPrice;
 
         public float BulletsAngleOffset => bulletsAngleOffset;
 
@@ -26,5 +29,9 @@ namespace HighVoltage.Infrastructure.Sentry
         public int DecayPerSecond => decayPerSecond;
 
         public int SentryId => sentryId;
+
+        public Sprite SentryIcon => sentryIcon;
+
+        public int BuildPrice => buildPrice;
     }
 }

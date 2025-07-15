@@ -30,3 +30,4 @@ MonoBehaviour:
     - quantity: 2
       enemyID: 3
   coreHealth: 100
+  sentryIDs: 0100000002000000
