@@ -12,35 +12,35 @@ namespace HighVoltage
         private Tilemap _tilemap;
         private IPlayerBuildingService _buildingService;
         private IStaticDataService _dataService;
-        private Vector2 _cursorPostion;
-        private PlayerInput inputActions;
+        private Vector2 _cursorPosition;
+        private PlayerInput _inputActions;
 
         private int _selectedBuildingID = 0;
 
         private void Update()
         {
-            _cursorPostion = inputActions.Gameplay.Cursor.ReadValue<Vector2>();
+            _cursorPosition = _inputActions.Gameplay.Cursor.ReadValue<Vector2>();
             //TODO: tile highlight
         }
 
         private Vector3 GetSelectedCellWorldPosition()
         {
-            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPostion);
+            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
             return _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(cursorPos));
         }
         private void OnEnable()
         {
-            inputActions.Enable();
+            _inputActions.Enable();
         }
 
         private void Awake()
         {
-            inputActions = new();
+            _inputActions = new();
         }
 
         private void OnPlayerDestroy(InputAction.CallbackContext context)
         {
-            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPostion);
+            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
             var hit = Physics2D.Raycast(cursorPos, Vector2.zero, Mathf.Infinity, 1 << 9);
 
             if (hit.collider == null)
@@ -62,8 +62,8 @@ namespace HighVoltage
             _buildingService = buildingService;
             _tilemap = _buildingService.MapTilemap;
 
-            inputActions.Gameplay.BuildAction.performed += OnPlayerBuild;
-            inputActions.Gameplay.DestroyAction.performed += OnPlayerDestroy;
+            _inputActions.Gameplay.BuildAction.performed += OnPlayerBuild;
+            _inputActions.Gameplay.DestroyAction.performed += OnPlayerDestroy;
         }
     }
 }
