@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e2f76ad49198cc443a1198c13a8a5d1b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 52de3de436927014b8b138147b47fdcc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -506,7 +506,7 @@ GameObject:
   - component: {fileID: 4772147743066544581}
   - component: {fileID: 4352902966956862753}
   m_Layer: 5
-  m_Name: Levels
+  m_Name: BackToMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
