@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace HighVoltage
 {
-    public interface ICurrentSource
+    public interface ICurrentSource : ICurrentObject
     {
-        public List<ICurrentReciever> Recievers { get; }
+        public IEnumerable<ICurrentReciever> Recievers { get; }
 
         public event EventHandler OnOverload;
         public float Output { get; }

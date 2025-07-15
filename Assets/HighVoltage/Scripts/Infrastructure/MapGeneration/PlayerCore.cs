@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
@@ -7,10 +8,13 @@ using UnityEngine;
 
 namespace HighVoltage
 {
-    public class PlayerCore : Building
+    public class PlayerCore : Building, ICurrentSource
     {
+        private List<ICurrentReciever> _recievers;
         private IMobSpawnerService _mobSpawner;
         public event EventHandler<int> OnCoreHealthChanged = delegate { };
+        public event EventHandler OnOverload;
+
         private int _maxCoreHealth;
 
         public int MaxCoreHealth => _maxCoreHealth;
@@ -28,6 +32,10 @@ namespace HighVoltage
             }
         }
 
+        public IEnumerable<ICurrentReciever> Recievers => _recievers;
+
+        public float Output => throw new NotImplementedException();
+
         public void Initialize(IMobSpawnerService mobSpawner, LevelConfig levelConfig)
         {
             _mobSpawner = mobSpawner;
@@ -43,6 +51,16 @@ namespace HighVoltage
                 _mobSpawner.HandleMobReachedCore(mobBrain);
                 CurrentCoreHealth -= mobBrain.CoreDamage;
             }
+        }
+
+        public void AttachReciever(ICurrentReciever reciever)
+        {
+            
+        }
+
+        public void RequestPower()
+        {
+            throw new NotImplementedException();
         }
     }
 }
