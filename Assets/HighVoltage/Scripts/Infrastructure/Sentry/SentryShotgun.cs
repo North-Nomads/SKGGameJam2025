@@ -24,6 +24,9 @@ namespace HighVoltage.Infrastructure.Sentry
         protected override void Update()
         {
             base.Update();
+            if (LockedTarget == null)
+                return;
+            
             Vector3 left = TargetPositionWithOffset(-Config.BulletsAngleOffset / 2);
             Vector3 right = TargetPositionWithOffset(+Config.BulletsAngleOffset / 2);
             Debug.DrawLine(transform.position, left, Color.yellow);

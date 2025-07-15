@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HighVoltage
 {
-    public class PlayerCore : MonoBehaviour
+    public class PlayerCore : Building
     {
         private IMobSpawnerService _mobSpawner;
         public event EventHandler<int> OnCoreHealthChanged = delegate { };
