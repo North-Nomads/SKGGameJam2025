@@ -6,6 +6,7 @@ namespace HighVoltage.Infrastructure.Sentry
     public class SentryConfig : ScriptableObject
     {
         [SerializeField] private SentryTower sentryPrefab;
+        [SerializeField] private Bullet bulletPrefab;
         [Header("Combat settings")]
         [SerializeField] private float timeBetweenActions;
         [SerializeField] private int maxDurability;

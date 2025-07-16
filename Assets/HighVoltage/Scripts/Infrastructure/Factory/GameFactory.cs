@@ -35,8 +35,8 @@ namespace HighVoltage.Infrastructure.Factory
             ProgressWriters.Clear();
         }
 
-        public Bullet CreateBullet(Transform at) 
-            => _assets.Instantiate<Bullet>(AssetPath.BulletPrefab, at.position);
+        public Bullet CreateBullet(Transform at, Bullet which) 
+            => _assets.Instantiate(which, at.position);
 
         public SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig) 
             => _assets.Instantiate(sentryConfig.SentryPrefab, spawnPosition);

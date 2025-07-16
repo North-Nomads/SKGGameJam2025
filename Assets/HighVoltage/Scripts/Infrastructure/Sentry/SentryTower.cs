@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Runtime.Serialization;
 using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.MobSpawning;
 using UnityEngine;
@@ -10,8 +9,13 @@ namespace HighVoltage.Infrastructure.Sentry
     public abstract class SentryTower : MonoBehaviour, ICurrentReceiver
     {
         [SerializeField] private Transform rotatingPart;
+        [SerializeField] private Bullet bulletPrefab;
+        [SerializeField, Min(0)] private float scanRadius;
+        
         private const float OneSecond = 1;
 
+        protected Bullet BulletPrefab => bulletPrefab;
+        
         protected Transform LockedTarget;
         protected IMobSpawnerService MobSpawnerService;
         protected SentryConfig Config;
@@ -78,10 +82,12 @@ namespace HighVoltage.Infrastructure.Sentry
 
         protected virtual void ScanForTarget()
         {
-            if (LockedTarget != null)
+            if (LockedTarget != null && Vector3.Distance(LockedTarget.transform.position, transform.position) <= scanRadius)
                 return;
 
+
             LockedTarget = MobSpawnerService.CurrentlyAliveMobs
+                .Where(x => Vector3.Distance(transform.position, x.transform.position) <= scanRadius)
                 .OrderBy(enemy => (transform.position - enemy.transform.position).sqrMagnitude)
                 .FirstOrDefault()?
                 .transform;

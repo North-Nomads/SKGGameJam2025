@@ -216,6 +216,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingPart: {fileID: 3611747566714607411}
+  bulletPrefab: {fileID: 1563872610485020097, guid: b0e890bb87ccc3045b2bb21bc2851f16, type: 3}
+  scanRadius: 2
   bulletSpawnPoint: {fileID: 6663315526061819139}
 --- !u!58 &943789733754519873
 CircleCollider2D:

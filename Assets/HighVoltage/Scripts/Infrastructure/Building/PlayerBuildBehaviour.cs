@@ -1,6 +1,9 @@
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
+using System;
+using HighVoltage.UI.Services;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Tilemaps;
@@ -13,6 +16,9 @@ namespace HighVoltage
         private IPlayerBuildingService _buildingService;
         private Vector2 _cursorPosition;
         private PlayerInput _inputActions;
+        private IStaticDataService _dataService;
+        private IGameWindowService _gameWindowService;
+        private IPlayerBuildingService _buildingService;
         private EditingMode _editingMode;
 
         private void Update()
@@ -66,6 +72,14 @@ namespace HighVoltage
 
         private void OnEditingSecondaryAction(InputAction.CallbackContext obj)
         {
+            // Prevent UI-through clicks
+            if (EventSystem.current.IsPointerOverGameObject() || _gameWindowService.HasOpenedWindows())
+                return;
+            
+            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
+            var hit = Physics2D.Raycast(cursorPos, Vector2.zero, Mathf.Infinity, 1 << 9);
+
+            if (hit.collider == null)
             if (_editingMode != EditingMode.Wiring)
                 return; //there just isn't anything for other modes
             
@@ -77,7 +91,19 @@ namespace HighVoltage
 
         public void Initialize(IPlayerBuildingService buildingService)
         {
+            // Prevent UI-through clicks
+            if (EventSystem.current.IsPointerOverGameObject() || _gameWindowService.HasOpenedWindows())
+                return;
+            
+            _buildingService.BuildStructure(GetSelectedCellWorldPosition());
+        }
+
+        public void Initialize(IStaticDataService dataService, IPlayerBuildingService buildingService,
+            IGameWindowService gameWindowService)
+        {
+            _dataService = dataService;
             _buildingService = buildingService;
+            _gameWindowService = gameWindowService;
             _tilemap = _buildingService.MapTilemap;
 
             _inputActions.Editing.EditingActionMain.performed += OnEditingMainAction;

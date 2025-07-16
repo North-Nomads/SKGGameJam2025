@@ -4,7 +4,6 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using HighVoltage.Infrastructure.Sentry;
@@ -15,6 +14,7 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
@@ -79,7 +79,6 @@ namespace HighVoltage.Infrastructure.States
             List<SentryConfig> thisLevelSentries = config.SentryIDs
                 .Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
 
-            InitializeMobSpawners(config);
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore, thisLevelSentries);
@@ -89,7 +88,7 @@ namespace HighVoltage.Infrastructure.States
         private void InitializeBuilder()
         {
             PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
-            playerBuildBehaviour.Initialize(_buildingService);
+            playerBuildBehaviour.Initialize(_staticData, _buildingService, _gameWindowService);
         }
 
         private PlayerCore InitializeGameWorld(LevelConfig config)
@@ -106,7 +105,19 @@ namespace HighVoltage.Infrastructure.States
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
                 .ProvideSceneData(playerCore, thisLevelSentries, _buildingService);
+            
+            InitializePauseMenu();
+
             _gameWindowService.Open(GameWindowId.InGameHUD);
+        }
+
+        private void InitializePauseMenu()
+        {
+            InGamePauseMenu pauseMenu = _gameWindowService.GetWindow(GameWindowId.InGamePauseMenu)
+                .GetComponent<InGamePauseMenu>();
+            pauseMenu.ReloadButtonPressed += (sender, args) =>
+                _gameStateMachine.Enter<LoadLevelState, string>(SceneManager.GetActiveScene().name);
+            pauseMenu.ReturnToMenuButtonPressed += (sender, args) => _gameStateMachine.Enter<HubState>();
         }
 
         private PlayerCore InitializePlayerBase(LevelConfig config)
