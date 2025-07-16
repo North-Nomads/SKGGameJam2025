@@ -12,10 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932b77ec312442668a7ab7fbad091beb, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  timeBetweenActions: 10
-  maxDurability: 100
-  damage: 10
-  decayPerSecond: 5
+  sentryPrefab: {fileID: 5963175928648131307, guid: 23306f535e627c947a9b61493c2c1cd2, type: 3}
+  timeBetweenActions: 1.8
+  maxDurability: 500
+  damage: 30
+  decayPerSecond: 15
   sentryId: 2
-  bulletsPerAction: 5
-  bulletsAngleOffset: 30
+  bulletsPerAction: 7
+  bulletsAngleOffset: 20
+  sentryIcon: {fileID: 21300000, guid: 9c6b5515383b70349ad1db9b5274df05, type: 3}
+  buildPrice: 200

@@ -10,7 +10,7 @@ namespace HighVoltage.Infrastructure.Sentry
         
         protected override void PerformAction()
         {
-            Bullet bulletInstance = GameFactory.CreateBullet(at: bulletSpawnPoint);
+            Bullet bulletInstance = GameFactory.CreateBullet(at: bulletSpawnPoint, which: BulletPrefab);
             bulletInstance.Initialize(LockedTarget.position, Damage);
         }
     }

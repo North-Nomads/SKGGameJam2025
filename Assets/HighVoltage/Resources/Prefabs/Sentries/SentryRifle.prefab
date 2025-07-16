@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3611747566714607411}
   - component: {fileID: 8408866565144937531}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6663315526061819139}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,8 @@ GameObject:
   - component: {fileID: 502827662028249600}
   - component: {fileID: 376189782751003696}
   - component: {fileID: 1288593593139877954}
-  m_Layer: 0
+  - component: {fileID: -7184096770495506582}
+  m_Layer: 9
   m_Name: SentryRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,4 +216,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotatingPart: {fileID: 3611747566714607411}
+  bulletPrefab: {fileID: 1563872610485020097, guid: b0e890bb87ccc3045b2bb21bc2851f16, type: 3}
+  scanRadius: 3
   bulletSpawnPoint: {fileID: 6663315526061819139}
+--- !u!58 &-7184096770495506582
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137622353348788599}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5

@@ -6,13 +6,9 @@ namespace HighVoltage.Services.Progress
     {
         public PlayerProgress Progress { get; set; }
 
-        public void IncrementCurrentLevel(bool objectiveReached)
+        public void IncrementCurrentLevel()
         {
             Progress.CurrentLevel++;
-            if (objectiveReached)
-            {
-                Progress.RemainingTasks--;
-            }
         }
     }
 }

@@ -8,8 +8,10 @@ using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
+using HighVoltage.Infrastructure.InGameTime;
 using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
+using HighVoltage.Level;
 using HighVoltage.StaticData;
 using HighVoltage.UI.Services;
 using HighVoltage.Map.Building;
@@ -49,14 +51,18 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IStaticDataService>(),
                                                               services.Single<IGameWindowService>(),
                                                               services.Single<IUIFactory>(),
-                                                              services.Single<IPlayerBuildingService>()),
+                                                              services.Single<IPlayerBuildingService>(),
+                                                              services.Single<ILevelProgress>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
-                                                            services.Single<ISaveLoadService>()),
+                                                            services.Single<ISaveLoadService>(),
+                                                            services.Single<IGameWindowService>(),
+                                                            services.Single<ILevelProgress>(),
+                                                            services.Single<IMobSpawnerService>()),
                 [typeof(GameFinishedState)] = new GameFinishedState(this,
-                                                                    services.Single<IGameFactory>(),
-                                                                    services.Single<IPlayerProgressService>()),
-                [typeof(PlayerDiedState)] = new PlayerDiedState(this,
-                                                                services.Single<IUIFactory>())
+                                                                    services.Single<IPlayerProgressService>(),
+                                                                    services.Single<IGameWindowService>(),
+                                                                    services.Single<IPlayerProgressService>(),
+                                                                    services.Single<IInGameTimeService>()),
             };
         }
 

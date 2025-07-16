@@ -15,7 +15,7 @@ namespace HighVoltage.Infrastructure.Factory
         MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 point);
         void CleanUp();
         PlayerBuildBehaviour CreateBuilder();
-        Bullet CreateBullet(Transform at);
-        SentryTower CreateSentry(GameObject spawnPosition);
+        Bullet CreateBullet(Transform at, Bullet which);
+        SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
     }
 }

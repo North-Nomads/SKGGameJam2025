@@ -1,43 +1,83 @@
 ﻿using System;
-using UnityEngine;
+using System.Linq;
+using HighVoltage.StaticData;
+using System.Collections.Generic;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.MobSpawning;
+using UnityEngine;
 
 namespace HighVoltage.Level
 {
     public class LevelProgress : ILevelProgress
     {
-        public event EventHandler LevelFinishedWithReward = delegate { };
+        public event EventHandler WaveCleared = delegate { };
+        public event EventHandler LevelCleared = delegate { };
+        public event EventHandler PlayerCoreDestroyed = delegate { };
 
         private readonly IMobSpawnerService _mobSpawner;
-        private LevelTaskConfig _taskConfig;
+        private readonly IStaticDataService _staticData;
+        private LevelConfig _loadedLevelConfig;
+        private PlayerCore _playerCore;
+        
+        private int _currentWaveIndex;
+        private MobWave _loadedWave;
+        private bool _isLastWave;
 
-        private bool _noDamageThisLevel;
-        private float _levelStartTime;
+        public LevelConfig LoadedLevelConfig => _loadedLevelConfig;
+        public MobWave LoadedWave => _loadedWave;
 
-        private bool _hasRewardToGrant;
+        public bool IsLevelSuccessfullyFinished { get; private set; }
 
-        public bool RewardGranted => _hasRewardToGrant;
-
-        public void UpdateOnNewLevel(LevelTaskConfig taskConfig)
-        {
-            _taskConfig = taskConfig;
-            _noDamageThisLevel = true;
-            _levelStartTime = Time.time;
-        }
-
-        public LevelProgress(IMobSpawnerService mobSpawner)
+        public LevelProgress(IMobSpawnerService mobSpawner, IStaticDataService staticData)
         {
             _mobSpawner = mobSpawner;
             _mobSpawner.AnotherMobDied += HandleMobDeath;
+            
+            _staticData = staticData;
         }
+
+        public void LoadLevelConfig(LevelConfig levelConfig, PlayerCore playerCore)
+        {
+            IsLevelSuccessfullyFinished = false;
+            _loadedLevelConfig = levelConfig;
+            _playerCore = playerCore;
+            _playerCore.OnCoreHealthChanged += CheckPlayerCoreWasDestroyed;
+            LoadCurrentWaveConfig();
+        }
+
+        private void CheckPlayerCoreWasDestroyed(object sender, int healthRemaining)
+        {
+            Debug.Log($"Handling player core was destroyed: left hp: {healthRemaining}");
+            if (healthRemaining > 0)
+                return;
+            PlayerCoreDestroyed(this, EventArgs.Empty);
+        }
+
+        public List<SentryConfig> GetSentriesForThisLevel()
+            => _loadedLevelConfig.SentryIDs.Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
+
+        public float GetCurrentWaveTimer()
+            => _loadedWave.SecondsDelayBeforeWave;
+
+        private void LoadCurrentWaveConfig() 
+            => _loadedWave = _loadedLevelConfig.MobWaves[_currentWaveIndex];
 
         private void HandleMobDeath(object sender, int mobsLeft)
         {
             if (mobsLeft != 0)
                 return;
 
-            LevelFinishedWithReward(this, EventArgs.Empty);
-            Debug.Log("Level finished");
+            if (_isLastWave)
+            {
+                IsLevelSuccessfullyFinished = true;
+                LevelCleared(this, EventArgs.Empty);
+                return;
+            }
+
+            _currentWaveIndex++;
+            _isLastWave = _currentWaveIndex == _loadedLevelConfig.MobWaves.Length - 1;
+            LoadCurrentWaveConfig();
+            WaveCleared(this, EventArgs.Empty);
         }
     }
 }

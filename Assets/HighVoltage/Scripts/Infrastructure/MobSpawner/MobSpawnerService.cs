@@ -7,7 +7,6 @@ using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using Unity.VisualScripting;
 
 namespace HighVoltage.Infrastructure.MobSpawning
 {
@@ -18,24 +17,27 @@ namespace HighVoltage.Infrastructure.MobSpawning
         
         private readonly IStaticDataService _staticDataService;
         private readonly ICoroutineRunner _coroutineRunner;
-        private readonly List<MobBrain> _currentlyAliveMobs;
         private readonly IGameFactory _factory;
+        
+        private List<MobBrain> _currentlyAliveMobs = new();
+        private List<Coroutine> _runningGateCoroutines = new();
+        
+        private WaypointHolder[] _spawnerSpots;
+        private float _deltaBetweenSpawns;
+        private MobWave _mobWaveConfig;
 
         public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
             _factory = factory;
             _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
-            _currentlyAliveMobs = new List<MobBrain>();
         }
         
-        public void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots)
+        public void LoadConfigToSpawners(MobWave waveConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns)
         {
-            for (int gateIndex = 0; gateIndex < levelConfig.Gates.Length; gateIndex++)
-            {
-                _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
-                    spawnerSpots[gateIndex], levelConfig));
-            }
+            _mobWaveConfig = waveConfig;
+            _spawnerSpots = spawnerSpots;
+            _deltaBetweenSpawns = deltaBetweenSpawns;
         }
 
         public void HandleMobReachedCore(MobBrain mob)
@@ -44,7 +46,25 @@ namespace HighVoltage.Infrastructure.MobSpawning
             // Handle core damage
         }
 
-        private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, LevelConfig levelConfig)
+        public void LaunchMobSpawning()
+        {
+            _currentlyAliveMobs = new List<MobBrain>();
+            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
+                _coroutineRunner.StopCoroutine(runningGateCoroutine);
+            _runningGateCoroutines = new List<Coroutine>();
+
+            for (int gateIndex = 0; gateIndex < _mobWaveConfig.Gates.Length; gateIndex++)
+            {
+                Coroutine coroutine = _coroutineRunner.StartCoroutine(SpawnGateCoroutine(_mobWaveConfig.Gates[gateIndex],
+                    _spawnerSpots[gateIndex], _deltaBetweenSpawns));
+                _runningGateCoroutines.Add(coroutine);
+            }
+        }
+
+        public void UpdateWaveContent(MobWave newWave) 
+            => _mobWaveConfig = newWave;
+
+        private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, float deltaBetweenSpawns)
         {
             int mobNameIndex = 0;
 
@@ -60,10 +80,8 @@ namespace HighVoltage.Infrastructure.MobSpawning
                         spawnerSpot.Waypoints,
                         mobNameIndex
                     );
-
                     mobNameIndex++;
-
-                    yield return new WaitForSeconds(levelConfig.DeltaBetweenSpawns);
+                    yield return new WaitForSeconds(deltaBetweenSpawns);
                 }
             }
         }

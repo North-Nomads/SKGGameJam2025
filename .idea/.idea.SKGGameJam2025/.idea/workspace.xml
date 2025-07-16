@@ -6,7 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Level/ILevelProgress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Level/ILevelProgress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Level/LevelProgress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Level/LevelProgress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameFinishedState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameFinishedState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameLoopState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameLoopState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/PlayerDiedState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/PlayerDiedState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/PersistentProgress/IPlayerProgressService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/PersistentProgress/IPlayerProgressService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/PersistentProgress/PlayerProgressService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/PersistentProgress/PlayerProgressService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/EndGameWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/EndGameWindow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,20 +35,20 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {}
-}]]></component>
-  <component name="GitHubPullRequestState"><![CDATA[{
-  "prStates": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {}
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
     {
-      "id": {
-        "id": "PR_kwDOPLyp186e7IAO",
-        "number": 3
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOPLyp186e7IAO&quot;,
+        &quot;number&quot;: 3
       },
-      "lastSeen": 1752562578544
+      &quot;lastSeen&quot;: 1752562578544
     }
   ]
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/North-Nomads/SKGGameJam2025.git&quot;,
@@ -45,21 +56,16 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/17484a9af6b944dea5cd9be4dbb0da2c171c00/55/35b71469/SetupCoroutine.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/17484a9af6b944dea5cd9be4dbb0da2c171c00/5f/248b42cc/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/17484a9af6b944dea5cd9be4dbb0da2c171c00/fb/86084870/Transform.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/AssetManagement/AssetPath.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/Factory/IGameFactory.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/Factory/IGameFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8ad9ecbe25e14b10b6dde783af6e4aa258e00/6f/1377b2f6/SerializedObjectBindingContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f14133e0842e4214b2f6d813f01b864c4200/2b/aaf1078c/GridLayout.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/BootstrapState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/BootstrapState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/StaticData/IStaticDataSerivce.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://Z:/Code/UnityProjects/SKGGameJam2025/SKGGameJam2025/Assets/HighVoltage/Scripts/Infrastructure/StaticData/IStaticDataSerivce.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/LevelSelectButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.6.3/InputSystem/Plugins/UI/InputSystemUIInputModule.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.6.3/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@1.0.0/Runtime/UI/Core/Button.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -75,7 +81,8 @@
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#3 on MapGeneration",
+    "XThreadsFramesViewSplitterKey": "0.43457943",
+    "git-widget-placeholder": "end-game-ui",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -135,6 +142,8 @@
       <workItem from="1752495246588" duration="11549000" />
       <workItem from="1752514157683" duration="3928000" />
       <workItem from="1752522690470" duration="11212000" />
+      <workItem from="1752586547340" duration="7244000" />
+      <workItem from="1752671995930" duration="3305000" />
     </task>
     <servers />
   </component>
@@ -162,5 +171,24 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/OpenWindowButton.cs</url>
+          <line>22</line>
+          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\UI\Elements\OpenWindowButton.cs" containingFunctionPresentation="Method 'Open'">
+            <startOffsets>
+              <option value="601" />
+            </startOffsets>
+            <endOffsets>
+              <option value="630" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

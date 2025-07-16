@@ -9,6 +9,6 @@ namespace HighVoltage.Services.Progress
     public interface IPlayerProgressService : IService
     {
         PlayerProgress Progress { get; set; }
-        void IncrementCurrentLevel(bool objectiveReached);
+        void IncrementCurrentLevel();
     }
 }

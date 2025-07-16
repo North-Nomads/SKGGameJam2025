@@ -4,8 +4,7 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using System;
-using HighVoltage.Infrastructure.Sentry;
+using System.Linq;
 using HighVoltage.Services;
 using HighVoltage.Map.Building;
 using UnityEngine.Tilemaps;
@@ -13,6 +12,8 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
+using HighVoltage.UI.Windows;
+using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
@@ -29,11 +30,12 @@ namespace HighVoltage.Infrastructure.States
         private readonly SceneLoader _sceneLoader;
         private readonly Canvas _loadingCurtain;
         private readonly IPlayerBuildingService _buildingService;
+        private readonly ILevelProgress _levelProgress;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
             IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory,
-            IPlayerBuildingService buildingService)
+            IPlayerBuildingService buildingService, ILevelProgress levelProgress)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -45,17 +47,7 @@ namespace HighVoltage.Infrastructure.States
             _gameWindowService = gameWindowService;
             _uiFactory = uiFactory;
             _buildingService = buildingService;
-        }
-
-        private void OnLevelFinished(object sender, bool shouldGiveReward)
-        {
-            if (_progressService.Progress.IsLastLevel)
-            {
-                _gameStateMachine.Enter<HubState>();
-                return;
-            }
-            _progressService.IncrementCurrentLevel(shouldGiveReward);
-            _gameStateMachine.Enter<GameFinishedState>();
+            _levelProgress = levelProgress;
         }
 
         public void Enter(string sceneName)
@@ -74,7 +66,8 @@ namespace HighVoltage.Infrastructure.States
         {
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializeGameWorld(config);
-            InitializeMobSpawners(config);
+            _levelProgress.LoadLevelConfig(config, playerCore);
+            InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore);
@@ -84,23 +77,13 @@ namespace HighVoltage.Infrastructure.States
         private void InitializeBuilder()
         {
             PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
-            playerBuildBehaviour.Initialize(_staticData, _buildingService);
+            playerBuildBehaviour.Initialize(_staticData, _buildingService, _gameWindowService);
         }
 
         private PlayerCore InitializeGameWorld(LevelConfig config)
         {
             PlayerCore playerCore = InitializePlayerBase(config);
-            InitializeMobSpawners(config);
-            DEBUG_InitializeSentry();
             return playerCore;
-        }
-
-        private void DEBUG_InitializeSentry()
-        {
-            const int DEBUG_SentryID = 2;
-            SentryConfig config = _staticData.ForSentryID(DEBUG_SentryID);
-            SentryTower sentry = _gameFactory.CreateSentry(GameObject.FindGameObjectWithTag(Constants.DEBUG_SentrySpawn));
-            sentry.Initialize(config, _mobSpawnerService, _gameFactory);
         }
 
         private void InitializeInGameHUD(PlayerCore playerCore)
@@ -109,8 +92,19 @@ namespace HighVoltage.Infrastructure.States
             
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvidePlayerCore(playerCore);
+                .ProvideSceneData(playerCore, _buildingService);
+            _gameWindowService.GetWindow(GameWindowId.EndGame);
+            InitializePauseMenu();
             _gameWindowService.Open(GameWindowId.InGameHUD);
+        }
+
+        private void InitializePauseMenu()
+        {
+            InGamePauseMenu pauseMenu = _gameWindowService.GetWindow(GameWindowId.InGamePauseMenu)
+                .GetComponent<InGamePauseMenu>();
+            pauseMenu.ReloadButtonPressed += (_, _) =>
+                _gameStateMachine.Enter<LoadLevelState, string>(SceneManager.GetActiveScene().name);
+            pauseMenu.ReturnToMenuButtonPressed += (_, _) => _gameStateMachine.Enter<HubState>();
         }
 
         private PlayerCore InitializePlayerBase(LevelConfig config)
@@ -122,17 +116,12 @@ namespace HighVoltage.Infrastructure.States
         }
 
 
-        private void InitializeMobSpawners(LevelConfig config)
+        private void InitializeMobSpawners()
         {
             WaypointHolder[] spawnerSpots = Object.FindObjectsByType<WaypointHolder>(FindObjectsSortMode.None);
             
-            if (spawnerSpots.Length != config.Gates.Length)
-            {
-                Debug.LogError("Gates number and level config gates number must be same. " + 
-                                $"Spawner spots count: {spawnerSpots.Length} & Config gates: {config.Gates.Length}");
-                return;
-            }
-            _mobSpawnerService.LoadConfigToSpawners(config, spawnerSpots);
+            _mobSpawnerService.LoadConfigToSpawners(_levelProgress.LoadedWave, spawnerSpots,
+                _levelProgress.LoadedLevelConfig.DeltaBetweenSpawns);
         }
     }
 }
