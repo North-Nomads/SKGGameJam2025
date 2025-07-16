@@ -44,7 +44,14 @@ namespace HighVoltage.Infrastructure.States
                 _mobSpawnerService.UpdateWaveContent(_levelProgress.LoadedWave);
                 gameWindowBase.SetNextWaveTimer(_levelProgress.GetCurrentWaveTimer());
             };
-            _levelProgress.LevelCleared += (_, __) => Debug.Log("Level cleared! Yuppy");
+            _levelProgress.LevelCleared += (_, __) =>
+            {
+                _gameStateMachine.Enter<GameFinishedState>();
+            };
+            _levelProgress.PlayerCoreDestroyed += (_, __) =>
+            {
+                _gameStateMachine.Enter<GameFinishedState>();
+            };
         }
 
         public void Exit()

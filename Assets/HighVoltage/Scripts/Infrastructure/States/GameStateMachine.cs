@@ -8,6 +8,7 @@ using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
+using HighVoltage.Infrastructure.InGameTime;
 using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
@@ -58,10 +59,10 @@ namespace HighVoltage.Infrastructure.States
                                                             services.Single<ILevelProgress>(),
                                                             services.Single<IMobSpawnerService>()),
                 [typeof(GameFinishedState)] = new GameFinishedState(this,
-                                                                    services.Single<IGameFactory>(),
-                                                                    services.Single<IPlayerProgressService>()),
-                [typeof(PlayerDiedState)] = new PlayerDiedState(this,
-                                                                services.Single<IUIFactory>())
+                                                                    services.Single<IPlayerProgressService>(),
+                                                                    services.Single<IGameWindowService>(),
+                                                                    services.Single<IPlayerProgressService>(),
+                                                                    services.Single<IInGameTimeService>()),
             };
         }
 

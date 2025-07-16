@@ -79,6 +79,7 @@ namespace HighVoltage.UI.Services.Factory
                     GameWindowId.InGameHUD => CreateInGameHUD(),
                     GameWindowId.PlayerDead => CreatePlayerDeadWindow(),
                     GameWindowId.InGamePauseMenu => CreatePauseMenu(),
+                    GameWindowId.EndGame => CreateEndGame(),
                     _ => null,
                 };
             }
@@ -123,11 +124,6 @@ namespace HighVoltage.UI.Services.Factory
 
         public BuildingCard InstantiateBuildingCard(Transform buildingCardParent) 
             => _assets.Instantiate<BuildingCard>(AssetPath.BuildingCard, buildingCardParent);
-
-        public List<LevelSelectButton> InstantiateLevelButtons(int totalLevels)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public List<LevelSelectButton> InstantiateLevelButtons(int totalLevels, Transform parent)
         {

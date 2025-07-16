@@ -9,9 +9,11 @@ namespace HighVoltage.Level
     {
         event EventHandler WaveCleared;
         event EventHandler LevelCleared;
+        event EventHandler PlayerCoreDestroyed;
         LevelConfig LoadedLevelConfig { get; }
         MobWave LoadedWave { get; }
-        void LoadLevelConfig(LevelConfig levelConfig);
+        bool IsLevelSuccessfullyFinished { get; }
+        void LoadLevelConfig(LevelConfig levelConfig, PlayerCore playerCore);
         List<SentryConfig> GetSentriesForThisLevel();
         float GetCurrentWaveTimer();
     }

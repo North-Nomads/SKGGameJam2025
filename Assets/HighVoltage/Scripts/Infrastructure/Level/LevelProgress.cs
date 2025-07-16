@@ -12,10 +12,13 @@ namespace HighVoltage.Level
     {
         public event EventHandler WaveCleared = delegate { };
         public event EventHandler LevelCleared = delegate { };
+        public event EventHandler PlayerCoreDestroyed = delegate { };
 
         private readonly IMobSpawnerService _mobSpawner;
         private readonly IStaticDataService _staticData;
         private LevelConfig _loadedLevelConfig;
+        private PlayerCore _playerCore;
+        
         private int _currentWaveIndex;
         private MobWave _loadedWave;
         private bool _isLastWave;
@@ -23,6 +26,7 @@ namespace HighVoltage.Level
         public LevelConfig LoadedLevelConfig => _loadedLevelConfig;
         public MobWave LoadedWave => _loadedWave;
 
+        public bool IsLevelSuccessfullyFinished { get; private set; }
 
         public LevelProgress(IMobSpawnerService mobSpawner, IStaticDataService staticData)
         {
@@ -32,10 +36,21 @@ namespace HighVoltage.Level
             _staticData = staticData;
         }
 
-        public void LoadLevelConfig(LevelConfig levelConfig)
+        public void LoadLevelConfig(LevelConfig levelConfig, PlayerCore playerCore)
         {
+            IsLevelSuccessfullyFinished = false;
             _loadedLevelConfig = levelConfig;
+            _playerCore = playerCore;
+            _playerCore.OnCoreHealthChanged += CheckPlayerCoreWasDestroyed;
             LoadCurrentWaveConfig();
+        }
+
+        private void CheckPlayerCoreWasDestroyed(object sender, int healthRemaining)
+        {
+            Debug.Log($"Handling player core was destroyed: left hp: {healthRemaining}");
+            if (healthRemaining > 0)
+                return;
+            PlayerCoreDestroyed(this, EventArgs.Empty);
         }
 
         public List<SentryConfig> GetSentriesForThisLevel()
@@ -54,12 +69,11 @@ namespace HighVoltage.Level
 
             if (_isLastWave)
             {
+                IsLevelSuccessfullyFinished = true;
                 LevelCleared(this, EventArgs.Empty);
-                Debug.Log("Level Cleared");
                 return;
             }
 
-            Debug.Log($"Wave {_currentWaveIndex + 1} cleared. New wave: {_currentWaveIndex + 2}/{_loadedLevelConfig.MobWaves.Length}");
             _currentWaveIndex++;
             _isLastWave = _currentWaveIndex == _loadedLevelConfig.MobWaves.Length - 1;
             LoadCurrentWaveConfig();

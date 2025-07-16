@@ -12,6 +12,7 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
+using HighVoltage.UI.Windows;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -49,17 +50,6 @@ namespace HighVoltage.Infrastructure.States
             _levelProgress = levelProgress;
         }
 
-        private void OnLevelFinished(object sender, bool shouldGiveReward)
-        {
-            if (_progressService.Progress.IsLastLevel)
-            {
-                _gameStateMachine.Enter<HubState>();
-                return;
-            }
-            _progressService.IncrementCurrentLevel(shouldGiveReward);
-            _gameStateMachine.Enter<GameFinishedState>();
-        }
-
         public void Enter(string sceneName)
         {
             _gameFactory.CleanUp();
@@ -70,15 +60,14 @@ namespace HighVoltage.Infrastructure.States
         public void Exit()
         {
             _loadingCurtain.gameObject.SetActive(false);
-            
         }
 
         private void OnLoaded()
         {
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
-            _levelProgress.LoadLevelConfig(config);
-            
             PlayerCore playerCore = InitializeGameWorld(config);
+            _levelProgress.LoadLevelConfig(config, playerCore);
+            InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore);
@@ -94,7 +83,6 @@ namespace HighVoltage.Infrastructure.States
         private PlayerCore InitializeGameWorld(LevelConfig config)
         {
             PlayerCore playerCore = InitializePlayerBase(config);
-            InitializeMobSpawners();
             return playerCore;
         }
 
@@ -105,9 +93,8 @@ namespace HighVoltage.Infrastructure.States
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
                 .ProvideSceneData(playerCore, _buildingService);
-            
+            _gameWindowService.GetWindow(GameWindowId.EndGame);
             InitializePauseMenu();
-
             _gameWindowService.Open(GameWindowId.InGameHUD);
         }
 
