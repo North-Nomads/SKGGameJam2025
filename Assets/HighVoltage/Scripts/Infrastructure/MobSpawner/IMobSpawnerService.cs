@@ -11,7 +11,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
     {
         event EventHandler<int> AnotherMobDied;
         List<MobBrain> CurrentlyAliveMobs { get; }
-        void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots);
+        void LoadConfigToSpawners(MobWave waveConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns);
         void HandleMobReachedCore(MobBrain mob);
     }
 }

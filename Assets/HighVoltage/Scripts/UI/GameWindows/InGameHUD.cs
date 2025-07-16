@@ -17,7 +17,7 @@ namespace HighVoltage.UI.GameWindows
             LayoutRebuilder.ForceRebuildLayoutImmediate(buildingCardParent.GetComponent<RectTransform>());
         }
 
-        public void ProvideSceneData(PlayerCore playerCore, List<SentryConfig> availableSentries,
+        public void ProvideSceneData(PlayerCore playerCore,
             IPlayerBuildingService buildingService)
         {
             SetupPlayerCoreObserver();
@@ -26,7 +26,7 @@ namespace HighVoltage.UI.GameWindows
 
             void BuildBuildingUI()
             {
-                foreach (SentryConfig sentry in availableSentries)
+                foreach (SentryConfig sentry in LevelProgress.GetSentriesForThisLevel())
                 {
                     BuildingCard buildingCard = GameWindowService.CreateBuildingCard(sentry, buildingCardParent);
                     buildingCard.OnCardSelected += (sender, selectedSentry) =>

@@ -16,7 +16,7 @@ namespace HighVoltage.UI.Windows
         {
             base.OnStart();
             nextButton.onClick.AddListener(() => ReturnToHubButtonPressed(this, null));
-            header.text = LevelProgress.RewardGranted ? "С наградой" : "Без награды";
+            // header.text = LevelProgress.RewardGranted ? "С наградой" : "Без награды";
         }
 
         protected override void Initialize()

@@ -1,26 +1,39 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace HighVoltage.Level
 {
     [CreateAssetMenu(fileName = "Level_", menuName = "Config/LevelConfig", order = 2)]
     public class LevelConfig : ScriptableObject
     {
+        [Header("=== LEVEL ===")]
         [SerializeField] private int levelID = 0;
-        [SerializeField] private float deltaBetweenSpawns;
-        [SerializeField] private Gate[] gates;
+        [Header("Core/generator parameters")]
         [SerializeField] private int coreHealth;
-        [SerializeField] private List<int> sentryIDs;
         [SerializeField] private float generatorCurrentGenerationPerSecond;
-        public List<int> SentryIDs => sentryIDs;
-        public int LevelID => levelID;
-        public float DeltaBetweenSpawns => deltaBetweenSpawns;
-        public Gate[] Gates => gates;
-        public int CoreHealth => coreHealth;
+        [SerializeField] private float deltaBetweenSpawns;
+        [Header("Building options")]
+        [SerializeField] private int[] sentryIDs;
+        [Header("Elements = waves")]
+        [SerializeField] private MobWave[] mobWaves;
+        
 
-        public float GenratorCapacity => generatorCurrentGenerationPerSecond;
+        public int LevelID => levelID;
+        public MobWave[] MobWaves => mobWaves;
+        public int CoreHealth => coreHealth;
+        public int[] SentryIDs => sentryIDs;
+        public float GeneratorCapacity => generatorCurrentGenerationPerSecond;
+        public float DeltaBetweenSpawns => deltaBetweenSpawns;
+    }
+
+    [Serializable]
+    public class MobWave
+    {
+        [SerializeField] private float secondsDelayBeforeWave;
+        [SerializeField] private Gate[] gates;
+
+        public Gate[] Gates => gates;
+        public float SecondsDelayBeforeWave => secondsDelayBeforeWave;
     }
 
     [Serializable]

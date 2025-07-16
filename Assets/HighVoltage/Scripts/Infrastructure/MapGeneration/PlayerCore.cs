@@ -42,7 +42,7 @@ namespace HighVoltage
         {
             _mobSpawner = mobSpawner;
             _maxCoreHealth = levelConfig.CoreHealth;
-            _currentGeneration = levelConfig.GenratorCapacity;
+            _currentGeneration = levelConfig.GeneratorCapacity;
             CurrentCoreHealth = levelConfig.CoreHealth;
         }
 

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
+using HighVoltage.Level;
 using HighVoltage.StaticData;
 using HighVoltage.UI.Services;
 using HighVoltage.Map.Building;
@@ -49,7 +50,8 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IStaticDataService>(),
                                                               services.Single<IGameWindowService>(),
                                                               services.Single<IUIFactory>(),
-                                                              services.Single<IPlayerBuildingService>()),
+                                                              services.Single<IPlayerBuildingService>(),
+                                                              services.Single<ILevelProgress>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>()),
                 [typeof(GameFinishedState)] = new GameFinishedState(this,

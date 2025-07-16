@@ -53,9 +53,13 @@ namespace HighVoltage.Infrastructure.States
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
             _allServices.RegisterSingle<IGameFactory>(new GameFactory(_allServices.Single<IAssetProvider>(),
                                                                       _allServices.Single<IPlayerProgressService>()));
+            
             _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawnerService(
                 _allServices.Single<IGameFactory>(), _allServices.Single<IStaticDataService>(), _coroutineRunner));
-            _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>()));
+            
+            _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>(),
+                _allServices.Single<IStaticDataService>()));
+            
             _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(_allServices.Single<IPlayerProgressService>(),
                                                                                          _allServices.Single<IGameFactory>(),
                                                                                          _allServices.SaveWriterServices));

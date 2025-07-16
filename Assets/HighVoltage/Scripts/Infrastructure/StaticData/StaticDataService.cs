@@ -15,7 +15,6 @@ namespace HighVoltage.StaticData
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
         private Dictionary<int, MobConfig> _zombieConfigs;
         private Dictionary<int, LevelConfig> _levels;
-        private Dictionary<int, LevelTaskConfig> _levelTasks;
         private Dictionary<int, SentryConfig> _sentryConfigs;
         private Texture2D _tileAtlas;
         private List<GameObject> _buildingPrefabs;

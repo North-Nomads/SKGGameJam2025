@@ -7,7 +7,6 @@ using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using Unity.VisualScripting;
 
 namespace HighVoltage.Infrastructure.MobSpawning
 {
@@ -30,7 +29,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
             _staticDataService = staticDataService;
         }
         
-        public void LoadConfigToSpawners(LevelConfig levelConfig, WaypointHolder[] spawnerSpots)
+        public void LoadConfigToSpawners(MobWave levelConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns)
         {
             _currentlyAliveMobs = new List<MobBrain>();
             foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
@@ -40,7 +39,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
             for (int gateIndex = 0; gateIndex < levelConfig.Gates.Length; gateIndex++)
             {
                 Coroutine coroutine = _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
-                    spawnerSpots[gateIndex], levelConfig));
+                    spawnerSpots[gateIndex], deltaBetweenSpawns));
                 _runningGateCoroutines.Add(coroutine);
             }
         }
@@ -51,7 +50,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
             // Handle core damage
         }
 
-        private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, LevelConfig levelConfig)
+        private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, float deltaBetweenSpawns)
         {
             int mobNameIndex = 0;
 
@@ -68,7 +67,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
                         mobNameIndex
                     );
                     mobNameIndex++;
-                    yield return new WaitForSeconds(levelConfig.DeltaBetweenSpawns);
+                    yield return new WaitForSeconds(deltaBetweenSpawns);
                 }
             }
         }
