@@ -1,6 +1,6 @@
+using System;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
-using System;
 using HighVoltage.UI.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,7 +18,6 @@ namespace HighVoltage
         private PlayerInput _inputActions;
         private IStaticDataService _dataService;
         private IGameWindowService _gameWindowService;
-        private IPlayerBuildingService _buildingService;
         private EditingMode _editingMode;
 
         private void Update()
@@ -51,35 +50,41 @@ namespace HighVoltage
             _inputActions = new();
         }
 
-        private void OnEditingMainAction(InputAction.CallbackContext context)
+        private void OnDestroy()
         {
-            if(_editingMode == EditingMode.Building)
-                _buildingService.BuildStructure(GetSelectedCellWorldPosition());
-            else if(_editingMode == EditingMode.Demolition)
-            {
-                Destroy(GetSelectedBuilding());
-            }
-            else
-            {
-                var building = GetSelectedBuilding();
-                if (building == null || !building.TryGetComponent(out ICurrentObject obj))
-                    return;
-
-                _buildingService.SelectTargetForWiring(obj);
-            }
-
+            _inputActions.Editing.EditingActionMain.performed -= OnEditingMainAction;
+            _inputActions.Editing.EditingActionSecondary.performed -= OnEditingSecondaryAction;
+            _inputActions.Editing.SwitchEditingMode.performed -= OnEditingModeChanged;
         }
 
-        private void OnEditingSecondaryAction(InputAction.CallbackContext obj)
+        private void OnEditingMainAction(InputAction.CallbackContext context)
         {
             // Prevent UI-through clicks
             if (EventSystem.current.IsPointerOverGameObject() || _gameWindowService.HasOpenedWindows())
                 return;
-            
-            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
-            var hit = Physics2D.Raycast(cursorPos, Vector2.zero, Mathf.Infinity, 1 << 9);
 
-            if (hit.collider == null)
+            switch (_editingMode)
+            {
+                case EditingMode.Building:
+                    _buildingService.BuildStructure(GetSelectedCellWorldPosition());
+                    break;
+                case EditingMode.Demolition:
+                    Destroy(GetSelectedBuilding());
+                    break;
+                case EditingMode.Wiring:
+                    var building = GetSelectedBuilding();
+                    if (building == null || !building.TryGetComponent(out ICurrentObject obj))
+                        return;
+
+                    _buildingService.SelectTargetForWiring(obj);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException($"Editing mode {_editingMode} has no handler");
+            }
+        }
+
+        private void OnEditingSecondaryAction(InputAction.CallbackContext obj)
+        {
             if (_editingMode != EditingMode.Wiring)
                 return; //there just isn't anything for other modes
             
@@ -87,15 +92,6 @@ namespace HighVoltage
             if (building == null || !building.TryGetComponent(out ICurrentObject currentObject))
                 return;
             _buildingService.SelectTargetForUnwiring(currentObject);
-        }
-
-        public void Initialize(IPlayerBuildingService buildingService)
-        {
-            // Prevent UI-through clicks
-            if (EventSystem.current.IsPointerOverGameObject() || _gameWindowService.HasOpenedWindows())
-                return;
-            
-            _buildingService.BuildStructure(GetSelectedCellWorldPosition());
         }
 
         public void Initialize(IStaticDataService dataService, IPlayerBuildingService buildingService,

@@ -44,7 +44,7 @@
                 {
                     "name": "OpenPauseMenu",
                     "type": "Button",
-                    "id": "8efab18d-23c5-49a4-acd5-a0e3c9490b6c",
+                    "id": "22eedf2d-599e-44b7-8fc3-f31708389410",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -120,7 +120,7 @@
                 },
                 {
                     "name": "",
-                    "id": "73e92539-2090-4a65-a4cb-20cb08b0f0a0",
+                    "id": "28a7f0f4-d63b-44b1-b329-55279b2f6458",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",

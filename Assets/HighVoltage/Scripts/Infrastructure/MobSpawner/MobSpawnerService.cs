@@ -61,34 +61,13 @@ namespace HighVoltage.Infrastructure.MobSpawning
 
                 for (int i = 0; i < entry.Quantity; i++)
                 {
-                    try
-                    {
-                        SpawnMob(
-                            mobConfig,
-                            spawnerSpot.Waypoints[0].position,
-                            spawnerSpot.Waypoints,
-                            mobNameIndex
-                        );
-                        mobNameIndex++;
-                    }
-                    catch (Exception e)
-                    {
-                        Debug.Log($"Mob Config: {mobNameIndex}");
-                        Debug.Log($"Mob Config: {mobConfig}");
-                        Debug.Log($"Mob Config: {spawnerSpot.Waypoints[0].position}");
-                        Debug.Log($"Mob Config: {spawnerSpot.Waypoints}");
-                        
-                        SpawnMob(
-                            mobConfig,
-                            spawnerSpot.Waypoints[0].position,
-                            spawnerSpot.Waypoints,
-                            mobNameIndex
-                        );
-                        
-                        mobNameIndex++;
-                    }
-                    
-
+                    SpawnMob(
+                        mobConfig,
+                        spawnerSpot.Waypoints[0].position,
+                        spawnerSpot.Waypoints,
+                        mobNameIndex
+                    );
+                    mobNameIndex++;
                     yield return new WaitForSeconds(levelConfig.DeltaBetweenSpawns);
                 }
             }

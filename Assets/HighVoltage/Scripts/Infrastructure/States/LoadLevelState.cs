@@ -70,10 +70,12 @@ namespace HighVoltage.Infrastructure.States
         public void Exit()
         {
             _loadingCurtain.gameObject.SetActive(false);
+            
         }
 
         private void OnLoaded()
         {
+            Debug.Log("LoadLevelState OnLoadded");
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializeGameWorld(config);
             List<SentryConfig> thisLevelSentries = config.SentryIDs

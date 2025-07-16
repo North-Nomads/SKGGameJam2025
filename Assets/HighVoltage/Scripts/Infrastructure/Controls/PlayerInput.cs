@@ -62,6 +62,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenPauseMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""22eedf2d-599e-44b7-8fc3-f31708389410"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Cursor"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28a7f0f4-d63b-44b1-b329-55279b2f6458"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenPauseMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -142,6 +162,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Editing_EditingActionSecondary = m_Editing.FindAction("EditingActionSecondary", throwIfNotFound: true);
         m_Editing_SwitchEditingMode = m_Editing.FindAction("SwitchEditingMode", throwIfNotFound: true);
         m_Editing_Cursor = m_Editing.FindAction("Cursor", throwIfNotFound: true);
+        m_Editing_OpenPauseMenu = m_Editing.FindAction("OpenPauseMenu", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +228,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Editing_EditingActionSecondary;
     private readonly InputAction m_Editing_SwitchEditingMode;
     private readonly InputAction m_Editing_Cursor;
+    private readonly InputAction m_Editing_OpenPauseMenu;
     public struct EditingActions
     {
         private @PlayerInput m_Wrapper;
@@ -215,6 +237,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @EditingActionSecondary => m_Wrapper.m_Editing_EditingActionSecondary;
         public InputAction @SwitchEditingMode => m_Wrapper.m_Editing_SwitchEditingMode;
         public InputAction @Cursor => m_Wrapper.m_Editing_Cursor;
+        public InputAction @OpenPauseMenu => m_Wrapper.m_Editing_OpenPauseMenu;
         public InputActionMap Get() { return m_Wrapper.m_Editing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -236,6 +259,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Cursor.started += instance.OnCursor;
             @Cursor.performed += instance.OnCursor;
             @Cursor.canceled += instance.OnCursor;
+            @OpenPauseMenu.started += instance.OnOpenPauseMenu;
+            @OpenPauseMenu.performed += instance.OnOpenPauseMenu;
+            @OpenPauseMenu.canceled += instance.OnOpenPauseMenu;
         }
 
         private void UnregisterCallbacks(IEditingActions instance)
@@ -252,6 +278,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Cursor.started -= instance.OnCursor;
             @Cursor.performed -= instance.OnCursor;
             @Cursor.canceled -= instance.OnCursor;
+            @OpenPauseMenu.started -= instance.OnOpenPauseMenu;
+            @OpenPauseMenu.performed -= instance.OnOpenPauseMenu;
+            @OpenPauseMenu.canceled -= instance.OnOpenPauseMenu;
         }
 
         public void RemoveCallbacks(IEditingActions instance)
@@ -275,5 +304,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnEditingActionSecondary(InputAction.CallbackContext context);
         void OnSwitchEditingMode(InputAction.CallbackContext context);
         void OnCursor(InputAction.CallbackContext context);
+        void OnOpenPauseMenu(InputAction.CallbackContext context);
     }
 }

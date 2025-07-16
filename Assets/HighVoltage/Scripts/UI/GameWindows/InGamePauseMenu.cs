@@ -34,7 +34,7 @@ namespace HighVoltage.UI.GameWindows
             exitButton.onClick.AddListener(() => ReturnToMenuButtonPressed(this, EventArgs.Empty));
             _inputActions = new PlayerInput();
             _inputActions.Enable();
-            _inputActions.Gameplay.OpenPauseMenu.performed += OpenPauseMenu;
+            _inputActions.Editing.OpenPauseMenu.performed += OpenPauseMenu;
         }
 
         private void OpenPauseMenu(InputAction.CallbackContext obj)
