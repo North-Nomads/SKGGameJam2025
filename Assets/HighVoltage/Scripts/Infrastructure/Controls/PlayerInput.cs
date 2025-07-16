@@ -24,11 +24,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInput"",
     ""maps"": [
         {
-            ""name"": ""Gameplay"",
+            ""name"": ""Editing"",
             ""id"": ""44b9159a-8313-46a5-9313-16c01037a141"",
             ""actions"": [
                 {
-                    ""name"": ""BuildAction"",
+                    ""name"": ""EditingActionMain"",
                     ""type"": ""Button"",
                     ""id"": ""5e859b1f-86c8-4e1c-83d4-fda8822153ef"",
                     ""expectedControlType"": ""Button"",
@@ -37,13 +37,22 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DestroyAction"",
+                    ""name"": ""EditingActionSecondary"",
                     ""type"": ""Button"",
                     ""id"": ""7630c571-1d83-4c37-b0eb-67c9c4771e9f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchEditingMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""94e7ff7c-74f8-4782-ab6d-0a8890406d8b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Cursor"",
@@ -63,7 +72,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""BuildAction"",
+                    ""action"": ""EditingActionMain"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -74,7 +83,40 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""DestroyAction"",
+                    ""action"": ""EditingActionSecondary"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d0c6d80-9338-4184-8979-b468e855d0d4"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchEditingMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f81846df-a9a1-4b58-8182-0905cd166f2f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchEditingMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""059b7260-4516-40e4-8299-5d4a0c563be8"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchEditingMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -94,11 +136,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_BuildAction = m_Gameplay.FindAction("BuildAction", throwIfNotFound: true);
-        m_Gameplay_DestroyAction = m_Gameplay.FindAction("DestroyAction", throwIfNotFound: true);
-        m_Gameplay_Cursor = m_Gameplay.FindAction("Cursor", throwIfNotFound: true);
+        // Editing
+        m_Editing = asset.FindActionMap("Editing", throwIfNotFound: true);
+        m_Editing_EditingActionMain = m_Editing.FindAction("EditingActionMain", throwIfNotFound: true);
+        m_Editing_EditingActionSecondary = m_Editing.FindAction("EditingActionSecondary", throwIfNotFound: true);
+        m_Editing_SwitchEditingMode = m_Editing.FindAction("SwitchEditingMode", throwIfNotFound: true);
+        m_Editing_Cursor = m_Editing.FindAction("Cursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -157,71 +200,80 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_BuildAction;
-    private readonly InputAction m_Gameplay_DestroyAction;
-    private readonly InputAction m_Gameplay_Cursor;
-    public struct GameplayActions
+    // Editing
+    private readonly InputActionMap m_Editing;
+    private List<IEditingActions> m_EditingActionsCallbackInterfaces = new List<IEditingActions>();
+    private readonly InputAction m_Editing_EditingActionMain;
+    private readonly InputAction m_Editing_EditingActionSecondary;
+    private readonly InputAction m_Editing_SwitchEditingMode;
+    private readonly InputAction m_Editing_Cursor;
+    public struct EditingActions
     {
         private @PlayerInput m_Wrapper;
-        public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @BuildAction => m_Wrapper.m_Gameplay_BuildAction;
-        public InputAction @DestroyAction => m_Wrapper.m_Gameplay_DestroyAction;
-        public InputAction @Cursor => m_Wrapper.m_Gameplay_Cursor;
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public EditingActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @EditingActionMain => m_Wrapper.m_Editing_EditingActionMain;
+        public InputAction @EditingActionSecondary => m_Wrapper.m_Editing_EditingActionSecondary;
+        public InputAction @SwitchEditingMode => m_Wrapper.m_Editing_SwitchEditingMode;
+        public InputAction @Cursor => m_Wrapper.m_Editing_Cursor;
+        public InputActionMap Get() { return m_Wrapper.m_Editing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
-        public void AddCallbacks(IGameplayActions instance)
+        public static implicit operator InputActionMap(EditingActions set) { return set.Get(); }
+        public void AddCallbacks(IEditingActions instance)
         {
-            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
-            @BuildAction.started += instance.OnBuildAction;
-            @BuildAction.performed += instance.OnBuildAction;
-            @BuildAction.canceled += instance.OnBuildAction;
-            @DestroyAction.started += instance.OnDestroyAction;
-            @DestroyAction.performed += instance.OnDestroyAction;
-            @DestroyAction.canceled += instance.OnDestroyAction;
+            if (instance == null || m_Wrapper.m_EditingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_EditingActionsCallbackInterfaces.Add(instance);
+            @EditingActionMain.started += instance.OnEditingActionMain;
+            @EditingActionMain.performed += instance.OnEditingActionMain;
+            @EditingActionMain.canceled += instance.OnEditingActionMain;
+            @EditingActionSecondary.started += instance.OnEditingActionSecondary;
+            @EditingActionSecondary.performed += instance.OnEditingActionSecondary;
+            @EditingActionSecondary.canceled += instance.OnEditingActionSecondary;
+            @SwitchEditingMode.started += instance.OnSwitchEditingMode;
+            @SwitchEditingMode.performed += instance.OnSwitchEditingMode;
+            @SwitchEditingMode.canceled += instance.OnSwitchEditingMode;
             @Cursor.started += instance.OnCursor;
             @Cursor.performed += instance.OnCursor;
             @Cursor.canceled += instance.OnCursor;
         }
 
-        private void UnregisterCallbacks(IGameplayActions instance)
+        private void UnregisterCallbacks(IEditingActions instance)
         {
-            @BuildAction.started -= instance.OnBuildAction;
-            @BuildAction.performed -= instance.OnBuildAction;
-            @BuildAction.canceled -= instance.OnBuildAction;
-            @DestroyAction.started -= instance.OnDestroyAction;
-            @DestroyAction.performed -= instance.OnDestroyAction;
-            @DestroyAction.canceled -= instance.OnDestroyAction;
+            @EditingActionMain.started -= instance.OnEditingActionMain;
+            @EditingActionMain.performed -= instance.OnEditingActionMain;
+            @EditingActionMain.canceled -= instance.OnEditingActionMain;
+            @EditingActionSecondary.started -= instance.OnEditingActionSecondary;
+            @EditingActionSecondary.performed -= instance.OnEditingActionSecondary;
+            @EditingActionSecondary.canceled -= instance.OnEditingActionSecondary;
+            @SwitchEditingMode.started -= instance.OnSwitchEditingMode;
+            @SwitchEditingMode.performed -= instance.OnSwitchEditingMode;
+            @SwitchEditingMode.canceled -= instance.OnSwitchEditingMode;
             @Cursor.started -= instance.OnCursor;
             @Cursor.performed -= instance.OnCursor;
             @Cursor.canceled -= instance.OnCursor;
         }
 
-        public void RemoveCallbacks(IGameplayActions instance)
+        public void RemoveCallbacks(IEditingActions instance)
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_EditingActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IGameplayActions instance)
+        public void SetCallbacks(IEditingActions instance)
         {
-            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_EditingActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_EditingActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public GameplayActions @Gameplay => new GameplayActions(this);
-    public interface IGameplayActions
+    public EditingActions @Editing => new EditingActions(this);
+    public interface IEditingActions
     {
-        void OnBuildAction(InputAction.CallbackContext context);
-        void OnDestroyAction(InputAction.CallbackContext context);
+        void OnEditingActionMain(InputAction.CallbackContext context);
+        void OnEditingActionSecondary(InputAction.CallbackContext context);
+        void OnSwitchEditingMode(InputAction.CallbackContext context);
         void OnCursor(InputAction.CallbackContext context);
     }
 }

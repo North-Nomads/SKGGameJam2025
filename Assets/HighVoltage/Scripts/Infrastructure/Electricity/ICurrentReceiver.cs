@@ -1,6 +1,6 @@
 namespace HighVoltage
 {
-    public interface ICurrentReciever : ICurrentObject
+    public interface ICurrentReceiver : ICurrentObject
     {
         public ICurrentSource CurrentProvider { get; }
 

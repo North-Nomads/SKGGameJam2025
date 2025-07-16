@@ -89,7 +89,7 @@ namespace HighVoltage.Infrastructure.States
         private void InitializeBuilder()
         {
             PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
-            playerBuildBehaviour.Initialize(_staticData, _buildingService);
+            playerBuildBehaviour.Initialize(_buildingService);
         }
 
         private PlayerCore InitializeGameWorld(LevelConfig config)

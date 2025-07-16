@@ -1,8 +1,8 @@
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Tilemaps;
 
 namespace HighVoltage
@@ -11,15 +11,13 @@ namespace HighVoltage
     {
         private Tilemap _tilemap;
         private IPlayerBuildingService _buildingService;
-        private IStaticDataService _dataService;
         private Vector2 _cursorPosition;
         private PlayerInput _inputActions;
-
-        private int _selectedBuildingID = 0;
+        private EditingMode _editingMode;
 
         private void Update()
         {
-            _cursorPosition = _inputActions.Gameplay.Cursor.ReadValue<Vector2>();
+            _cursorPosition = _inputActions.Editing.Cursor.ReadValue<Vector2>();
             //TODO: tile highlight
         }
 
@@ -27,6 +25,15 @@ namespace HighVoltage
         {
             var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
             return _tilemap.GetCellCenterWorld(_tilemap.WorldToCell(cursorPos));
+        }
+        private GameObject GetSelectedBuilding()
+        {
+            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
+            var hit = Physics2D.Raycast(cursorPos, Vector2.zero, Mathf.Infinity, 1 << 9);
+
+            if (hit.collider == null)
+                return null;
+            return hit.collider.gameObject;
         }
         private void OnEnable()
         {
@@ -38,31 +45,57 @@ namespace HighVoltage
             _inputActions = new();
         }
 
-        private void OnPlayerDestroy(InputAction.CallbackContext context)
+        private void OnEditingMainAction(InputAction.CallbackContext context)
         {
-            var cursorPos = Camera.main.ScreenToWorldPoint(_cursorPosition);
-            var hit = Physics2D.Raycast(cursorPos, Vector2.zero, Mathf.Infinity, 1 << 9);
+            if(_editingMode == EditingMode.Building)
+                _buildingService.BuildStructure(GetSelectedCellWorldPosition());
+            else if(_editingMode == EditingMode.Demolition)
+            {
+                Destroy(GetSelectedBuilding());
+            }
+            else
+            {
+                var building = GetSelectedBuilding();
+                if (building == null || !building.TryGetComponent(out ICurrentObject obj))
+                    return;
 
-            if (hit.collider == null)
+                _buildingService.SelectTargetForWiring(obj);
+            }
+
+        }
+
+        private void OnEditingSecondaryAction(InputAction.CallbackContext obj)
+        {
+            if (_editingMode != EditingMode.Wiring)
+                return; //there just isn't anything for other modes
+            
+            var building = GetSelectedBuilding();
+            if (building == null || !building.TryGetComponent(out ICurrentObject currentObject))
                 return;
-
-            Destroy(hit.collider.gameObject);
-
+            _buildingService.SelectTargetForUnwiring(currentObject);
         }
 
-        private void OnPlayerBuild(InputAction.CallbackContext obj)
+        public void Initialize(IPlayerBuildingService buildingService)
         {
-            _buildingService.BuildStructure(GetSelectedCellWorldPosition());
-        }
-
-        public void Initialize(IStaticDataService dataService, IPlayerBuildingService buildingService)
-        {
-            _dataService = dataService;
             _buildingService = buildingService;
             _tilemap = _buildingService.MapTilemap;
 
-            _inputActions.Gameplay.BuildAction.performed += OnPlayerBuild;
-            _inputActions.Gameplay.DestroyAction.performed += OnPlayerDestroy;
+            _inputActions.Editing.EditingActionMain.performed += OnEditingMainAction;
+            _inputActions.Editing.EditingActionSecondary.performed += OnEditingSecondaryAction;
+            _inputActions.Editing.SwitchEditingMode.performed += OnEditingModeChanged;
+        }
+
+        private void OnEditingModeChanged(InputAction.CallbackContext obj)
+        {
+            if (obj.control is not KeyControl control)
+                return;
+
+            if (control.keyCode == Key.Q)
+                _editingMode = EditingMode.Building;
+            else if(control.keyCode == Key.W)
+                _editingMode = EditingMode.Wiring;
+            else if(control.keyCode == Key.E)
+                _editingMode = EditingMode.Demolition;
         }
     }
 }

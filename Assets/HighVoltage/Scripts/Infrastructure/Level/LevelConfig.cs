@@ -13,12 +13,14 @@ namespace HighVoltage.Level
         [SerializeField] private Gate[] gates;
         [SerializeField] private int coreHealth;
         [SerializeField] private List<int> sentryIDs;
-
+        [SerializeField] private float generatorCurrentGenerationPerSecond;
         public List<int> SentryIDs => sentryIDs;
         public int LevelID => levelID;
         public float DeltaBetweenSpawns => deltaBetweenSpawns;
         public Gate[] Gates => gates;
         public int CoreHealth => coreHealth;
+
+        public float GenratorCapacity => generatorCurrentGenerationPerSecond;
     }
 
     [Serializable]

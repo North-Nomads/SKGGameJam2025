@@ -2,11 +2,11 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Gameplay",
+            "name": "Editing",
             "id": "44b9159a-8313-46a5-9313-16c01037a141",
             "actions": [
                 {
-                    "name": "BuildAction",
+                    "name": "EditingActionMain",
                     "type": "Button",
                     "id": "5e859b1f-86c8-4e1c-83d4-fda8822153ef",
                     "expectedControlType": "Button",
@@ -15,13 +15,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "DestroyAction",
+                    "name": "EditingActionSecondary",
                     "type": "Button",
                     "id": "7630c571-1d83-4c37-b0eb-67c9c4771e9f",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchEditingMode",
+                    "type": "Button",
+                    "id": "94e7ff7c-74f8-4782-ab6d-0a8890406d8b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Cursor",
@@ -41,7 +50,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "BuildAction",
+                    "action": "EditingActionMain",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -52,7 +61,40 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "DestroyAction",
+                    "action": "EditingActionSecondary",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d0c6d80-9338-4184-8979-b468e855d0d4",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchEditingMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f81846df-a9a1-4b58-8182-0905cd166f2f",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchEditingMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "059b7260-4516-40e4-8299-5d4a0c563be8",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchEditingMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

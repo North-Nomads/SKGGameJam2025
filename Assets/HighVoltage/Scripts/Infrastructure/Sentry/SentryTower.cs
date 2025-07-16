@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
-    public abstract class SentryTower : MonoBehaviour, ICurrentReciever
+    public abstract class SentryTower : MonoBehaviour, ICurrentReceiver
     {
         [SerializeField] private Transform rotatingPart;
         private const float OneSecond = 1;
@@ -50,6 +50,9 @@ namespace HighVoltage.Infrastructure.Sentry
 
         protected virtual void Update()
         {
+            if (CurrentProvider == null)
+                return;
+
             KeepDecay();
 
             if (_stunnedTimeLeft >= 0)
@@ -86,12 +89,13 @@ namespace HighVoltage.Infrastructure.Sentry
 
         protected virtual void KeepDecay()
         {
+            //they wont decay without power (to my vision)
             if (_decayCooldownTimeLeft > 0f)
             {
                 _decayCooldownTimeLeft -= Time.deltaTime;
                 return;
             }
-            
+
             _currentProvider.RequestPower(Config.PowerConsumption);
             _decayCooldownTimeLeft = OneSecond;
             CurrentDurability -= DecayPerSecond;

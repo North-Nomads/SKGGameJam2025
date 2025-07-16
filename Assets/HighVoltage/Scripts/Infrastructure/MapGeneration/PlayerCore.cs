@@ -10,7 +10,7 @@ namespace HighVoltage
 {
     public class PlayerCore : Building, ICurrentSource
     {
-        private List<ICurrentReciever> _recievers;
+        private readonly List<ICurrentReceiver> _receivers = new();
         private IMobSpawnerService _mobSpawner;
         public event EventHandler<int> OnCoreHealthChanged = delegate { };
         public event EventHandler OnOverload;
@@ -32,14 +32,17 @@ namespace HighVoltage
             }
         }
 
-        public IEnumerable<ICurrentReciever> Recievers => _recievers;
+        public IEnumerable<ICurrentReceiver> Receivers => _receivers;
 
-        public float Output => throw new NotImplementedException();
+        private float _currentGeneration;
+        private float _currentCurrentOutput;
+        public float Output => _currentCurrentOutput;
 
         public void Initialize(IMobSpawnerService mobSpawner, LevelConfig levelConfig)
         {
             _mobSpawner = mobSpawner;
             _maxCoreHealth = levelConfig.CoreHealth;
+            _currentGeneration = levelConfig.GenratorCapacity;
             CurrentCoreHealth = levelConfig.CoreHealth;
         }
 
@@ -53,14 +56,34 @@ namespace HighVoltage
             }
         }
 
-        public void AttachReciever(ICurrentReciever reciever)
+        public void AttachReceiver(ICurrentReceiver receiver)
         {
-            
+            _receivers.Add(receiver);
         }
 
-        public void RequestPower()
+        private void Update()
         {
-            throw new NotImplementedException();
+            _currentCurrentOutput = _currentGeneration;
+        }
+
+        public void RequestPower(float configPowerConsumption)
+        {
+            _currentCurrentOutput -= configPowerConsumption;
+            if (_currentCurrentOutput < 0)
+                OnOverload.Invoke(this, null);
+        }
+
+        public void DetachAllReceivers()
+        {
+            foreach (var receiver in _receivers)
+                receiver.AttachToSource(null);
+            _receivers.Clear();
+        }
+
+        public void DetachReceiver(ICurrentReceiver receiver)
+        {
+            receiver.AttachToSource(null);
+            _receivers.Remove(receiver);
         }
     }
 }
