@@ -24,7 +24,7 @@ namespace HighVoltage
         public int CurrentCoreHealth
         {
             get => _currentCoreHealth;
-            set
+            private set
             {
                 _currentCoreHealth = Mathf.Clamp(value, 0, _maxCoreHealth);
                 Debug.Log($"Core was damaged. Calling \"OnCoreHealthChanged\" with {_currentCoreHealth}");
@@ -48,7 +48,6 @@ namespace HighVoltage
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            print($"Other trigger entered: {other.name}");
             if (other.CompareTag(Constants.MobTag))
             {
                 MobBrain mobBrain = other.GetComponent<MobBrain>();

@@ -21,6 +21,10 @@ namespace HighVoltage.Infrastructure.MobSpawning
         
         private List<MobBrain> _currentlyAliveMobs = new();
         private List<Coroutine> _runningGateCoroutines = new();
+        
+        private WaypointHolder[] _spawnerSpots;
+        private float _deltaBetweenSpawns;
+        private MobWave _mobWaveConfig;
 
         public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
@@ -29,19 +33,11 @@ namespace HighVoltage.Infrastructure.MobSpawning
             _staticDataService = staticDataService;
         }
         
-        public void LoadConfigToSpawners(MobWave levelConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns)
+        public void LoadConfigToSpawners(MobWave waveConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns)
         {
-            _currentlyAliveMobs = new List<MobBrain>();
-            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
-                _coroutineRunner.StopCoroutine(runningGateCoroutine);
-            _runningGateCoroutines = new List<Coroutine>();
-
-            for (int gateIndex = 0; gateIndex < levelConfig.Gates.Length; gateIndex++)
-            {
-                Coroutine coroutine = _coroutineRunner.StartCoroutine(SpawnGateCoroutine(levelConfig.Gates[gateIndex],
-                    spawnerSpots[gateIndex], deltaBetweenSpawns));
-                _runningGateCoroutines.Add(coroutine);
-            }
+            _mobWaveConfig = waveConfig;
+            _spawnerSpots = spawnerSpots;
+            _deltaBetweenSpawns = deltaBetweenSpawns;
         }
 
         public void HandleMobReachedCore(MobBrain mob)
@@ -49,6 +45,24 @@ namespace HighVoltage.Infrastructure.MobSpawning
             mob.HandleHit(int.MaxValue);
             // Handle core damage
         }
+
+        public void LaunchMobSpawning()
+        {
+            _currentlyAliveMobs = new List<MobBrain>();
+            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
+                _coroutineRunner.StopCoroutine(runningGateCoroutine);
+            _runningGateCoroutines = new List<Coroutine>();
+
+            for (int gateIndex = 0; gateIndex < _mobWaveConfig.Gates.Length; gateIndex++)
+            {
+                Coroutine coroutine = _coroutineRunner.StartCoroutine(SpawnGateCoroutine(_mobWaveConfig.Gates[gateIndex],
+                    _spawnerSpots[gateIndex], _deltaBetweenSpawns));
+                _runningGateCoroutines.Add(coroutine);
+            }
+        }
+
+        public void UpdateWaveContent(MobWave newWave) 
+            => _mobWaveConfig = newWave;
 
         private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, float deltaBetweenSpawns)
         {

@@ -4,6 +4,7 @@ using HighVoltage.StaticData;
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.MobSpawning;
+using UnityEngine;
 
 namespace HighVoltage.Level
 {
@@ -17,6 +18,7 @@ namespace HighVoltage.Level
         private LevelConfig _loadedLevelConfig;
         private int _currentWaveIndex;
         private MobWave _loadedWave;
+        private bool _isLastWave;
 
         public LevelConfig LoadedLevelConfig => _loadedLevelConfig;
         public MobWave LoadedWave => _loadedWave;
@@ -39,6 +41,9 @@ namespace HighVoltage.Level
         public List<SentryConfig> GetSentriesForThisLevel()
             => _loadedLevelConfig.SentryIDs.Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
 
+        public float GetCurrentWaveTimer()
+            => _loadedWave.SecondsDelayBeforeWave;
+
         private void LoadCurrentWaveConfig() 
             => _loadedWave = _loadedLevelConfig.MobWaves[_currentWaveIndex];
 
@@ -47,16 +52,18 @@ namespace HighVoltage.Level
             if (mobsLeft != 0)
                 return;
 
-            if (_loadedLevelConfig.MobWaves.Length - 1 == _currentWaveIndex)
+            if (_isLastWave)
             {
                 LevelCleared(this, EventArgs.Empty);
+                Debug.Log("Level Cleared");
+                return;
             }
-            else
-            {
-                WaveCleared(this, EventArgs.Empty);
-                _currentWaveIndex++;
-                LoadCurrentWaveConfig();
-            }
+
+            Debug.Log($"Wave {_currentWaveIndex + 1} cleared. New wave: {_currentWaveIndex + 2}/{_loadedLevelConfig.MobWaves.Length}");
+            _currentWaveIndex++;
+            _isLastWave = _currentWaveIndex == _loadedLevelConfig.MobWaves.Length - 1;
+            LoadCurrentWaveConfig();
+            WaveCleared(this, EventArgs.Empty);
         }
     }
 }

@@ -13,5 +13,6 @@ namespace HighVoltage.Level
         MobWave LoadedWave { get; }
         void LoadLevelConfig(LevelConfig levelConfig);
         List<SentryConfig> GetSentriesForThisLevel();
+        float GetCurrentWaveTimer();
     }
 }

@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: 
   levelID: 1
+  coreHealth: 100
+  generatorCurrentGenerationPerSecond: 10
+  deltaBetweenSpawns: 0.5
+  sentryIDs: 010000000200000003000000
   mobWaves:
-  - gates:
+  - secondsDelayBeforeWave: 10
+    gates:
     - levelEnemies:
       - quantity: 5
         enemyID: 1
@@ -23,8 +28,8 @@ MonoBehaviour:
     - levelEnemies:
       - quantity: 3
         enemyID: 1
-    secondsDelayBeforeWave: 10
-  - gates:
+  - secondsDelayBeforeWave: 5
+    gates:
     - levelEnemies:
       - quantity: 1
         enemyID: 1
@@ -33,8 +38,3 @@ MonoBehaviour:
       - quantity: 3
         enemyID: 3
     - levelEnemies: []
-    secondsDelayBeforeWave: 10
-  coreHealth: 100
-  sentryIDs: 010000000200000003000000
-  generatorCurrentGenerationPerSecond: 10
-  deltaBetweenSpawns: 0.5
