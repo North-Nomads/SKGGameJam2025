@@ -9,8 +9,9 @@ namespace HighVoltage.Infrastructure.Mobs
     public class MobBrain : MonoBehaviour
     {
         public event EventHandler<MobBrain> OnMobDied = delegate { };
+        public MobConfig Config => _config;
+        
         private const float MinDistanceToWaypoint = 0.01f;
-
         private MobConfig _config;
         private Transform[] _waypoints;
         private Transform _target;

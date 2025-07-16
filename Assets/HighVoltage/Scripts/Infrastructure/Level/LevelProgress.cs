@@ -2,6 +2,7 @@
 using System.Linq;
 using HighVoltage.StaticData;
 using System.Collections.Generic;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.MobSpawning;
 using UnityEngine;
@@ -16,9 +17,11 @@ namespace HighVoltage.Level
 
         private readonly IMobSpawnerService _mobSpawner;
         private readonly IStaticDataService _staticData;
+        private readonly IBuildingStoreService _buildingStore;
         private LevelConfig _loadedLevelConfig;
         private PlayerCore _playerCore;
         
+        private int _mobsLeftThisWave;
         private int _currentWaveIndex;
         private MobWave _loadedWave;
         private bool _isLastWave;
@@ -28,12 +31,13 @@ namespace HighVoltage.Level
 
         public bool IsLevelSuccessfullyFinished { get; private set; }
 
-        public LevelProgress(IMobSpawnerService mobSpawner, IStaticDataService staticData)
+        public LevelProgress(IMobSpawnerService mobSpawner, IStaticDataService staticData, IBuildingStoreService buildingStore)
         {
             _mobSpawner = mobSpawner;
             _mobSpawner.AnotherMobDied += HandleMobDeath;
             
             _staticData = staticData;
+            _buildingStore = buildingStore;
         }
 
         public void LoadLevelConfig(LevelConfig levelConfig, PlayerCore playerCore)
@@ -47,7 +51,6 @@ namespace HighVoltage.Level
 
         private void CheckPlayerCoreWasDestroyed(object sender, int healthRemaining)
         {
-            Debug.Log($"Handling player core was destroyed: left hp: {healthRemaining}");
             if (healthRemaining > 0)
                 return;
             PlayerCoreDestroyed(this, EventArgs.Empty);
@@ -59,12 +62,18 @@ namespace HighVoltage.Level
         public float GetCurrentWaveTimer()
             => _loadedWave.SecondsDelayBeforeWave;
 
-        private void LoadCurrentWaveConfig() 
-            => _loadedWave = _loadedLevelConfig.MobWaves[_currentWaveIndex];
-
-        private void HandleMobDeath(object sender, int mobsLeft)
+        private void LoadCurrentWaveConfig()
         {
-            if (mobsLeft != 0)
+            _loadedWave = _loadedLevelConfig.MobWaves[_currentWaveIndex];
+            _mobsLeftThisWave = _loadedWave.Gates.Sum(gate => gate.LevelEnemies.Sum(enemy => enemy.Quantity));
+        }
+
+        private void HandleMobDeath(object sender, int mobID)
+        {
+            _buildingStore.AddMoney(_staticData.ForSentryID(mobID).Reward);
+            _mobsLeftThisWave--;
+            
+            if (_mobsLeftThisWave != 0)
                 return;
 
             if (_isLastWave)

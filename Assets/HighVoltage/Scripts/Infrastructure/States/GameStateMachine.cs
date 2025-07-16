@@ -8,6 +8,7 @@ using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using System;
 using System.Collections.Generic;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.InGameTime;
 using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
@@ -52,7 +53,8 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IGameWindowService>(),
                                                               services.Single<IUIFactory>(),
                                                               services.Single<IPlayerBuildingService>(),
-                                                              services.Single<ILevelProgress>()),
+                                                              services.Single<ILevelProgress>(),
+                                                              services.Single<IBuildingStoreService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>(),
                                                             services.Single<IGameWindowService>(),

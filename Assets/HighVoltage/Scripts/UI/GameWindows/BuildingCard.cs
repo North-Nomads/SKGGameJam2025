@@ -16,18 +16,24 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private TextMeshProUGUI buildingPrice;
         private int _sentryID;
         private bool _isSelected;
+        private bool _canBeAfforded;
+        private int _itemPrice;
 
         public void Initialize(SentryConfig config)
         {
             _sentryID = config.SentryId;
+            _itemPrice = config.BuildPrice;
             buildingPrice.text = config.BuildPrice.ToString();
             itemIcon.sprite = config.SentryIcon;
             outline.enabled = false;
+            _canBeAfforded = false;
+            gameObject.name = config.name;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            outline.enabled = true;
+            if (_canBeAfforded)
+                outline.enabled = true;
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -38,9 +44,26 @@ namespace HighVoltage.UI.GameWindows
 
         public void OnPointerClick(PointerEventData eventData)
         {
+            Debug.Log($"For {name}: affordance={_canBeAfforded}");
+            if (!_canBeAfforded)
+                return;
+            
             outline.enabled = !_isSelected;
             _isSelected = outline.enabled;
             OnCardSelected(this, _sentryID);
+        }
+
+        public void ToggleSelection(bool isSelected)
+        {
+            _isSelected = isSelected;
+            outline.enabled = isSelected;
+        }
+
+        public void UpdatePurchasableStatus(int newMoney)
+        {
+            _canBeAfforded = newMoney >= _itemPrice;
+            if (!_canBeAfforded)
+                outline.enabled = false;
         }
     }
 }
