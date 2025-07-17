@@ -1,9 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Cinemachine;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Services.Progress;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Infrastructure.AssetManagement;
+using HighVoltage.Infrastructure.CameraService;
+using HighVoltage.Services;
 
 namespace HighVoltage.Infrastructure.Factory
 {
@@ -11,7 +14,6 @@ namespace HighVoltage.Infrastructure.Factory
     {
         private readonly IAssetProvider _assets;
         private readonly IPlayerProgressService _progress;
-        private readonly MobBrain[] _mobPrototypes;
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new();
         public List<IProgressUpdater> ProgressWriters { get; } = new()
@@ -23,7 +25,7 @@ namespace HighVoltage.Infrastructure.Factory
         {
             _assets = assets;
             _progress = progress;
-            _mobPrototypes = Resources.LoadAll<MobBrain>(AssetPath.MobPath);
+            Resources.LoadAll<MobBrain>(AssetPath.MobPath);
         }
 
         public PlayerCore CreatePlayerCore(GameObject at) 
@@ -40,6 +42,9 @@ namespace HighVoltage.Infrastructure.Factory
 
         public SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig) 
             => _assets.Instantiate(sentryConfig.SentryPrefab, spawnPosition);
+
+        public PlayerCamera CreateCamera(Vector3 spawnPosition) 
+            => _assets.Instantiate<PlayerCamera>(AssetPath.CameraPrefabPath, spawnPosition);
 
         public MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 at) 
             => Object.Instantiate(whichEnemyPrefab, at, Quaternion.identity);

@@ -76,7 +76,6 @@ namespace HighVoltage.UI.Services.Windows
             _currentWindow = windowID;
 
             window.OnOpened();
-            _cameraService.MoveCamera(windowID);
             window.gameObject.SetActive(true);
         }
 

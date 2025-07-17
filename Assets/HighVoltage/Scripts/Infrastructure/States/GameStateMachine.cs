@@ -16,6 +16,7 @@ using HighVoltage.Level;
 using HighVoltage.StaticData;
 using HighVoltage.UI.Services;
 using HighVoltage.Map.Building;
+using Unity.VisualScripting;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -54,7 +55,8 @@ namespace HighVoltage.Infrastructure.States
                                                               services.Single<IUIFactory>(),
                                                               services.Single<IPlayerBuildingService>(),
                                                               services.Single<ILevelProgress>(),
-                                                              services.Single<IBuildingStoreService>()),
+                                                              services.Single<IBuildingStoreService>(),
+                                                              services.Single<ICameraService>()),
                 [typeof(GameLoopState)] = new GameLoopState(this,
                                                             services.Single<ISaveLoadService>(),
                                                             services.Single<IGameWindowService>(),
