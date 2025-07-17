@@ -80,9 +80,17 @@ namespace HighVoltage.UI.Services.Factory
                     GameWindowId.PlayerDead => CreatePlayerDeadWindow(),
                     GameWindowId.InGamePauseMenu => CreatePauseMenu(),
                     GameWindowId.EndGame => CreateEndGame(),
+                    GameWindowId.BeforeGameHUD => CreateBeforeGameHUD(),
                     _ => null,
                 };
             }
+        }
+
+        private GameWindowBase CreateBeforeGameHUD()
+        {
+            GameWindowConfig config = _staticData.ForGameWindow(GameWindowId.BeforeGameHUD);
+            var window = Object.Instantiate(config.Prefab, _uiRoot);
+            return window;
         }
 
         private GameWindowBase CreatePauseMenu()

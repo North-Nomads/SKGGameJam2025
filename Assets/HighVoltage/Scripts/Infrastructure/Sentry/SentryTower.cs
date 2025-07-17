@@ -28,7 +28,7 @@ namespace HighVoltage.Infrastructure.Sentry
         protected int Damage;
         protected int DecayPerSecond;
 
-        
+        private float _buildingTimeLeft;
         private float _decayCooldownTimeLeft;
         private ICurrentSource _currentProvider;
         private float _stunnedTimeLeft;
@@ -48,12 +48,21 @@ namespace HighVoltage.Infrastructure.Sentry
             
             MaxCooldownTime = config.TimeBetweenActions;
             ActionCooldownTimeLeft = 0f;
+
+
+            _buildingTimeLeft = mobSpawnerService.IsWaveOngoing ? config.SecondsToBuild : 0f;
         }
 
         protected abstract void PerformAction();
 
         protected virtual void Update()
         {
+            if (_buildingTimeLeft > 0)
+            {
+                _buildingTimeLeft -= Time.deltaTime;
+                return;
+            }
+
             if (CurrentProvider == null)
                 return;
 

@@ -1,4 +1,5 @@
-﻿using HighVoltage.Infrastructure.InGameTime;
+﻿using HighVoltage.HighVoltage.Scripts.UI.GameWindows;
+using HighVoltage.Infrastructure.InGameTime;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
@@ -21,6 +22,8 @@ namespace HighVoltage.Infrastructure.States
         private readonly IGameWindowService _gameWindowService;
         private readonly ILevelProgress _levelProgress;
         private readonly IMobSpawnerService _mobSpawnerService;
+        private InGameHUD _inGameHUD;
+        private bool _isWaveOngoing;
 
         public GameLoopState(GameStateMachine gameStateMachine, ISaveLoadService saveLoad,
             IGameWindowService gameWindowService, ILevelProgress levelProgress, IMobSpawnerService mobSpawnerService)
@@ -35,23 +38,39 @@ namespace HighVoltage.Infrastructure.States
 
         public void Enter()
         {
-            InGameHUD gameWindowBase = _gameWindowService.GetWindow(GameWindowId.InGameHUD).GetComponent<InGameHUD>();
-            gameWindowBase.SetNextWaveTimer(_levelProgress.LoadedWave.SecondsDelayBeforeWave);
+            _inGameHUD = _gameWindowService.GetWindow(GameWindowId.InGameHUD).GetComponent<InGameHUD>();
+            BeforeGameHUD beforeGameHUD = _gameWindowService.GetWindow(GameWindowId.BeforeGameHUD).GetComponent<BeforeGameHUD>();
+            beforeGameHUD.PlayerReadyToStart += (_, __) =>
+            {
+                StartGame();
+            };
 
-            gameWindowBase.NextWaveTimerIsUp += (_, __) => _mobSpawnerService.LaunchMobSpawning();
+            _inGameHUD.NextWaveTimerIsUp += (_, __) =>
+            {
+                _mobSpawnerService.UpdateWaveOngoingStatus(true);
+                _mobSpawnerService.LaunchMobSpawning();
+            };
             _levelProgress.WaveCleared += (_, __) =>
             {
+                _mobSpawnerService.UpdateWaveOngoingStatus(false);
                 _mobSpawnerService.UpdateWaveContent(_levelProgress.LoadedWave);
-                gameWindowBase.SetNextWaveTimer(_levelProgress.GetCurrentWaveTimer());
+                _inGameHUD.SetNextWaveTimer(_levelProgress.GetCurrentWaveTimer());
             };
             _levelProgress.LevelCleared += (_, __) =>
             {
+                _mobSpawnerService.UpdateWaveOngoingStatus(false);
                 _gameStateMachine.Enter<GameFinishedState>();
             };
             _levelProgress.PlayerCoreDestroyed += (_, __) =>
             {
                 _gameStateMachine.Enter<GameFinishedState>();
             };
+        }
+
+        private void StartGame()
+        {
+            _inGameHUD.SetNextWaveTimer(_levelProgress.LoadedWave.SecondsDelayBeforeWave);
+            _gameWindowService.Open(GameWindowId.InGameHUD);
         }
 
         public void Exit()

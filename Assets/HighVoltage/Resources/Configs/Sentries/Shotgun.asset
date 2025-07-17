@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Shotgun
   m_EditorClassIdentifier: 
   sentryPrefab: {fileID: 5963175928648131307, guid: 23306f535e627c947a9b61493c2c1cd2, type: 3}
+  bulletPrefab: {fileID: 0}
   timeBetweenActions: 1.8
   maxDurability: 500
   damage: 30
@@ -20,5 +21,9 @@ MonoBehaviour:
   sentryId: 2
   bulletsPerAction: 7
   bulletsAngleOffset: 20
+  powerConsumption: 0
+  stunTime: 0
   sentryIcon: {fileID: 21300000, guid: 9c6b5515383b70349ad1db9b5274df05, type: 3}
   buildPrice: 200
+  secondsToBuild: 3
+  reward: 0
