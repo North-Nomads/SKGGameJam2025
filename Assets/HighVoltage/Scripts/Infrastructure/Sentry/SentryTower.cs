@@ -54,7 +54,7 @@ namespace HighVoltage.Infrastructure.Sentry
 
         protected virtual void Update()
         {
-            if (CurrentProvider == null)
+            if (CurrentProvider == null || !CurrentProvider.IsActive)
                 return;
 
             KeepDecay();
@@ -101,8 +101,6 @@ namespace HighVoltage.Infrastructure.Sentry
                 _decayCooldownTimeLeft -= Time.deltaTime;
                 return;
             }
-
-            _currentProvider.RequestPower(Config.PowerConsumption);
             _decayCooldownTimeLeft = OneSecond;
             CurrentDurability -= DecayPerSecond;
             if (CurrentDurability <= 0)
@@ -126,6 +124,8 @@ namespace HighVoltage.Infrastructure.Sentry
         }
 
         public ICurrentSource CurrentProvider => _currentProvider;
+
+        public float Consumption => throw new NotImplementedException();
 
         public void AttachToSource(ICurrentSource currentProvider)
         {

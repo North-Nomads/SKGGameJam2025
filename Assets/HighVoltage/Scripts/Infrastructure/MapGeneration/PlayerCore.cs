@@ -38,6 +38,8 @@ namespace HighVoltage
         private float _currentCurrentOutput;
         public float Output => _currentCurrentOutput;
 
+        public bool IsActive { get; private set; }
+
         public void Initialize(IMobSpawnerService mobSpawner, LevelConfig levelConfig)
         {
             _mobSpawner = mobSpawner;
@@ -64,6 +66,11 @@ namespace HighVoltage
         private void Update()
         {
             _currentCurrentOutput = _currentGeneration;
+            foreach (var receiver in Receivers)
+            {
+                _currentCurrentOutput -= receiver.Consumption;
+            }
+            IsActive = _currentCurrentOutput >= 0;
         }
 
         public void RequestPower(float configPowerConsumption)

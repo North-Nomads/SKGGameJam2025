@@ -127,6 +127,7 @@ GameObject:
   - component: {fileID: 502827662028249600}
   - component: {fileID: 376189782751003696}
   - component: {fileID: 3293749472009735155}
+  - component: {fileID: 6073343875962706350}
   m_Layer: 9
   m_Name: SentrySniper
   m_TagString: Untagged
@@ -218,3 +219,38 @@ MonoBehaviour:
   bulletPrefab: {fileID: -8056474331501318046, guid: 4bff9a68a8608e545a57d58ef2438abd, type: 3}
   scanRadius: 6
   bulletSpawnPoint: {fileID: 6663315526061819139}
+--- !u!58 &6073343875962706350
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137622353348788599}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
