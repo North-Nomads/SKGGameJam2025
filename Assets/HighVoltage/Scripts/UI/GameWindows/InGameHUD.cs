@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using TMPro;
@@ -10,10 +12,12 @@ namespace HighVoltage.UI.GameWindows
     public class InGameHUD : GameWindowBase
     {
         [SerializeField] private TextMeshProUGUI nextWaveTimer;
+        [SerializeField] private TextMeshProUGUI playerWallet;
         [SerializeField] private Transform buildingCardParent;
         [SerializeField] private Image playerCoreHealthBar;
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
+        private List<BuildingCard> _buildingCards;
 
         public event EventHandler NextWaveTimerIsUp = delegate { };
 
@@ -28,10 +32,20 @@ namespace HighVoltage.UI.GameWindows
             nextWaveTimer.gameObject.SetActive(true);
         }
 
-        public void ProvideSceneData(PlayerCore playerCore, IPlayerBuildingService buildingService)
+        public void ProvideSceneData(PlayerCore playerCore, IPlayerBuildingService buildingService, 
+            IBuildingStoreService buildingStore)
         {
+            _buildingCards = new List<BuildingCard>();
             SetupPlayerCoreObserver();
             BuildBuildingUI();
+            playerWallet.text = buildingStore.MoneyPlayerHas.ToString();
+            
+            buildingStore.CurrencyChanged += (_, newMoney) =>
+            {
+                playerWallet.text = newMoney.ToString();
+                foreach (BuildingCard buildingCard in _buildingCards) 
+                    buildingCard.UpdatePurchasableStatus(newMoney);
+            };  
             return;
 
             void BuildBuildingUI()
@@ -40,7 +54,16 @@ namespace HighVoltage.UI.GameWindows
                 {
                     BuildingCard buildingCard = GameWindowService.CreateBuildingCard(sentry, buildingCardParent);
                     buildingCard.OnCardSelected += (sender, selectedSentry) =>
+                    {
+                        foreach (BuildingCard card in _buildingCards)
+                        {
+                            card.ToggleSelection(false);    
+                        }
+
+                        ((BuildingCard)sender).ToggleSelection(true);
                         buildingService.SelectedSentryChanged(selectedSentry);
+                    };
+                    _buildingCards.Add(buildingCard);
                 }
             }
 

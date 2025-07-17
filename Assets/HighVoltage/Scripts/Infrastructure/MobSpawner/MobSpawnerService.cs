@@ -98,7 +98,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
         private void HandleMobDeath(object sender, MobBrain mob)
         {
             _currentlyAliveMobs.Remove(mob);
-            AnotherMobDied(null, _currentlyAliveMobs.Count);
+            AnotherMobDied(null, mob.Config.EnemyId);
         }
     }
 }

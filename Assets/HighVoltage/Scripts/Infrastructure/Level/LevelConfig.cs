@@ -8,6 +8,7 @@ namespace HighVoltage.Level
     {
         [Header("=== LEVEL ===")]
         [SerializeField] private int levelID = 0;
+        [SerializeField] private int initialMoney = 0;
         [Header("Core/generator parameters")]
         [SerializeField] private int coreHealth;
         [SerializeField] private float generatorCurrentGenerationPerSecond;
@@ -16,9 +17,10 @@ namespace HighVoltage.Level
         [SerializeField] private int[] sentryIDs;
         [Header("Elements = waves")]
         [SerializeField] private MobWave[] mobWaves;
-        
+
 
         public int LevelID => levelID;
+        public int InitialMoney => initialMoney;
         public MobWave[] MobWaves => mobWaves;
         public int CoreHealth => coreHealth;
         public int[] SentryIDs => sentryIDs;
