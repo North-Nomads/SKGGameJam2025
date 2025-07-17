@@ -6,6 +6,7 @@ using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System.Linq;
 using Cinemachine;
+using HighVoltage.HighVoltage.Scripts.UI.GameWindows;
 using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Services;
@@ -109,8 +110,9 @@ namespace HighVoltage.Infrastructure.States
                 .GetComponent<InGameHUD>()
                 .ProvideSceneData(playerCore, _buildingService, _buildingStore);
             _gameWindowService.GetWindow(GameWindowId.EndGame);
+            _gameWindowService.GetWindow(GameWindowId.BeforeGameHUD);
             InitializePauseMenu();
-            _gameWindowService.Open(GameWindowId.InGameHUD);
+            _gameWindowService.Open(GameWindowId.BeforeGameHUD);
         }
 
         private void InitializePauseMenu()
