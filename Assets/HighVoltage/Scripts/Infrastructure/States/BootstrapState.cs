@@ -1,4 +1,5 @@
 ﻿using HighVoltage.Infrastructure.AssetManagement;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.InGameTime;
@@ -6,7 +7,6 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
-using HighVoltage.Map;
 using HighVoltage.Map.Building;
 using HighVoltage.Services.Inputs;
 using HighVoltage.Services.Progress;
@@ -46,7 +46,7 @@ namespace HighVoltage.Infrastructure.States
         {
             RegisterStaticDataService();
             _allServices.RegisterSingle<IInGameTimeService>(new InGameTimeService());
-
+            _allServices.RegisterSingle<IBuildingStoreService>(new BuildingStoreService());
             _allServices.RegisterSingle<IInputService>(new DesktopInputService());
             
             _allServices.RegisterSingle<IAssetProvider>(new AssetProvider());
@@ -58,7 +58,7 @@ namespace HighVoltage.Infrastructure.States
                 _allServices.Single<IGameFactory>(), _allServices.Single<IStaticDataService>(), _coroutineRunner));
             
             _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>(),
-                _allServices.Single<IStaticDataService>()));
+                _allServices.Single<IStaticDataService>(), _allServices.Single<IBuildingStoreService>()));
             
             _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(_allServices.Single<IPlayerProgressService>(),
                                                                                          _allServices.Single<IGameFactory>(),
@@ -75,7 +75,8 @@ namespace HighVoltage.Infrastructure.States
                                                                           _allServices.Single<IGameFactory>(),
                                                                           _allServices.Single<ICameraService>()));
             _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService(_allServices.Single<IStaticDataService>(),
-                _allServices.Single<IGameFactory>(), _allServices.Single<IMobSpawnerService>()));
+                _allServices.Single<IGameFactory>(), _allServices.Single<IMobSpawnerService>(),
+                _allServices.Single<IBuildingStoreService>()));
         }
 
         private void RegisterStaticDataService()

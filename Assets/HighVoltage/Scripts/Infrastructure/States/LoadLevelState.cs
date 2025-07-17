@@ -5,6 +5,7 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System.Linq;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Services;
 using HighVoltage.Map.Building;
 using UnityEngine.Tilemaps;
@@ -31,11 +32,12 @@ namespace HighVoltage.Infrastructure.States
         private readonly Canvas _loadingCurtain;
         private readonly IPlayerBuildingService _buildingService;
         private readonly ILevelProgress _levelProgress;
+        private readonly IBuildingStoreService _buildingStore;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
             IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory,
-            IPlayerBuildingService buildingService, ILevelProgress levelProgress)
+            IPlayerBuildingService buildingService, ILevelProgress levelProgress, IBuildingStoreService buildingStore)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -48,6 +50,7 @@ namespace HighVoltage.Infrastructure.States
             _uiFactory = uiFactory;
             _buildingService = buildingService;
             _levelProgress = levelProgress;
+            _buildingStore = buildingStore;
         }
 
         public void Enter(string sceneName)
@@ -71,6 +74,7 @@ namespace HighVoltage.Infrastructure.States
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore);
+            _buildingStore.AddMoney(config.InitialMoney);
             _gameStateMachine.Enter<GameLoopState>();
         }
         
@@ -89,10 +93,9 @@ namespace HighVoltage.Infrastructure.States
         private void InitializeInGameHUD(PlayerCore playerCore)
         {
             _uiFactory.CreateUIRoot();
-            
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvideSceneData(playerCore, _buildingService);
+                .ProvideSceneData(playerCore, _buildingService, _buildingStore);
             _gameWindowService.GetWindow(GameWindowId.EndGame);
             InitializePauseMenu();
             _gameWindowService.Open(GameWindowId.InGameHUD);
