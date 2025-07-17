@@ -125,7 +125,7 @@ namespace HighVoltage.Infrastructure.Sentry
 
         public ICurrentSource CurrentProvider => _currentProvider;
 
-        public float Consumption => throw new NotImplementedException();
+        public float Consumption => Config.PowerConsumption;
 
         public void AttachToSource(ICurrentSource currentProvider)
         {
