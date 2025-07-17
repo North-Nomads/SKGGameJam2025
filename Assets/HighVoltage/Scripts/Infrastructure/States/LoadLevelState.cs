@@ -5,7 +5,9 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
 using System.Linq;
+using Cinemachine;
 using HighVoltage.Infrastructure.BuildingStore;
+using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Services;
 using HighVoltage.Map.Building;
 using UnityEngine.Tilemaps;
@@ -33,11 +35,13 @@ namespace HighVoltage.Infrastructure.States
         private readonly IPlayerBuildingService _buildingService;
         private readonly ILevelProgress _levelProgress;
         private readonly IBuildingStoreService _buildingStore;
+        private readonly ICameraService _cameraService;
 
         public LoadLevelState(GameStateMachine gameStateMachine, SceneLoader sceneLoader, Canvas loadingCurtain,
             IGameFactory gameFactory, IPlayerProgressService progressService, IMobSpawnerService mobSpawnerService,
             IStaticDataService staticData, IGameWindowService gameWindowService, IUIFactory uiFactory,
-            IPlayerBuildingService buildingService, ILevelProgress levelProgress, IBuildingStoreService buildingStore)
+            IPlayerBuildingService buildingService, ILevelProgress levelProgress, IBuildingStoreService buildingStore,
+            ICameraService cameraService)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -51,6 +55,7 @@ namespace HighVoltage.Infrastructure.States
             _buildingService = buildingService;
             _levelProgress = levelProgress;
             _buildingStore = buildingStore;
+            _cameraService = cameraService;
         }
 
         public void Enter(string sceneName)
@@ -74,10 +79,17 @@ namespace HighVoltage.Infrastructure.States
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
             InitializeInGameHUD(playerCore);
+            InitializeCamera();
             _buildingStore.AddMoney(config.InitialMoney);
             _gameStateMachine.Enter<GameLoopState>();
         }
-        
+
+        private void InitializeCamera()
+        {
+            GameObject cameraSpawnPoint = GameObject.FindGameObjectWithTag(Constants.CameraSpawnPoint);
+            _cameraService.InitializeCamera(cameraSpawnPoint.transform.position);
+        }
+
         private void InitializeBuilder()
         {
             PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();

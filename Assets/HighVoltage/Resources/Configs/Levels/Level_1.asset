@@ -19,7 +19,7 @@ MonoBehaviour:
   deltaBetweenSpawns: 0.5
   sentryIDs: 010000000200000003000000
   mobWaves:
-  - secondsDelayBeforeWave: 10
+  - secondsDelayBeforeWave: 55
     gates:
     - levelEnemies:
       - quantity: 5

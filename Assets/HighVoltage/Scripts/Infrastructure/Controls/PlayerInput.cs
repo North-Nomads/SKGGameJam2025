@@ -71,6 +71,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""415034d6-6d73-45eb-973b-fa5b540efab0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -150,6 +159,61 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""OpenPauseMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""55b46cb5-5b21-417f-a9fc-0f0cb2667bed"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""639201a1-fd6f-4e30-8f80-868c728fce3a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""995bdfd2-7587-42ca-920c-5623dde780c1"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""656f1822-9f38-48ee-8e36-3b4a61fd95c2"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""7bce486d-26e4-43b4-971e-e58e8db6b4c6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -163,6 +227,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Editing_SwitchEditingMode = m_Editing.FindAction("SwitchEditingMode", throwIfNotFound: true);
         m_Editing_Cursor = m_Editing.FindAction("Cursor", throwIfNotFound: true);
         m_Editing_OpenPauseMenu = m_Editing.FindAction("OpenPauseMenu", throwIfNotFound: true);
+        m_Editing_MoveCamera = m_Editing.FindAction("MoveCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +294,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Editing_SwitchEditingMode;
     private readonly InputAction m_Editing_Cursor;
     private readonly InputAction m_Editing_OpenPauseMenu;
+    private readonly InputAction m_Editing_MoveCamera;
     public struct EditingActions
     {
         private @PlayerInput m_Wrapper;
@@ -238,6 +304,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @SwitchEditingMode => m_Wrapper.m_Editing_SwitchEditingMode;
         public InputAction @Cursor => m_Wrapper.m_Editing_Cursor;
         public InputAction @OpenPauseMenu => m_Wrapper.m_Editing_OpenPauseMenu;
+        public InputAction @MoveCamera => m_Wrapper.m_Editing_MoveCamera;
         public InputActionMap Get() { return m_Wrapper.m_Editing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -262,6 +329,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @OpenPauseMenu.started += instance.OnOpenPauseMenu;
             @OpenPauseMenu.performed += instance.OnOpenPauseMenu;
             @OpenPauseMenu.canceled += instance.OnOpenPauseMenu;
+            @MoveCamera.started += instance.OnMoveCamera;
+            @MoveCamera.performed += instance.OnMoveCamera;
+            @MoveCamera.canceled += instance.OnMoveCamera;
         }
 
         private void UnregisterCallbacks(IEditingActions instance)
@@ -281,6 +351,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @OpenPauseMenu.started -= instance.OnOpenPauseMenu;
             @OpenPauseMenu.performed -= instance.OnOpenPauseMenu;
             @OpenPauseMenu.canceled -= instance.OnOpenPauseMenu;
+            @MoveCamera.started -= instance.OnMoveCamera;
+            @MoveCamera.performed -= instance.OnMoveCamera;
+            @MoveCamera.canceled -= instance.OnMoveCamera;
         }
 
         public void RemoveCallbacks(IEditingActions instance)
@@ -305,5 +378,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSwitchEditingMode(InputAction.CallbackContext context);
         void OnCursor(InputAction.CallbackContext context);
         void OnOpenPauseMenu(InputAction.CallbackContext context);
+        void OnMoveCamera(InputAction.CallbackContext context);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using Cinemachine;
+using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Infrastructure.Services;
@@ -17,5 +19,6 @@ namespace HighVoltage.Infrastructure.Factory
         PlayerBuildBehaviour CreateBuilder();
         Bullet CreateBullet(Transform at, Bullet which);
         SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
+        PlayerCamera CreateCamera(Vector3 spawnPosition);
     }
 }
