@@ -23,6 +23,7 @@ namespace HighVoltage.Infrastructure.States
         private readonly ILevelProgress _levelProgress;
         private readonly IMobSpawnerService _mobSpawnerService;
         private InGameHUD _inGameHUD;
+        private bool _isWaveOngoing;
 
         public GameLoopState(GameStateMachine gameStateMachine, ISaveLoadService saveLoad,
             IGameWindowService gameWindowService, ILevelProgress levelProgress, IMobSpawnerService mobSpawnerService)
@@ -44,14 +45,20 @@ namespace HighVoltage.Infrastructure.States
                 StartGame();
             };
 
-            _inGameHUD.NextWaveTimerIsUp += (_, __) => _mobSpawnerService.LaunchMobSpawning();
+            _inGameHUD.NextWaveTimerIsUp += (_, __) =>
+            {
+                _mobSpawnerService.UpdateWaveOngoingStatus(true);
+                _mobSpawnerService.LaunchMobSpawning();
+            };
             _levelProgress.WaveCleared += (_, __) =>
             {
+                _mobSpawnerService.UpdateWaveOngoingStatus(false);
                 _mobSpawnerService.UpdateWaveContent(_levelProgress.LoadedWave);
                 _inGameHUD.SetNextWaveTimer(_levelProgress.GetCurrentWaveTimer());
             };
             _levelProgress.LevelCleared += (_, __) =>
             {
+                _mobSpawnerService.UpdateWaveOngoingStatus(false);
                 _gameStateMachine.Enter<GameFinishedState>();
             };
             _levelProgress.PlayerCoreDestroyed += (_, __) =>

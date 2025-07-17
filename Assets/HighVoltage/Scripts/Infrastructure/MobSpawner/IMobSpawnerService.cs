@@ -10,9 +10,11 @@ namespace HighVoltage.Infrastructure.MobSpawning
     {
         event EventHandler<int> AnotherMobDied;
         List<MobBrain> CurrentlyAliveMobs { get; }
+        bool IsWaveOngoing { get; }
         void LoadConfigToSpawners(MobWave waveConfig, WaypointHolder[] spawnerSpots, float deltaBetweenSpawns);
         void HandleMobReachedCore(MobBrain mob);
         void LaunchMobSpawning();
         void UpdateWaveContent(MobWave newWave);
+        void UpdateWaveOngoingStatus(bool isWaveOngoing);
     }
 }

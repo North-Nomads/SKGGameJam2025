@@ -25,6 +25,9 @@ namespace HighVoltage.Infrastructure.MobSpawning
         private WaypointHolder[] _spawnerSpots;
         private float _deltaBetweenSpawns;
         private MobWave _mobWaveConfig;
+        private bool _isWaveOngoing;
+        
+        public bool IsWaveOngoing => _isWaveOngoing;
 
         public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
         {
@@ -63,6 +66,11 @@ namespace HighVoltage.Infrastructure.MobSpawning
 
         public void UpdateWaveContent(MobWave newWave) 
             => _mobWaveConfig = newWave;
+
+        public void UpdateWaveOngoingStatus(bool isWaveOngoing)
+        {
+            _isWaveOngoing = isWaveOngoing;
+        }
 
         private IEnumerator SpawnGateCoroutine(Gate gate, WaypointHolder spawnerSpot, float deltaBetweenSpawns)
         {

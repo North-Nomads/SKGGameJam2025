@@ -44,7 +44,6 @@ namespace HighVoltage.UI.GameWindows
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            Debug.Log($"For {name}: affordance={_canBeAfforded}");
             if (!_canBeAfforded)
                 return;
             

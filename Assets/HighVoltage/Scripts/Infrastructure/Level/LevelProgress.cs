@@ -70,7 +70,7 @@ namespace HighVoltage.Level
 
         private void HandleMobDeath(object sender, int mobID)
         {
-            _buildingStore.AddMoney(_staticData.ForSentryID(mobID).Reward);
+            _buildingStore.AddMoney(_staticData.ForEnemyID(mobID).Reward);
             _mobsLeftThisWave--;
             
             if (_mobsLeftThisWave != 0)

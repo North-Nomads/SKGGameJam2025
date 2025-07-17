@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rifle
   m_EditorClassIdentifier: 
   sentryPrefab: {fileID: 1288593593139877954, guid: 12ed28f89fddf1a4d9799b656cd8955d, type: 3}
+  bulletPrefab: {fileID: 0}
   timeBetweenActions: 1.5
   maxDurability: 500
   damage: 60
@@ -20,5 +21,9 @@ MonoBehaviour:
   sentryId: 1
   bulletsPerAction: 1
   bulletsAngleOffset: 1
+  powerConsumption: 0
+  stunTime: 0
   sentryIcon: {fileID: 21300000, guid: 32c7633f89e1aaa4f9ae6c9285386911, type: 3}
   buildPrice: 100
+  secondsToBuild: 3
+  reward: 0
