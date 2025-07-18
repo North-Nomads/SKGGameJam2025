@@ -63,7 +63,6 @@ namespace HighVoltage.Infrastructure.Sentry
                 return;
             }
 
-            if (CurrentProvider == null)
             if (CurrentSource == null || !CurrentSource.IsActive)
                 return;
 

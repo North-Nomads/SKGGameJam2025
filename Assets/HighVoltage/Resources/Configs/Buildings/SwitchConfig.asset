@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwitchConfig
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
-  buildingID: 0
+  buildingID: 3
   hudIcon: {fileID: -1069003561, guid: 3bfefe1b9396c984c9b00184089e36f1, type: 3}
   buildPrice: 50
   switchSwitchPrefab: {fileID: 2865021106803066973, guid: 68be55a5d272430488e6dcaac473be4d, type: 3}
