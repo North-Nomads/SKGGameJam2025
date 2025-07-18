@@ -12,6 +12,8 @@ namespace HighVoltage
 
         public float Consumption => switchMain.Consumption;
 
+        public LineRenderer Wire { get; set; }
+
         public void AttachToSource(ICurrentSource currentProvider)
         {
             CurrentSource = currentProvider;

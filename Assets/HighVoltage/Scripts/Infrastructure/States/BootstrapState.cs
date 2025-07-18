@@ -90,6 +90,7 @@ namespace HighVoltage.Infrastructure.States
             staticData.LoadSentries();
             staticData.LoadBuildingConfigs();
             staticData.LoadBuildingPrefabs();
+            staticData.LoadWirePrefab();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
     }

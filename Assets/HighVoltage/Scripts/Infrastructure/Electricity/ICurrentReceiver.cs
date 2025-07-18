@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace HighVoltage
 {
     public interface ICurrentReceiver : ICurrentObject
@@ -7,5 +9,7 @@ namespace HighVoltage
         public void AttachToSource(ICurrentSource currentProvider);
 
         public float Consumption { get; }
+
+        public LineRenderer Wire { get; set; }
     }
 }

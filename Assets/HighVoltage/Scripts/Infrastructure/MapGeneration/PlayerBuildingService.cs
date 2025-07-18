@@ -4,6 +4,9 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
+using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -19,6 +22,9 @@ namespace HighVoltage
         private readonly IGameFactory _gameFactory;
         private readonly IMobSpawnerService _mobSpawnerService;
         private readonly IBuildingStoreService _buildingStoreService;
+
+
+        private readonly List<LineRenderer> _wires = new();
 
         public Tilemap MapTilemap { get; set; }
 
@@ -75,7 +81,16 @@ namespace HighVoltage
             {
                 _selectedReceiver.AttachToSource(_selectedSource);
                 _selectedSource.AttachReceiver(_selectedReceiver);
+                AddWire((_selectedReceiver as MonoBehaviour).gameObject.transform.position,
+                    (_selectedSource as MonoBehaviour).gameObject.transform.position);
             }
+        }
+        public void ChangedEditingMode(EditingMode newMode)
+        {
+            if (newMode == EditingMode.Wiring)
+                _wires.ForEach(x => x.enabled = true);
+            else
+                _wires.ForEach(x => x.enabled = false);
         }
 
         public void SelectTargetForUnwiring(ICurrentObject building)
@@ -95,6 +110,18 @@ namespace HighVoltage
                 receiver.CurrentSource.DetachReceiver(receiver);
                 receiver.AttachToSource(null);
             }
+        }
+        private void AddWire(Vector2 outPos, Vector2 inPos)
+        {
+            var wire = UnityEngine.Object.Instantiate(_staticDataService.GetWirePrefab());
+            wire.SetPositions(new Vector3[] { outPos, inPos });
+            _wires.Add(wire);
+        }
+
+        public void CleanUp()
+        {
+            _wires.ForEach(wire => UnityEngine.Object.Destroy(wire));
+            _wires.Clear();
         }
     }
 }

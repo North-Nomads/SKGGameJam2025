@@ -26,6 +26,8 @@ namespace HighVoltage
             }
         }
 
+        public List<LineRenderer> Wires { get; } = new();
+
         public event EventHandler OnOverload;
 
         public void ChangeState(bool enable)

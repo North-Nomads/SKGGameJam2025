@@ -136,6 +136,8 @@ namespace HighVoltage.Infrastructure.Sentry
 
         public float Consumption => Config.PowerConsumption;
 
+        public LineRenderer Wire { get; set; }
+
         public void AttachToSource(ICurrentSource currentProvider)
         {
             _currentProvider = currentProvider;

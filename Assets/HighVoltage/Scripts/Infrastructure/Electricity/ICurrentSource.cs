@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace HighVoltage
 {
@@ -12,5 +13,7 @@ namespace HighVoltage
         public void AttachReceiver(ICurrentReceiver receiver);
         public void DetachAllReceivers();
         public void DetachReceiver(ICurrentReceiver receiver);
+
+        public List<LineRenderer> Wires { get; }
     }
 }

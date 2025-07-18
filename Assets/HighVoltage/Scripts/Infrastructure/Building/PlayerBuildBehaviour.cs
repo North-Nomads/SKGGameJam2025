@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
 using HighVoltage.UI.Services;
@@ -19,6 +20,7 @@ namespace HighVoltage
         private IStaticDataService _dataService;
         private IGameWindowService _gameWindowService;
         private EditingMode _editingMode;
+
 
         private void Update()
         {
@@ -112,12 +114,15 @@ namespace HighVoltage
             if (obj.control is not KeyControl control)
                 return;
 
+
             if (control.keyCode == Key.Q)
                 _editingMode = EditingMode.Building;
-            else if(control.keyCode == Key.W)
+            else if(control.keyCode == Key.Tab)
                 _editingMode = EditingMode.Wiring;
             else if(control.keyCode == Key.E)
                 _editingMode = EditingMode.Demolition;
+
+            _buildingService.ChangedEditingMode(_editingMode);
         }
     }
 }
