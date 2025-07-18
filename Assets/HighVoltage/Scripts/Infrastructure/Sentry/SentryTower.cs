@@ -54,7 +54,7 @@ namespace HighVoltage.Infrastructure.Sentry
 
         protected virtual void Update()
         {
-            if (CurrentProvider == null || !CurrentProvider.IsActive)
+            if (CurrentSource == null || !CurrentSource.IsActive)
                 return;
 
             KeepDecay();
@@ -123,7 +123,7 @@ namespace HighVoltage.Infrastructure.Sentry
             rotatingPart.rotation = Quaternion.Euler(0, 0, angle + AngleOffset);
         }
 
-        public ICurrentSource CurrentProvider => _currentProvider;
+        public ICurrentSource CurrentSource => _currentProvider;
 
         public float Consumption => Config.PowerConsumption;
 

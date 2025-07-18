@@ -38,6 +38,13 @@ namespace HighVoltage
             if (tile is not BuildableTile buildableTile || !buildableTile.isBuildable)
                 return;
 
+            //thanks for this awesome refactoring, never needed buildings anyway...
+            if(_selectedSentry == 0)
+            {
+                Object.Instantiate(_staticDataService.GetBuildingPrefab(1));
+                return;
+            }
+
             SentryConfig sentryConfig = _staticDataService.ForSentryID(_selectedSentry);
             
             if (!_buildingStoreService.CanAfford(sentryConfig))
@@ -79,7 +86,7 @@ namespace HighVoltage
             else if (building is ICurrentReceiver receiver)
             {
                 //i didn't feel like adding DetachFromSource, mb
-                receiver.CurrentProvider.DetachReceiver(receiver);
+                receiver.CurrentSource.DetachReceiver(receiver);
                 receiver.AttachToSource(null);
             }
         }

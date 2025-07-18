@@ -2,7 +2,7 @@ namespace HighVoltage
 {
     public interface ICurrentReceiver : ICurrentObject
     {
-        public ICurrentSource CurrentProvider { get; }
+        public ICurrentSource CurrentSource { get; }
 
         public void AttachToSource(ICurrentSource currentProvider);
 
