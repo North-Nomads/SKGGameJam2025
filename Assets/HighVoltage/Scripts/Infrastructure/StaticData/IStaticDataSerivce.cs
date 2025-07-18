@@ -14,13 +14,14 @@ namespace HighVoltage.StaticData
         LevelConfig ForLevel(int levelID);
         WindowConfig ForWindow(WindowId endGame);
         GameWindowConfig ForGameWindow(GameWindowId endGame);
-        void LoadEnemies();
         MobConfig ForEnemyID(int zombieId);
+        void LoadEnemies();
         Texture2D GetTileAtlas();
         void LoadTileAtlas();
         SentryConfig ForSentryID(int sentryConfigID);
         void LoadSentries();
         void LoadBuildingPrefabs();
-        GameObject GetBuildingPrefab(int prefabID);
+        SwitchConfig ForSwitchID(int buildingID);
+        void LoadBuildingConfigs();
     }
 }

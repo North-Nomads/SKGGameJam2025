@@ -18,6 +18,7 @@ MonoBehaviour:
   generatorCurrentGenerationPerSecond: 10
   deltaBetweenSpawns: 0.5
   sentryIDs: 010000000200000003000000
+  buildingIDs: 00000000
   mobWaves:
   - secondsDelayBeforeWave: 10
     gates:

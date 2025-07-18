@@ -15,8 +15,10 @@ namespace HighVoltage.Level
         [SerializeField] private float deltaBetweenSpawns;
         [Header("Building options")]
         [SerializeField] private int[] sentryIDs;
+        [SerializeField] private int[] buildingIDs;
         [Header("Elements = waves")]
         [SerializeField] private MobWave[] mobWaves;
+
 
 
         public int LevelID => levelID;
@@ -26,6 +28,8 @@ namespace HighVoltage.Level
         public int[] SentryIDs => sentryIDs;
         public float GeneratorCapacity => generatorCurrentGenerationPerSecond;
         public float DeltaBetweenSpawns => deltaBetweenSpawns;
+
+        public int[] BuildingIDs => buildingIDs;
     }
 
     [Serializable]

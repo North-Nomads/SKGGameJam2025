@@ -3,9 +3,7 @@ using System.Linq;
 using HighVoltage.StaticData;
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.BuildingStore;
-using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.MobSpawning;
-using UnityEngine;
 
 namespace HighVoltage.Level
 {
@@ -56,8 +54,14 @@ namespace HighVoltage.Level
             PlayerCoreDestroyed(this, EventArgs.Empty);
         }
 
-        public List<SentryConfig> GetSentriesForThisLevel()
-            => _loadedLevelConfig.SentryIDs.Select(sentryID => _staticData.ForSentryID(sentryID)).ToList();
+        public List<BuildingConfig> GetBuildingsForThisLevel()
+        {
+            IEnumerable<BuildingConfig> sentryConfigs = _loadedLevelConfig.SentryIDs
+                .Select(sentryID => _staticData.ForSentryID(sentryID) as BuildingConfig);
+            IEnumerable<BuildingConfig> buildingConfigs = _loadedLevelConfig.BuildingIDs
+                .Select(buildingID => _staticData.ForSwitchID(buildingID));
+            return sentryConfigs.Concat(buildingConfigs).ToList();
+        }
 
         public float GetCurrentWaveTimer()
             => _loadedWave.SecondsDelayBeforeWave;
@@ -70,7 +74,7 @@ namespace HighVoltage.Level
 
         private void HandleMobDeath(object sender, int mobID)
         {
-            _buildingStore.AddMoney(_staticData.ForSentryID(mobID).Reward);
+            _buildingStore.AddMoney(_staticData.ForEnemyID(mobID).Reward);
             _mobsLeftThisWave--;
             
             if (_mobsLeftThisWave != 0)

@@ -39,7 +39,10 @@ namespace HighVoltage.Infrastructure.Factory
             => _assets.Instantiate(which, at.position);
 
         public SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig) 
-            => _assets.Instantiate(sentryConfig.SentryPrefab, spawnPosition);
+            => _assets.Instantiate(sentryConfig.Prefab, spawnPosition);
+
+        public SwitchMain CreateSwitch(Vector3Int spawnPosition, SwitchConfig thingToBuild)
+            => _assets.Instantiate(thingToBuild.SwitchPrefab, spawnPosition);
 
         public MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 at) 
             => Object.Instantiate(whichEnemyPrefab, at, Quaternion.identity);

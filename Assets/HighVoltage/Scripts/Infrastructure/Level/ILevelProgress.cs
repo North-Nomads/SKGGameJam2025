@@ -14,7 +14,7 @@ namespace HighVoltage.Level
         MobWave LoadedWave { get; }
         bool IsLevelSuccessfullyFinished { get; }
         void LoadLevelConfig(LevelConfig levelConfig, PlayerCore playerCore);
-        List<SentryConfig> GetSentriesForThisLevel();
+        List<BuildingConfig> GetBuildingsForThisLevel();
         float GetCurrentWaveTimer();
     }
 }

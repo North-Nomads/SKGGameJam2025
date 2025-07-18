@@ -50,9 +50,9 @@ namespace HighVoltage.UI.GameWindows
 
             void BuildBuildingUI()
             {
-                foreach (SentryConfig sentry in LevelProgress.GetSentriesForThisLevel())
+                foreach (BuildingConfig building in LevelProgress.GetBuildingsForThisLevel())
                 {
-                    BuildingCard buildingCard = GameWindowService.CreateBuildingCard(sentry, buildingCardParent);
+                    BuildingCard buildingCard = GameWindowService.CreateBuildingCard(building, buildingCardParent);
                     buildingCard.OnCardSelected += (sender, selectedSentry) =>
                     {
                         foreach (BuildingCard card in _buildingCards)

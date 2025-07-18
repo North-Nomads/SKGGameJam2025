@@ -11,7 +11,7 @@ namespace HighVoltage
 {
     public class PlayerBuildingService : IPlayerBuildingService
     {
-        private int _selectedSentry;
+        private int _selectedBuildingID;
         private ICurrentReceiver _selectedReceiver;
         private ICurrentSource _selectedSource;
 
@@ -29,34 +29,40 @@ namespace HighVoltage
             _gameFactory = gameFactory;
             _mobSpawnerService = mobSpawnerService;
             _buildingStoreService = buildingStoreService;
-            _selectedSentry = 1;
+            _selectedBuildingID = 1;
         }
 
         public void BuildStructure(Vector3 worldCoordinates)
         {
             TileBase tile = MapTilemap.GetTile(MapTilemap.WorldToCell(worldCoordinates));
-            if (tile is not BuildableTile buildableTile || !buildableTile.isBuildable)
+            if (tile is not BuildableTile { isBuildable: true })
                 return;
 
-            //thanks for this awesome refactoring, never needed buildings anyway...
-            if(_selectedSentry == 0)
-            {
-                Object.Instantiate(_staticDataService.GetBuildingPrefab(1));
-                return;
-            }
-
-            SentryConfig sentryConfig = _staticDataService.ForSentryID(_selectedSentry);
+            SentryConfig sentryConfig = _staticDataService.ForSentryID(_selectedBuildingID);
+            SwitchConfig switchConfig = _staticDataService.ForSwitchID(_selectedBuildingID);
             
-            if (!_buildingStoreService.CanAfford(sentryConfig))
+            BuildingConfig thingToBuild = sentryConfig == null ? switchConfig : sentryConfig;
+            
+            if (!_buildingStoreService.CanAfford(thingToBuild))
                 return;
 
-            SentryTower sentryTower = _gameFactory.CreateSentry(MapTilemap.WorldToCell(worldCoordinates), sentryConfig);
-            sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);
-            _buildingStoreService.SpendMoneyOn(sentryConfig);
+            if (sentryConfig == null)
+            {
+                SwitchMain switchMain =
+                    _gameFactory.CreateSwitch(MapTilemap.WorldToCell(worldCoordinates), switchConfig);
+            }
+            else
+            {
+                SentryTower sentryTower = _gameFactory.CreateSentry(MapTilemap.WorldToCell(worldCoordinates), sentryConfig);
+                sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);    
+            }
+            
+            
+            _buildingStoreService.SpendMoneyOn(thingToBuild);
         }
 
         public void SelectedSentryChanged(int selectedSentry)
-            => _selectedSentry = selectedSentry;
+            => _selectedBuildingID = selectedSentry;
 
         public void SelectTargetForWiring(ICurrentObject building)
         {

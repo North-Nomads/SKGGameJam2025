@@ -11,10 +11,10 @@ namespace HighVoltage.Infrastructure.BuildingStore
 
         public int MoneyPlayerHas => _moneyPlayerHas;
 
-        public bool CanAfford(SentryConfig sentryConfig)
+        public bool CanAfford(BuildingConfig sentryConfig)
             => _moneyPlayerHas >= sentryConfig.BuildPrice;
 
-        public void SpendMoneyOn(SentryConfig sentryConfig)
+        public void SpendMoneyOn(BuildingConfig sentryConfig)
         {
             _moneyPlayerHas -= sentryConfig.BuildPrice;
             CurrencyChanged(this, _moneyPlayerHas);

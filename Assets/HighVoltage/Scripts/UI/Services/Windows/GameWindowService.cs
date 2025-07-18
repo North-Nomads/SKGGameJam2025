@@ -66,8 +66,8 @@ namespace HighVoltage.UI.Services
 
         public void ReturnToPreviousWindow()
             => Open(_previousWindow);
-
-        public BuildingCard CreateBuildingCard(SentryConfig building, Transform parent)
+        
+        public BuildingCard CreateBuildingCard(BuildingConfig building, Transform parent)
         {
             BuildingCard card = _uiFactory.InstantiateBuildingCard(parent);
             card.Initialize(building);

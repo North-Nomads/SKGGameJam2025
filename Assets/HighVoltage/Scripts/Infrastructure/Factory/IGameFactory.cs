@@ -17,5 +17,6 @@ namespace HighVoltage.Infrastructure.Factory
         PlayerBuildBehaviour CreateBuilder();
         Bullet CreateBullet(Transform at, Bullet which);
         SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
+        SwitchMain CreateSwitch(Vector3Int spawnPosition, SwitchConfig thingToBuild);
     }
 }

@@ -19,12 +19,12 @@ namespace HighVoltage.UI.GameWindows
         private bool _canBeAfforded;
         private int _itemPrice;
 
-        public void Initialize(SentryConfig config)
+        public void Initialize(BuildingConfig config)
         {
-            _sentryID = config.SentryId;
+            _sentryID = config.BuildingID;
             _itemPrice = config.BuildPrice;
             buildingPrice.text = config.BuildPrice.ToString();
-            itemIcon.sprite = config.SentryIcon;
+            itemIcon.sprite = config.HUDIcon;
             outline.enabled = false;
             _canBeAfforded = false;
             gameObject.name = config.name;

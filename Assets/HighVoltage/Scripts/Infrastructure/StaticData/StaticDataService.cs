@@ -16,9 +16,8 @@ namespace HighVoltage.StaticData
         private Dictionary<int, MobConfig> _zombieConfigs;
         private Dictionary<int, LevelConfig> _levels;
         private Dictionary<int, SentryConfig> _sentryConfigs;
+        private Dictionary<int, SwitchConfig> _switchConfigs;
         private Texture2D _tileAtlas;
-        private List<GameObject> _buildingPrefabs;
-        //public IEnumerable<GameObject> BuildgPrefabs { get => _buildngPrefabs; }
 
         public void LoadLevels()
             => _levels = Resources.LoadAll<LevelConfig>("Configs/Levels").ToDictionary(x => x.LevelID, x => x);
@@ -48,12 +47,19 @@ namespace HighVoltage.StaticData
             => _sentryConfigs.GetValueOrDefault(sentryConfigID);
         
         public void LoadSentries()
-            => _sentryConfigs = Resources.LoadAll<SentryConfig>("Configs/Sentries").ToDictionary(x => x.SentryId, x => x);
+            => _sentryConfigs = Resources.LoadAll<SentryConfig>("Configs/Sentries").ToDictionary(x => x.BuildingID, x => x);
 
         public MobConfig ForEnemyID(int zombieId)
             => _zombieConfigs.GetValueOrDefault(zombieId);
-        public void LoadBuildingPrefabs() => _buildingPrefabs = Resources.LoadAll<GameObject>("Prefabs/Buildings").ToList();
+        
+        public void LoadBuildingPrefabs() 
+            => Resources.LoadAll<GameObject>("Prefabs/Buildings").ToList();
+        
+        public SwitchConfig ForSwitchID(int buildingID) 
+            => _switchConfigs.GetValueOrDefault(buildingID);
 
-        public GameObject GetBuildingPrefab(int prefabID) => prefabID >= _buildingPrefabs.Count? null : _buildingPrefabs[prefabID];
+        public void LoadBuildingConfigs() =>
+            _switchConfigs = Resources.LoadAll<SwitchConfig>("Configs/Buildings")
+                .ToDictionary(x => x.BuildingID, x => x);
     }
 }

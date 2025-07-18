@@ -8,8 +8,8 @@ namespace HighVoltage.Infrastructure.BuildingStore
     {
         event EventHandler<int> CurrencyChanged;
         int MoneyPlayerHas { get; }
-        bool CanAfford(SentryConfig sentryConfig);
-        void SpendMoneyOn(SentryConfig sentryConfig);
+        bool CanAfford(BuildingConfig sentryConfig);
+        void SpendMoneyOn(BuildingConfig sentryConfig);
         void AddMoney(int reward);
     }
 }
