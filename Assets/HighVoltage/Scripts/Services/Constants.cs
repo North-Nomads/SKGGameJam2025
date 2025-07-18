@@ -9,5 +9,8 @@ namespace HighVoltage.Services
         public const float TimeToTick = .1f;
         public const string MobTag = "Mob";
         public const int TotalLevels = 3;
+        public const string CameraSpawnPoint = "CameraSpawnPoint";
+        public const string TilemapTagName = "Tilemap";
+        public const float TimeLeftAfterPreparationTimeSkip = 3f;
     }
 }

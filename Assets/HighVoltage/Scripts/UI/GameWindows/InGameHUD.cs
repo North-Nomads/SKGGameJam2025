@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
+using HighVoltage.Services;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,12 +16,25 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private TextMeshProUGUI nextWaveTimer;
         [SerializeField] private TextMeshProUGUI playerWallet;
         [SerializeField] private Transform buildingCardParent;
+        [SerializeField] private Button timerSkipButton;
         [SerializeField] private Image playerCoreHealthBar;
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
         private List<BuildingCard> _buildingCards;
-
+        
         public event EventHandler NextWaveTimerIsUp = delegate { };
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            timerSkipButton.onClick.AddListener(HandlePreparationTimeSkip);
+        }
+
+        private void HandlePreparationTimeSkip()
+        {
+            _delayTimeLeft = Constants.TimeLeftAfterPreparationTimeSkip;
+            timerSkipButton.gameObject.SetActive(false);
+        }
 
         public override void OnOpened()
         {
@@ -30,6 +45,7 @@ namespace HighVoltage.UI.GameWindows
         {
             _delayTimeLeft = seconds;
             nextWaveTimer.gameObject.SetActive(true);
+            timerSkipButton.gameObject.SetActive(true);
         }
 
         public void ProvideSceneData(PlayerCore playerCore, IPlayerBuildingService buildingService, 
@@ -84,6 +100,10 @@ namespace HighVoltage.UI.GameWindows
                 return;
             
             _delayTimeLeft -= Time.deltaTime;
+            if (_delayTimeLeft <= Constants.TimeLeftAfterPreparationTimeSkip && nextWaveTimer.gameObject.activeSelf)
+            {
+                timerSkipButton.gameObject.SetActive(false);
+            }
             if (_delayTimeLeft < 0)
             {
                 _delayTimeLeft = 0;
@@ -96,12 +116,8 @@ namespace HighVoltage.UI.GameWindows
 
         private void UpdateTimerDisplay()
         {
-            // Calculate minutes and seconds
-            int minutes = Mathf.FloorToInt(_delayTimeLeft / 60f);
             int seconds = Mathf.FloorToInt(_delayTimeLeft % 60f);
-        
-            // Format as mm:ss with leading zeros
-            nextWaveTimer.text = $"{minutes:00}:{seconds:00}";
+            nextWaveTimer.text = $"{seconds + 1:00}";
         }
     }
 }

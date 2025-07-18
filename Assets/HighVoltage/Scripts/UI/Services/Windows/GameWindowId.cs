@@ -7,6 +7,6 @@
         InGamePauseMenu = 2,
         Unknown = 3,
         PlayerDead = 4,
-        LaunchGameLoop = 5,
+        BeforeGameHUD = 5,
     }
 }

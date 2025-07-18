@@ -20,17 +20,12 @@ MonoBehaviour:
   sentryIDs: 010000000200000003000000
   buildingIDs: 00000000
   mobWaves:
-  - secondsDelayBeforeWave: 10
+  - secondsDelayBeforeWave: 5
     gates:
     - levelEnemies:
-      - quantity: 5
+      - quantity: 1
         enemyID: 1
-      - quantity: 3
-        enemyID: 1
-    - levelEnemies:
-      - quantity: 3
-        enemyID: 1
-  - secondsDelayBeforeWave: 5
+  - secondsDelayBeforeWave: 10
     gates:
     - levelEnemies:
       - quantity: 1
