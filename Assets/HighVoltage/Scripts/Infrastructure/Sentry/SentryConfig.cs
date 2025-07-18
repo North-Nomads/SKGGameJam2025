@@ -20,7 +20,6 @@ namespace HighVoltage.Infrastructure.Sentry
         [SerializeField] private float stunTime;
         [Header("UI settings")]
         [SerializeField] private Sprite sentryIcon;
-        [SerializeField] private int buildPrice;
         [SerializeField] private float secondsToBuild;
 
         public float SecondsToBuild => secondsToBuild;
