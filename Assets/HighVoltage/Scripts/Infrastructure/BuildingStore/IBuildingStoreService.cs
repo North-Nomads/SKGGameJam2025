@@ -11,5 +11,6 @@ namespace HighVoltage.Infrastructure.BuildingStore
         bool CanAfford(BuildingConfig sentryConfig);
         void SpendMoneyOn(BuildingConfig sentryConfig);
         void AddMoney(int reward);
+        void ResetMoney();
     }
 }

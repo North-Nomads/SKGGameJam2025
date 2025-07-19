@@ -25,5 +25,11 @@ namespace HighVoltage.Infrastructure.BuildingStore
             _moneyPlayerHas += reward;
             CurrencyChanged(this, _moneyPlayerHas);
         }
+
+        public void ResetMoney()
+        {
+            _moneyPlayerHas = 0;
+            CurrencyChanged(this, _moneyPlayerHas);
+        }
     }
 }

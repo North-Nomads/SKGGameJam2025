@@ -72,6 +72,7 @@ namespace HighVoltage.Infrastructure.States
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializeGameWorld(config);
             _levelProgress.LoadLevelConfig(config, playerCore);
+            _buildingStore.ResetMoney();
             InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
