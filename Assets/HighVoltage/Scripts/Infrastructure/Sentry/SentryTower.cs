@@ -3,16 +3,25 @@ using System.Linq;
 using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.MobSpawning;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
-    public abstract class SentryTower : MonoBehaviour, ICurrentReceiver
+    public abstract class SentryTower : MonoBehaviour, ICurrentReceiver, IHealthOwner
     {
         [SerializeField] private Transform rotatingPart;
         [SerializeField] private Bullet bulletPrefab;
         [SerializeField, Min(0)] private float scanRadius;
-        
-        private const float OneSecond = 1;
+        [SerializeField] private Image healthBarFiller;
+
+        public Image HealthBarFiller => healthBarFiller;
+        public int MaxHealth { get; private set; }
+
+        public int CurrentHealth
+        {
+            get => _currentHealth;
+            private set => _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+        }
 
         protected Bullet BulletPrefab => bulletPrefab;
         
@@ -23,15 +32,17 @@ namespace HighVoltage.Infrastructure.Sentry
         protected bool IsActionOnCooldown => ActionCooldownTimeLeft > 0f;
         protected float ActionCooldownTimeLeft;
         protected float MaxCooldownTime;
-        protected int MaxDurability;
-        protected int CurrentDurability;
+        
         protected int Damage;
         protected int DecayPerSecond;
 
-        private float _buildingTimeLeft;
-        private float _decayCooldownTimeLeft;
+        private const float OneSecond = 1;
         private ICurrentSource _currentProvider;
+        private float _decayCooldownTimeLeft;
+        private float _buildingTimeLeft;
         private float _stunnedTimeLeft;
+        private int _currentHealth;
+
 
         public void Initialize(SentryConfig config, IMobSpawnerService mobSpawnerService, IGameFactory gameFactory)
         {
@@ -39,16 +50,15 @@ namespace HighVoltage.Infrastructure.Sentry
             MobSpawnerService = mobSpawnerService;
             GameFactory = gameFactory;
             
-            MaxDurability = config.MaxDurability;
-            CurrentDurability = MaxDurability;
+            MaxHealth = config.MaxDurability;
             DecayPerSecond = config.DecayPerSecond;
             _decayCooldownTimeLeft = OneSecond; 
+            TakeHealth(MaxHealth);
             
             Damage = Config.Damage;
             
             MaxCooldownTime = config.TimeBetweenActions;
             ActionCooldownTimeLeft = 0f;
-
 
             _buildingTimeLeft = mobSpawnerService.IsWaveOngoing ? config.SecondsToBuild : 0f;
         }
@@ -102,7 +112,7 @@ namespace HighVoltage.Infrastructure.Sentry
                 .transform;
         }
 
-        protected virtual void KeepDecay()
+        private void KeepDecay()
         {
             //they wont decay without power (to my vision)
             if (_decayCooldownTimeLeft > 0f)
@@ -110,9 +120,11 @@ namespace HighVoltage.Infrastructure.Sentry
                 _decayCooldownTimeLeft -= Time.deltaTime;
                 return;
             }
+            
             _decayCooldownTimeLeft = OneSecond;
-            CurrentDurability -= DecayPerSecond;
-            if (CurrentDurability <= 0)
+            TakeDamage(DecayPerSecond);
+            print($"{name} (decay): {CurrentHealth}/{MaxHealth} with {healthBarFiller.fillAmount}");
+            if (CurrentHealth <= 0)
                 DestroyBuilding();
         }
 
@@ -142,9 +154,22 @@ namespace HighVoltage.Infrastructure.Sentry
             _currentProvider.OnOverload += HandleOverload;
         }
 
-        private void HandleOverload(object sender, EventArgs e)
+        private void HandleOverload(object sender, EventArgs e) 
+            => _stunnedTimeLeft = Config.StunTime;
+
+        public void UpdateHealthBar() 
+            => HealthBarFiller.fillAmount = (float)CurrentHealth / MaxHealth;
+
+        public void TakeDamage(int damage)
         {
-            _stunnedTimeLeft = Config.StunTime;
+            CurrentHealth -= damage;
+            UpdateHealthBar();
+        }
+
+        public void TakeHealth(int medicine)
+        {
+            CurrentHealth += medicine;
+            UpdateHealthBar();
         }
     }
 }
