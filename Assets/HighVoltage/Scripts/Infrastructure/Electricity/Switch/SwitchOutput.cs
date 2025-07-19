@@ -27,6 +27,7 @@ namespace HighVoltage
         }
 
         public List<LineRenderer> Wires { get; } = new();
+        public SwitchMain SwitchMain => switchMain;
 
         public event EventHandler OnOverload;
 

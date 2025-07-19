@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 namespace HighVoltage
@@ -26,6 +27,8 @@ namespace HighVoltage
             }
         }
 
+        public SwitchInput Input => input;
+        public SwitchOutput Output => output;
 
         void Start()
         {

@@ -79,12 +79,44 @@ namespace HighVoltage
 
             if(_selectedSource != null && _selectedReceiver != null)
             {
+                if ((_selectedSource is SwitchOutput output && _selectedReceiver is SwitchInput input 
+                    && output.SwitchMain.Input == input)
+                    ||ConnectionHasLoops(_selectedReceiver))
+                    return;
+
                 _selectedReceiver.AttachToSource(_selectedSource);
                 _selectedSource.AttachReceiver(_selectedReceiver);
                 AddWire((_selectedReceiver as MonoBehaviour).gameObject.transform.position,
                     (_selectedSource as MonoBehaviour).gameObject.transform.position);
+
+                _selectedReceiver = null;
+                _selectedSource = null;
             }
         }
+
+#pragma warning disable CS0253
+        private bool ConnectionHasLoops(ICurrentReceiver receiver)
+        {
+            if (receiver is not SwitchInput input)
+                return false;
+            var source = input.SwitchMain.Output;
+            if (source == _selectedSource)
+                return true;
+
+            foreach (var connectedReceiver in source.Receivers)
+            {
+                if (connectedReceiver is not SwitchInput nextInput)
+                    continue;
+
+                var nextSource = nextInput.SwitchMain.Output;
+
+                if (ConnectionHasLoops(nextSource.SwitchMain.Input))
+                    return true;
+            }
+            return false;
+        }
+#pragma warning restore CS0253  
+
         public void ChangedEditingMode(EditingMode newMode)
         {
             if (newMode == EditingMode.Wiring)
@@ -115,6 +147,8 @@ namespace HighVoltage
         {
             var wire = UnityEngine.Object.Instantiate(_staticDataService.GetWirePrefab());
             wire.SetPositions(new Vector3[] { outPos, inPos });
+            _selectedReceiver.Wire = wire;
+            _selectedSource.Wires.Add(wire);
             _wires.Add(wire);
         }
 
