@@ -18,6 +18,7 @@ namespace HighVoltage.StaticData
         private Dictionary<int, SentryConfig> _sentryConfigs;
         private Dictionary<int, SwitchConfig> _switchConfigs;
         private Texture2D _tileAtlas;
+        private LineRenderer _wirePrefab;
 
         public void LoadLevels()
             => _levels = Resources.LoadAll<LevelConfig>("Configs/Levels").ToDictionary(x => x.LevelID, x => x);
@@ -61,5 +62,12 @@ namespace HighVoltage.StaticData
         public void LoadBuildingConfigs() =>
             _switchConfigs = Resources.LoadAll<SwitchConfig>("Configs/Buildings")
                 .ToDictionary(x => x.BuildingID, x => x);
+
+        public LineRenderer GetWirePrefab() => _wirePrefab;
+
+        public void LoadWirePrefab()
+        {
+            _wirePrefab = Resources.Load<LineRenderer>("Prefabs/Wire/Wire");
+        }
     }
 }

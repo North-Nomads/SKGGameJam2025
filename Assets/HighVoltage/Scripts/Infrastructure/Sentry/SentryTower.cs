@@ -148,10 +148,13 @@ namespace HighVoltage.Infrastructure.Sentry
 
         public float Consumption => Config.PowerConsumption;
 
+        public LineRenderer Wire { get; set; }
+
         public void AttachToSource(ICurrentSource currentProvider)
         {
             _currentProvider = currentProvider;
-            _currentProvider.OnOverload += HandleOverload;
+            if(currentProvider != null)
+                _currentProvider.OnOverload += HandleOverload;
         }
 
         private void HandleOverload(object sender, EventArgs e) 

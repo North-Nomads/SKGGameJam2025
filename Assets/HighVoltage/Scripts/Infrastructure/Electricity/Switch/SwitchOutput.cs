@@ -26,6 +26,9 @@ namespace HighVoltage
             }
         }
 
+        public List<LineRenderer> Wires { get; } = new();
+        public SwitchMain SwitchMain => switchMain;
+
         public event EventHandler OnOverload;
 
         public void ChangeState(bool enable)
@@ -49,7 +52,7 @@ namespace HighVoltage
 
         public void DetachReceiver(ICurrentReceiver receiver)
         {
-            throw new NotImplementedException();
+            _receivers.Remove(receiver);
         }
 
         public void Overload() => OnOverload.Invoke(this, null);

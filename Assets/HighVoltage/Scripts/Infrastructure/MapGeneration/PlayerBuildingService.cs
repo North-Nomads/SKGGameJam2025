@@ -4,6 +4,9 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
+using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -19,6 +22,9 @@ namespace HighVoltage
         private readonly IGameFactory _gameFactory;
         private readonly IMobSpawnerService _mobSpawnerService;
         private readonly IBuildingStoreService _buildingStoreService;
+
+
+        private readonly List<LineRenderer> _wires = new();
 
         public Tilemap MapTilemap { get; set; }
 
@@ -73,9 +79,55 @@ namespace HighVoltage
 
             if(_selectedSource != null && _selectedReceiver != null)
             {
+                if (ConnectionHasLoops(_selectedReceiver))
+                    return;
+
+                
+                if(_selectedReceiver.Wire != null)
+                {
+                    _selectedReceiver.CurrentSource.Wires.Remove(_selectedReceiver.Wire);
+                    UnityEngine.Object.Destroy(_selectedReceiver.Wire);
+                }
+                _selectedReceiver.CurrentSource?.DetachReceiver(_selectedReceiver);
+
                 _selectedReceiver.AttachToSource(_selectedSource);
                 _selectedSource.AttachReceiver(_selectedReceiver);
+                AddWire();
+
+                _selectedReceiver = null;
+                _selectedSource = null;
             }
+        }
+
+#pragma warning disable CS0253
+        private bool ConnectionHasLoops(ICurrentReceiver receiver)
+        {
+            if (receiver is not SwitchInput input)
+                return false;
+            var source = input.SwitchMain.Output;
+            if (source == _selectedSource)
+                return true;
+
+            foreach (var connectedReceiver in source.Receivers)
+            {
+                if (connectedReceiver is not SwitchInput nextInput)
+                    continue;
+
+                var nextSource = nextInput.SwitchMain.Output;
+
+                if (ConnectionHasLoops(nextSource.SwitchMain.Input))
+                    return true;
+            }
+            return false;
+        }
+#pragma warning restore CS0253  
+
+        public void ChangedEditingMode(EditingMode newMode)
+        {
+            if (newMode == EditingMode.Wiring)
+                _wires.ForEach(x => x.enabled = true);
+            else
+                _wires.ForEach(x => x.enabled = false);
         }
 
         public void SelectTargetForUnwiring(ICurrentObject building)
@@ -88,13 +140,38 @@ namespace HighVoltage
                 _selectedSource = null;
 
             if (building is ICurrentSource source)
+            {
                 source.DetachAllReceivers();
+                source.Wires.ForEach(x => UnityEngine.Object.Destroy(x));
+                source.Wires.Clear();
+            }
             else if (building is ICurrentReceiver receiver)
             {
                 //i didn't feel like adding DetachFromSource, mb
+                _wires.Remove(receiver.Wire);
+                receiver.CurrentSource.Wires.Remove(receiver.Wire);
+                UnityEngine.Object.Destroy(receiver.Wire);
+
                 receiver.CurrentSource.DetachReceiver(receiver);
                 receiver.AttachToSource(null);
             }
+        }
+        private void AddWire()
+        {
+            var outPos = (_selectedReceiver as MonoBehaviour).gameObject.transform.position;
+            var inPos = (_selectedSource as MonoBehaviour).gameObject.transform.position;
+
+            var wire = UnityEngine.Object.Instantiate(_staticDataService.GetWirePrefab());
+            wire.SetPositions(new Vector3[] { outPos, inPos });
+            _selectedReceiver.Wire = wire;
+            _selectedSource.Wires.Add(wire);
+            _wires.Add(wire);
+        }
+
+        public void CleanUp()
+        {
+            _wires.ForEach(wire => UnityEngine.Object.Destroy(wire));
+            _wires.Clear();
         }
     }
 }

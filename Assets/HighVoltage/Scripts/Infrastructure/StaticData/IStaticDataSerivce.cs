@@ -23,5 +23,7 @@ namespace HighVoltage.StaticData
         void LoadBuildingPrefabs();
         SwitchConfig ForSwitchID(int buildingID);
         void LoadBuildingConfigs();
+        LineRenderer GetWirePrefab();
+        void LoadWirePrefab();
     }
 }

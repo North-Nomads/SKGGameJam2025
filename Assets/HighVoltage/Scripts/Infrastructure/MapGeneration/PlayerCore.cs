@@ -38,6 +38,8 @@ namespace HighVoltage
 
         public bool IsActive { get; private set; }
 
+        public List<LineRenderer> Wires { get; } = new();
+
         public void Initialize(IMobSpawnerService mobSpawner, LevelConfig levelConfig)
         {
             _mobSpawner = mobSpawner;
