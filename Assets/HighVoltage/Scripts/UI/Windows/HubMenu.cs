@@ -33,7 +33,6 @@ namespace HighVoltage.UI.Windows
         {
             base.OnOpened();
             AnimateDisplay();
-            Debug.Break();
         }
 
         public override void OnClosed()
