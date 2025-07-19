@@ -13,7 +13,7 @@ namespace HighVoltage
 
         public IEnumerable<ICurrentReceiver> Receivers => _receivers;
 
-        public bool IsActive { get; private set; }
+        public bool IsActive => switchMain.IsActive;
 
         public float Output
         {
@@ -30,11 +30,6 @@ namespace HighVoltage
         public SwitchMain SwitchMain => switchMain;
 
         public event EventHandler OnOverload;
-
-        public void ChangeState(bool enable)
-        {
-            IsActive = enable;
-        }
 
         public void AttachReceiver(ICurrentReceiver receiver)
         {
