@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using Cinemachine;
@@ -48,6 +49,9 @@ namespace HighVoltage.Infrastructure.Factory
 
         public PlayerCamera CreateCamera(Vector3 spawnPosition) 
             => _assets.Instantiate<PlayerCamera>(AssetPath.CameraPrefabPath, spawnPosition);
+
+        public ICoroutineRunner CreateCoroutineRunner() 
+            => _assets.Instantiate<MobCoroutineRunner>(AssetPath.MobCoroutineRunner, Vector3.zero);
 
         public MobBrain CreateMobOn(MobBrain whichEnemyPrefab, Vector3 at) 
             => Object.Instantiate(whichEnemyPrefab, at, Quaternion.identity);

@@ -4,9 +4,6 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using System.Linq;
-using Cinemachine;
-using HighVoltage.HighVoltage.Scripts.UI.GameWindows;
 using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Services;
@@ -16,7 +13,6 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
-using HighVoltage.UI.Windows;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -119,7 +115,7 @@ namespace HighVoltage.Infrastructure.States
         {
             InGamePauseMenu pauseMenu = _gameWindowService.GetWindow(GameWindowId.InGamePauseMenu)
                 .GetComponent<InGamePauseMenu>();
-            pauseMenu.ReloadButtonPressed += (_, _) =>
+            pauseMenu.RestartButtonPressed += (_, _) =>
                 _gameStateMachine.Enter<LoadLevelState, string>(SceneManager.GetActiveScene().name);
             pauseMenu.ReturnToMenuButtonPressed += (_, _) => _gameStateMachine.Enter<HubState>();
         }

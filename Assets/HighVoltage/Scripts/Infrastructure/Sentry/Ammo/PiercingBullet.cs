@@ -12,7 +12,7 @@ namespace HighVoltage.Infrastructure.Sentry
         {
             if (_enemiesToPierceLeft > 0)
             {
-                mob.GetComponent<MobBrain>().HandleHit(BulletDamage);
+                mob.GetComponent<MobBrain>().TakeDamage(BulletDamage);
                 _enemiesToPierceLeft--;
                 return;
             }

@@ -2,11 +2,13 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using HighVoltage.Enemy;
+using HighVoltage.Infrastructure.Sentry;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HighVoltage.Infrastructure.Mobs
 {
-    public class MobBrain : MonoBehaviour
+    public class MobBrain : MonoBehaviour, IHealthOwner
     {
         public event EventHandler<MobBrain> OnMobDied = delegate { };
         public MobConfig Config => _config;
@@ -15,20 +17,25 @@ namespace HighVoltage.Infrastructure.Mobs
         private MobConfig _config;
         private Transform[] _waypoints;
         private Transform _target;
-        private int _waypointIndex;
+        private int _waypointIndex;        
+        private int _currentHealth;
+        [SerializeField] private Image healthBarFiller;
+
+        public int MaxHealth { get; private set; }
 
         public int CurrentHealth
         {
             get => _currentHealth;
             private set
             {
-                _currentHealth = value;
+                _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+                UpdateHealthBar();
                 if (_currentHealth <= 0)
                     HandleMobDeath();
-                
             }
         }
 
+        public Image HealthBarFiller => healthBarFiller;
         public int CoreDamage => _config.Damage;
 
         private void HandleMobDeath()
@@ -36,13 +43,18 @@ namespace HighVoltage.Infrastructure.Mobs
             Destroy(gameObject);
             OnMobDied(this, this);
         }
+        
 
-        private int _currentHealth;
-
-        public void HandleHit(int damage)
+        public void UpdateHealthBar()
         {
-            CurrentHealth -= damage;
+            healthBarFiller.fillAmount = (float)_currentHealth / MaxHealth;
         }
+        
+        public void TakeHealth(int medicine) 
+            => CurrentHealth += medicine;
+
+        public void TakeDamage(int damage) 
+            => CurrentHealth -= damage;
 
         public void Initialize(Transform[] waypoints, MobConfig config)
         {
@@ -50,6 +62,8 @@ namespace HighVoltage.Infrastructure.Mobs
             _target = waypoints[0];
             _waypointIndex = 0;
             _config = config;
+            MaxHealth = config.MaxHealth;
+            TakeHealth(config.MaxHealth);
         }
 
         private void Update()

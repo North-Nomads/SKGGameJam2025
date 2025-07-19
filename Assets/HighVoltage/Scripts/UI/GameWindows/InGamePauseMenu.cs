@@ -18,7 +18,7 @@ namespace HighVoltage.UI.GameWindows
         private IInGameTimeService _timeService;
         private PlayerInput _inputActions;
 
-        public event EventHandler ReloadButtonPressed = delegate { };
+        public event EventHandler RestartButtonPressed = delegate { };
         public event EventHandler ReturnToMenuButtonPressed = delegate { };
         
 
@@ -27,8 +27,7 @@ namespace HighVoltage.UI.GameWindows
             // these two buttons do the same
             continueButton.onClick.AddListener(ResumeGame);
             
-            restartButton.onClick.AddListener(() => ReloadButtonPressed(this, EventArgs.Empty));
-            restartButton.onClick.AddListener(() => Debug.Log("Restart game"));
+            restartButton.onClick.AddListener(() => RestartButtonPressed(this, EventArgs.Empty));
             exitButton.onClick.AddListener(() => ReturnToMenuButtonPressed(this, EventArgs.Empty));
             _inputActions = new PlayerInput();
             _inputActions.Enable();

@@ -20,7 +20,13 @@ namespace HighVoltage.Infrastructure.Sentry
         public int CurrentHealth
         {
             get => _currentHealth;
-            private set => _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+            private set
+            {
+                _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+                UpdateHealthBar();
+                if (_currentHealth <= 0)
+                    DestroyBuilding();
+            }
         }
 
         protected Bullet BulletPrefab => bulletPrefab;
@@ -123,16 +129,11 @@ namespace HighVoltage.Infrastructure.Sentry
             
             _decayCooldownTimeLeft = OneSecond;
             TakeDamage(DecayPerSecond);
-            print($"{name} (decay): {CurrentHealth}/{MaxHealth} with {healthBarFiller.fillAmount}");
-            if (CurrentHealth <= 0)
-                DestroyBuilding();
         }
 
-        protected virtual void DestroyBuilding()
-        {
-            Destroy(gameObject);
-        }
-        
+        private void DestroyBuilding()
+            => Destroy(gameObject);
+
         protected virtual void KeepTrackingEnemy()
         {
             if (LockedTarget == null)
@@ -160,16 +161,10 @@ namespace HighVoltage.Infrastructure.Sentry
         public void UpdateHealthBar() 
             => HealthBarFiller.fillAmount = (float)CurrentHealth / MaxHealth;
 
-        public void TakeDamage(int damage)
-        {
-            CurrentHealth -= damage;
-            UpdateHealthBar();
-        }
+        public void TakeDamage(int damage) 
+            => CurrentHealth -= damage;
 
-        public void TakeHealth(int medicine)
-        {
-            CurrentHealth += medicine;
-            UpdateHealthBar();
-        }
+        public void TakeHealth(int medicine) 
+            => CurrentHealth += medicine;
     }
 }

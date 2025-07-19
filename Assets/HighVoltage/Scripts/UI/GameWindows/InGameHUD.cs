@@ -29,6 +29,12 @@ namespace HighVoltage.UI.GameWindows
             timerSkipButton.onClick.AddListener(HandlePreparationTimeSkip);
         }
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _buildingCards = new List<BuildingCard>();
+        }
+
         private void HandlePreparationTimeSkip()
         {
             _delayTimeLeft = Constants.TimeLeftAfterPreparationTimeSkip;

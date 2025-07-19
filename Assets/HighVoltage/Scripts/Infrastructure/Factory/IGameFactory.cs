@@ -21,5 +21,6 @@ namespace HighVoltage.Infrastructure.Factory
         SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
         SwitchMain CreateSwitch(Vector3Int spawnPosition, SwitchConfig thingToBuild);
         PlayerCamera CreateCamera(Vector3 spawnPosition);
+        ICoroutineRunner CreateCoroutineRunner();
     }
 }

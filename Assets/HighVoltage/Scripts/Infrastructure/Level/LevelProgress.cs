@@ -44,6 +44,8 @@ namespace HighVoltage.Level
             _loadedLevelConfig = levelConfig;
             _playerCore = playerCore;
             _playerCore.OnCoreHealthChanged += CheckPlayerCoreWasDestroyed;
+            _currentWaveIndex = 0;
+            _isLastWave = false;
             LoadCurrentWaveConfig();
         }
 

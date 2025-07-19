@@ -16,12 +16,12 @@ namespace HighVoltage.Infrastructure.MobSpawning
         public event EventHandler<int> AnotherMobDied = delegate { };
         
         private readonly IStaticDataService _staticDataService;
-        private readonly ICoroutineRunner _coroutineRunner;
         private readonly IGameFactory _factory;
         
         private List<MobBrain> _currentlyAliveMobs = new();
         private List<Coroutine> _runningGateCoroutines = new();
         
+        private ICoroutineRunner _coroutineRunner;
         private WaypointHolder[] _spawnerSpots;
         private float _deltaBetweenSpawns;
         private MobWave _mobWaveConfig;
@@ -29,10 +29,9 @@ namespace HighVoltage.Infrastructure.MobSpawning
         
         public bool IsWaveOngoing => _isWaveOngoing;
 
-        public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService, ICoroutineRunner coroutineRunner)
+        public MobSpawnerService(IGameFactory factory, IStaticDataService staticDataService)
         {
             _factory = factory;
-            _coroutineRunner = coroutineRunner;
             _staticDataService = staticDataService;
         }
         
@@ -41,19 +40,21 @@ namespace HighVoltage.Infrastructure.MobSpawning
             _mobWaveConfig = waveConfig;
             _spawnerSpots = spawnerSpots;
             _deltaBetweenSpawns = deltaBetweenSpawns;
+            _coroutineRunner = _factory.CreateCoroutineRunner();
         }
 
         public void HandleMobReachedCore(MobBrain mob)
         {
-            mob.HandleHit(int.MaxValue);
-            // Handle core damage
+            mob.TakeDamage(int.MaxValue);
+            _currentlyAliveMobs.Remove(mob);
         }
 
         public void LaunchMobSpawning()
         {
             _currentlyAliveMobs = new List<MobBrain>();
-            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines) 
-                _coroutineRunner.StopCoroutine(runningGateCoroutine);
+            foreach (Coroutine runningGateCoroutine in _runningGateCoroutines)
+                if (runningGateCoroutine != null)
+                    _coroutineRunner.StopCoroutine(runningGateCoroutine);
             _runningGateCoroutines = new List<Coroutine>();
 
             for (int gateIndex = 0; gateIndex < _mobWaveConfig.Gates.Length; gateIndex++)

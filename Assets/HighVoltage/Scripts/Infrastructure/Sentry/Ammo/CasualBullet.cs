@@ -7,7 +7,7 @@ namespace HighVoltage.Infrastructure.Sentry
     {
         protected override void HandleContact(Collider2D mob)
         {
-            mob.GetComponent<MobBrain>().HandleHit(BulletDamage);
+            mob.GetComponent<MobBrain>().TakeDamage(BulletDamage);
             Destroy(gameObject);
         }
     }
