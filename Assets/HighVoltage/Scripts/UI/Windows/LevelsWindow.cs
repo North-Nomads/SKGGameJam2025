@@ -7,14 +7,21 @@ using HighVoltage.Services.Progress;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.Windows;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HighVoltage.UI.Windows
 {
     public class LevelsWindow : WindowBase
     {
         [SerializeField] private Transform buttonsParent;
+        [SerializeField] private Button exitButton;
 
         public event EventHandler<int> LevelLaunched = delegate { };
+
+        private void Awake()
+        {
+            exitButton.onClick.AddListener(() => WindowService.Open(WindowId.Hub));
+        }
 
         public override void ConstructWindow(IPlayerProgressService progressService, WindowId windowId, IWindowService windowService,
             ISaveLoadService saveLoadService, IGameFactory gameFactory, IUIFactory uiFactory)
