@@ -15,7 +15,6 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private Button continueButton;
         [SerializeField] private Button exitButton;
         [SerializeField] private Button restartButton; 
-        [SerializeField] private Button closeButton; 
         private IInGameTimeService _timeService;
         private PlayerInput _inputActions;
 
@@ -26,7 +25,6 @@ namespace HighVoltage.UI.GameWindows
         private void Awake()
         {
             // these two buttons do the same
-            closeButton.onClick.AddListener(ResumeGame); 
             continueButton.onClick.AddListener(ResumeGame);
             
             restartButton.onClick.AddListener(() => ReloadButtonPressed(this, EventArgs.Empty));
