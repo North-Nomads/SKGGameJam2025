@@ -6,6 +6,8 @@ using HighVoltage.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 namespace HighVoltage.UI.GameWindows
 {
@@ -17,29 +19,49 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private Transform timerParentObject;
         [SerializeField] private Button timerSkipButton;
         [SerializeField] private Button collapseButton;
-        [SerializeField] private Button[] openCollapsedButtons;
-        [SerializeField] private Transform collapsedParent;
-        [SerializeField] private Transform openedParent;
+
+        [Header("UI Animation")]
+        [SerializeField] private GameObject cardHolderObject;
+        [SerializeField] private GameObject tabHolderObject;
+        [SerializeField] private LeanTweenType animationType;
+        [SerializeField] private float slideOutAnimationTime = 0.5f;
         
+        private List<BuildingCard> _buildingCards;
+        private RectTransform _tapRectTransform;
+        private RectTransform _hudRectTransform;
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
-        private List<BuildingCard> _buildingCards;
-        
+        private bool _isCollapsed;
+
         public event EventHandler NextWaveTimerIsUp = delegate { };
+
+        private void Awake()
+        {
+            _hudRectTransform = cardHolderObject.GetComponent<RectTransform>();
+            _tapRectTransform = tabHolderObject.GetComponent<RectTransform>();
+        }
 
         protected override void OnStart()
         {
             base.OnStart();
+            
+            _hudRectTransform.localPosition = new Vector3(0, -Screen.height, 0);
+            LeanTween.moveLocal(cardHolderObject, new Vector3(0, -Screen.height / 2, 0), slideOutAnimationTime);
+            
             timerSkipButton.onClick.AddListener(HandlePreparationTimeSkip);
-            collapseButton.onClick.AddListener(() => ToggleBuildingHUD(true));
-            foreach (Button openCollapsedButton in openCollapsedButtons)
-                openCollapsedButton.onClick.AddListener(() => ToggleBuildingHUD(false));
+            collapseButton.onClick.AddListener(ToggleBuildingHUD);
         }
 
-        private void ToggleBuildingHUD(bool isCollapsed)
+        private void ToggleBuildingHUD()
         {
-            collapsedParent.gameObject.SetActive(isCollapsed);
-            openedParent.gameObject.SetActive(!isCollapsed);
+            float verticalMultiplier = _isCollapsed ? -1f : 1f;
+            _isCollapsed = !_isCollapsed;
+            float screenHeightMultiplier = _hudRectTransform.anchorMax.y * _tapRectTransform.anchorMin.y;
+            Debug.Log(screenHeightMultiplier);
+            LeanTween.moveLocal(cardHolderObject,
+                _hudRectTransform.localPosition -
+                verticalMultiplier * new Vector3(0, Screen.height * screenHeightMultiplier, 0),
+                slideOutAnimationTime);
         }
 
         protected override void Initialize()

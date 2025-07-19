@@ -8,11 +8,13 @@ namespace HighVoltage.UI.GameWindows
     {
         protected IGameWindowService GameWindowService;
         protected ILevelProgress LevelProgress;
+        protected RectTransform RectTransform;
 
         public virtual void ConstructWindow(IGameWindowService gameWindowService, ILevelProgress levelProgress)
         {
             GameWindowService = gameWindowService;
             LevelProgress = levelProgress;
+            RectTransform = GetComponent<RectTransform>();
         }
 
         public virtual void OnOpened() { }
