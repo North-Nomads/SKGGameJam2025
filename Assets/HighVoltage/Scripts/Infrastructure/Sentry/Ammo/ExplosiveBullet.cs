@@ -11,7 +11,7 @@ namespace HighVoltage.Infrastructure.Sentry
         {
             Collider2D[] explosionHitMobs = Physics2D.OverlapCircleAll(mob.transform.position, explosionRadius);
             foreach (Collider2D hitMob in explosionHitMobs) 
-                hitMob.GetComponent<MobBrain>().HandleHit(BulletDamage);
+                hitMob.GetComponent<MobBrain>().TakeDamage(BulletDamage);
             Destroy(gameObject);
         }
     }

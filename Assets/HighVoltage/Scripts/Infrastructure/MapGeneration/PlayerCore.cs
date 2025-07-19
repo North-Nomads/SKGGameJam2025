@@ -2,40 +2,38 @@ using System;
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.Mobs;
 using HighVoltage.Infrastructure.MobSpawning;
+using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.Services;
 using UnityEngine;
 
 namespace HighVoltage
 {
-    public class PlayerCore : Building, ICurrentSource
+    public class PlayerCore : Building, ICurrentSource, IHealthOwner
     {
-        private readonly List<ICurrentReceiver> _receivers = new();
-        private IMobSpawnerService _mobSpawner;
         public event EventHandler<int> OnCoreHealthChanged = delegate { };
-        public event EventHandler OnOverload;
-
-        private int _maxCoreHealth;
-
-        public int MaxCoreHealth => _maxCoreHealth;
-
-        private int _currentCoreHealth;
-
-        public int CurrentCoreHealth
+        public event EventHandler<float> NotifyHealthBar = delegate { };
+        public int MaxHealth { get; private set; }
+        public int CurrentHealth
         {
-            get => _currentCoreHealth;
+            get => _currentHealth;
             private set
             {
-                _currentCoreHealth = Mathf.Clamp(value, 0, _maxCoreHealth);
-                Debug.Log($"Core was damaged. Calling \"OnCoreHealthChanged\" with {_currentCoreHealth}");
-                OnCoreHealthChanged(this, _currentCoreHealth);
+                _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
+                NotifyHealthBar(this, (float)_currentHealth / MaxHealth);
+                OnCoreHealthChanged(this, _currentHealth);
             }
         }
+        
+        private readonly List<ICurrentReceiver> _receivers = new();
+        private IMobSpawnerService _mobSpawner;
+        public event EventHandler OnOverload;
 
         public IEnumerable<ICurrentReceiver> Receivers => _receivers;
 
         private float _currentGeneration;
         private float _currentCurrentOutput;
+        private int _currentHealth;
         public float Output => _currentCurrentOutput;
 
         public bool IsActive { get; private set; }
@@ -45,19 +43,21 @@ namespace HighVoltage
         public void Initialize(IMobSpawnerService mobSpawner, LevelConfig levelConfig)
         {
             _mobSpawner = mobSpawner;
-            _maxCoreHealth = levelConfig.CoreHealth;
             _currentGeneration = levelConfig.GeneratorCapacity;
-            CurrentCoreHealth = levelConfig.CoreHealth;
+            
+            MaxHealth = levelConfig.CoreHealth;
+            TakeHealth(MaxHealth);
+            NotifyHealthBar(this, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag(Constants.MobTag))
-            {
-                MobBrain mobBrain = other.GetComponent<MobBrain>();
-                _mobSpawner.HandleMobReachedCore(mobBrain);
-                CurrentCoreHealth -= mobBrain.CoreDamage;
-            }
+            if (!other.CompareTag(Constants.MobTag)) 
+                return;
+            
+            MobBrain mobBrain = other.GetComponent<MobBrain>();
+            _mobSpawner.HandleMobReachedCore(mobBrain);
+            TakeDamage(mobBrain.CoreDamage);
         }
 
         public void AttachReceiver(ICurrentReceiver receiver)
@@ -94,5 +94,11 @@ namespace HighVoltage
             receiver.AttachToSource(null);
             _receivers.Remove(receiver);
         }
+
+        public void TakeDamage(int damage) 
+            => CurrentHealth -= damage;
+
+        public void TakeHealth(int medicine) 
+            => CurrentHealth += medicine;
     }
 }

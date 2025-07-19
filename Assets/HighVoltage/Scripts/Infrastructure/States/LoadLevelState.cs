@@ -4,9 +4,6 @@ using UnityEngine;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Level;
 using HighVoltage.StaticData;
-using System.Linq;
-using Cinemachine;
-using HighVoltage.HighVoltage.Scripts.UI.GameWindows;
 using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Services;
@@ -16,7 +13,6 @@ using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
-using HighVoltage.UI.Windows;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -76,10 +72,11 @@ namespace HighVoltage.Infrastructure.States
             LevelConfig config = _staticData.ForLevel(_progressService.Progress.CurrentLevel);
             PlayerCore playerCore = InitializeGameWorld(config);
             _levelProgress.LoadLevelConfig(config, playerCore);
+            _buildingStore.ResetMoney();
             InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
-            InitializeInGameHUD(playerCore);
+            InitializeInGameHUD();
             InitializeCamera();
             _buildingStore.AddMoney(config.InitialMoney);
             _gameStateMachine.Enter<GameLoopState>();
@@ -103,12 +100,12 @@ namespace HighVoltage.Infrastructure.States
             return playerCore;
         }
 
-        private void InitializeInGameHUD(PlayerCore playerCore)
+        private void InitializeInGameHUD()
         {
             _uiFactory.CreateUIRoot();
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvideSceneData(playerCore, _buildingService, _buildingStore);
+                .ProvideSceneData(_buildingService, _buildingStore);
             _gameWindowService.GetWindow(GameWindowId.EndGame);
             _gameWindowService.GetWindow(GameWindowId.BeforeGameHUD);
             InitializePauseMenu();
@@ -119,7 +116,7 @@ namespace HighVoltage.Infrastructure.States
         {
             InGamePauseMenu pauseMenu = _gameWindowService.GetWindow(GameWindowId.InGamePauseMenu)
                 .GetComponent<InGamePauseMenu>();
-            pauseMenu.ReloadButtonPressed += (_, _) =>
+            pauseMenu.RestartButtonPressed += (_, _) =>
                 _gameStateMachine.Enter<LoadLevelState, string>(SceneManager.GetActiveScene().name);
             pauseMenu.ReturnToMenuButtonPressed += (_, _) => _gameStateMachine.Enter<HubState>();
         }

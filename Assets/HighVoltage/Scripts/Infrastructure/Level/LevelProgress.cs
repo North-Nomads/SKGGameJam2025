@@ -33,6 +33,7 @@ namespace HighVoltage.Level
         {
             _mobSpawner = mobSpawner;
             _mobSpawner.AnotherMobDied += HandleMobDeath;
+            _mobSpawner.AnotherMobDiedNoReward += (_, __) => HandleMobDeath(_, -1);
             
             _staticData = staticData;
             _buildingStore = buildingStore;
@@ -44,6 +45,8 @@ namespace HighVoltage.Level
             _loadedLevelConfig = levelConfig;
             _playerCore = playerCore;
             _playerCore.OnCoreHealthChanged += CheckPlayerCoreWasDestroyed;
+            _currentWaveIndex = 0;
+            _isLastWave = false;
             LoadCurrentWaveConfig();
         }
 
@@ -74,7 +77,8 @@ namespace HighVoltage.Level
 
         private void HandleMobDeath(object sender, int mobID)
         {
-            _buildingStore.AddMoney(_staticData.ForEnemyID(mobID).Reward);
+            if (mobID != -1) // no reward handle mob death
+                _buildingStore.AddMoney(_staticData.ForEnemyID(mobID).Reward);
             _mobsLeftThisWave--;
             
             if (_mobsLeftThisWave != 0)
