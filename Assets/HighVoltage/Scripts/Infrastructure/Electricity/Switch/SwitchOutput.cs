@@ -52,7 +52,7 @@ namespace HighVoltage
 
         public void DetachReceiver(ICurrentReceiver receiver)
         {
-            throw new NotImplementedException();
+            _receivers.Remove(receiver);
         }
 
         public void Overload() => OnOverload.Invoke(this, null);

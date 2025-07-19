@@ -79,15 +79,20 @@ namespace HighVoltage
 
             if(_selectedSource != null && _selectedReceiver != null)
             {
-                if ((_selectedSource is SwitchOutput output && _selectedReceiver is SwitchInput input 
-                    && output.SwitchMain.Input == input)
-                    ||ConnectionHasLoops(_selectedReceiver))
+                if (ConnectionHasLoops(_selectedReceiver))
                     return;
+
+                
+                if(_selectedReceiver.Wire != null)
+                {
+                    _selectedReceiver.CurrentSource.Wires.Remove(_selectedReceiver.Wire);
+                    UnityEngine.Object.Destroy(_selectedReceiver.Wire);
+                }
+                _selectedReceiver.CurrentSource?.DetachReceiver(_selectedReceiver);
 
                 _selectedReceiver.AttachToSource(_selectedSource);
                 _selectedSource.AttachReceiver(_selectedReceiver);
-                AddWire((_selectedReceiver as MonoBehaviour).gameObject.transform.position,
-                    (_selectedSource as MonoBehaviour).gameObject.transform.position);
+                AddWire();
 
                 _selectedReceiver = null;
                 _selectedSource = null;
@@ -135,16 +140,27 @@ namespace HighVoltage
                 _selectedSource = null;
 
             if (building is ICurrentSource source)
+            {
                 source.DetachAllReceivers();
+                source.Wires.ForEach(x => UnityEngine.Object.Destroy(x));
+                source.Wires.Clear();
+            }
             else if (building is ICurrentReceiver receiver)
             {
                 //i didn't feel like adding DetachFromSource, mb
+                _wires.Remove(receiver.Wire);
+                receiver.CurrentSource.Wires.Remove(receiver.Wire);
+                UnityEngine.Object.Destroy(receiver.Wire);
+
                 receiver.CurrentSource.DetachReceiver(receiver);
                 receiver.AttachToSource(null);
             }
         }
-        private void AddWire(Vector2 outPos, Vector2 inPos)
+        private void AddWire()
         {
+            var outPos = (_selectedReceiver as MonoBehaviour).gameObject.transform.position;
+            var inPos = (_selectedSource as MonoBehaviour).gameObject.transform.position;
+
             var wire = UnityEngine.Object.Instantiate(_staticDataService.GetWirePrefab());
             wire.SetPositions(new Vector3[] { outPos, inPos });
             _selectedReceiver.Wire = wire;
