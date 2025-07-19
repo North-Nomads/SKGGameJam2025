@@ -1,13 +1,12 @@
-using UnityEngine.UI;
+using System;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
     public interface IHealthOwner
     {
+        event EventHandler<float> NotifyHealthBar;  
         int MaxHealth { get; }
         int CurrentHealth { get; }
-        Image HealthBarFiller { get; } 
-        void UpdateHealthBar();
         void TakeDamage(int damage);
         void TakeHealth(int medicine);
     }

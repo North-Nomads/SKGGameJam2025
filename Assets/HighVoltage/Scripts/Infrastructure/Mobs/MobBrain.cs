@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using HighVoltage.Enemy;
 using HighVoltage.Infrastructure.Sentry;
 using UnityEngine;
@@ -11,6 +12,8 @@ namespace HighVoltage.Infrastructure.Mobs
     {
         public event EventHandler<MobBrain> OnMobDied = delegate { };
         public event EventHandler<MobBrain> OnMobHitCore = delegate { };
+        public event EventHandler<float> NotifyHealthBar = delegate { };
+
         public MobConfig Config => _config;
         
         private const float MinDistanceToWaypoint = 0.01f;
@@ -19,7 +22,6 @@ namespace HighVoltage.Infrastructure.Mobs
         private Transform _target;
         private int _waypointIndex;        
         private int _currentHealth;
-        [SerializeField] private Image healthBarFiller;
 
         public int MaxHealth { get; private set; }
 
@@ -29,13 +31,12 @@ namespace HighVoltage.Infrastructure.Mobs
             private set
             {
                 _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
-                UpdateHealthBar();
+                NotifyHealthBar(this, (float)_currentHealth / MaxHealth);
                 if (_currentHealth <= 0)
                     HandleMobDeath();
             }
         }
 
-        public Image HealthBarFiller => healthBarFiller;
         public int CoreDamage => _config.Damage;
 
         private void HandleMobDeath(bool sendEvent = true)
@@ -43,12 +44,6 @@ namespace HighVoltage.Infrastructure.Mobs
             Destroy(gameObject);
             if (sendEvent)
                 OnMobDied(this, this);
-        }
-        
-
-        public void UpdateHealthBar()
-        {
-            healthBarFiller.fillAmount = (float)_currentHealth / MaxHealth;
         }
         
         public void TakeHealth(int medicine) 

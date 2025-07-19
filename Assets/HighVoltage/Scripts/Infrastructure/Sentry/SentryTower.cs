@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.MobSpawning;
@@ -12,9 +13,7 @@ namespace HighVoltage.Infrastructure.Sentry
         [SerializeField] private Transform rotatingPart;
         [SerializeField] private Bullet bulletPrefab;
         [SerializeField, Min(0)] private float scanRadius;
-        [SerializeField] private Image healthBarFiller;
-
-        public Image HealthBarFiller => healthBarFiller;
+        public event EventHandler<float> NotifyHealthBar = delegate { };
         public int MaxHealth { get; private set; }
 
         public int CurrentHealth
@@ -23,7 +22,7 @@ namespace HighVoltage.Infrastructure.Sentry
             private set
             {
                 _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
-                UpdateHealthBar();
+                NotifyHealthBar(this, (float)_currentHealth / MaxHealth);
                 if (_currentHealth <= 0)
                     DestroyBuilding();
             }
@@ -157,9 +156,6 @@ namespace HighVoltage.Infrastructure.Sentry
 
         private void HandleOverload(object sender, EventArgs e) 
             => _stunnedTimeLeft = Config.StunTime;
-
-        public void UpdateHealthBar() 
-            => HealthBarFiller.fillAmount = (float)CurrentHealth / MaxHealth;
 
         public void TakeDamage(int damage) 
             => CurrentHealth -= damage;

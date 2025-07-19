@@ -6,14 +6,13 @@ using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.Services;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HighVoltage
 {
     public class PlayerCore : Building, ICurrentSource, IHealthOwner
     {
         public event EventHandler<int> OnCoreHealthChanged = delegate { };
-        
+        public event EventHandler<float> NotifyHealthBar = delegate { };
         public int MaxHealth { get; private set; }
         public int CurrentHealth
         {
@@ -21,21 +20,17 @@ namespace HighVoltage
             private set
             {
                 _currentHealth = Mathf.Clamp(value, 0, MaxHealth);
-                UpdateHealthBar();
-                _currentHealth = value;
+                NotifyHealthBar(this, (float)_currentHealth / MaxHealth);
                 OnCoreHealthChanged(this, _currentHealth);
             }
         }
-
-        public Image HealthBarFiller => healthBarFiller;
-
+        
         private readonly List<ICurrentReceiver> _receivers = new();
         private IMobSpawnerService _mobSpawner;
         public event EventHandler OnOverload;
 
         public IEnumerable<ICurrentReceiver> Receivers => _receivers;
 
-        [SerializeField] private Image healthBarFiller;
         private float _currentGeneration;
         private float _currentCurrentOutput;
         private int _currentHealth;
@@ -50,6 +45,7 @@ namespace HighVoltage
             
             MaxHealth = levelConfig.CoreHealth;
             TakeHealth(MaxHealth);
+            NotifyHealthBar(this, 1f);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -95,11 +91,6 @@ namespace HighVoltage
         {
             receiver.AttachToSource(null);
             _receivers.Remove(receiver);
-        }
-        
-        public void UpdateHealthBar()
-        {
-            healthBarFiller.fillAmount = (float)CurrentHealth/MaxHealth;
         }
 
         public void TakeDamage(int damage) 

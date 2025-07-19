@@ -5,9 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/BuildingStore/BuildingStoreService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/BuildingStore/BuildingStoreService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/BuildingStore/IBuildingStoreService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/BuildingStore/IBuildingStoreService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadLevelState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/HealthBar.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/HealthBar.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Fast.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Fast.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Heavy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Heavy.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Medium.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Medium.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryRifle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryRifle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryShotgun.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryShotgun.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentrySniper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentrySniper.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/WorldUI/World Canvas Prefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/WorldUI/World Canvas Prefab.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Mobs/MobBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Mobs/MobBrain.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/IHealthOwner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/IHealthOwner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/SentryTower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/SentryTower.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,10 +126,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="2872">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="2872" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -184,6 +197,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/HealthBar.cs</url>
+          <line>43</line>
+          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\UI\Elements\HealthBar.cs" containingFunctionPresentation="Method 'AnimateHealthBar'">
+            <startOffsets>
+              <option value="1504" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1529" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -33,7 +33,6 @@ namespace HighVoltage.UI.Services.Factory
 
         public WindowBase InstantiateWindow(WindowId windowID)
         {
-            Debug.Log($"trying to instantiate window={windowID}");
             var window = CreateSpecificWindow(windowID);
             window.transform.SetAsFirstSibling();
             window.gameObject.SetActive(false);

@@ -219,7 +219,6 @@ MonoBehaviour:
   rotatingPart: {fileID: 3611747566714607411}
   bulletPrefab: {fileID: -8056474331501318046, guid: 4bff9a68a8608e545a57d58ef2438abd, type: 3}
   scanRadius: 6
-  healthBarFiller: {fileID: 4236164632600499121}
   bulletSpawnPoint: {fileID: 6663315526061819139}
 --- !u!58 &6073343875962706350
 CircleCollider2D:
@@ -264,6 +263,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 502827662028249600}
     m_Modifications:
+    - target: {fileID: 4212816445271958088, guid: 2bc91e533385d024596a7ae15e93e762, type: 3}
+      propertyPath: healthOwner
+      value: 
+      objectReference: {fileID: 5137622353348788599}
+    - target: {fileID: 6808464945488278435, guid: 2bc91e533385d024596a7ae15e93e762, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7122629600294536462, guid: 2bc91e533385d024596a7ae15e93e762, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -362,14 +369,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7122629600294536462, guid: 2bc91e533385d024596a7ae15e93e762, type: 3}
   m_PrefabInstance: {fileID: 6926288201298931239}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4236164632600499121 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6545699647143230870, guid: 2bc91e533385d024596a7ae15e93e762, type: 3}
-  m_PrefabInstance: {fileID: 6926288201298931239}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
