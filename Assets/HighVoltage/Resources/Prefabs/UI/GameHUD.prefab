@@ -846,6 +846,7 @@ MonoBehaviour:
   nextWaveTimer: {fileID: 6343500861737170702}
   playerWallet: {fileID: 7632124658323385639}
   buildingCardParent: {fileID: 7510078101975064633}
+  timerParentObject: {fileID: 1434181672751240843}
   timerSkipButton: {fileID: 2157534637642118490}
 --- !u!1 &3841132255368023683
 GameObject:

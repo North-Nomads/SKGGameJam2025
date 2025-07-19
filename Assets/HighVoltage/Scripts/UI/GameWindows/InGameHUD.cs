@@ -16,6 +16,7 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private TextMeshProUGUI nextWaveTimer;
         [SerializeField] private TextMeshProUGUI playerWallet;
         [SerializeField] private Transform buildingCardParent;
+        [SerializeField] private Transform timerParentObject;
         [SerializeField] private Button timerSkipButton;
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
@@ -51,6 +52,7 @@ namespace HighVoltage.UI.GameWindows
             _delayTimeLeft = seconds;
             nextWaveTimer.gameObject.SetActive(true);
             timerSkipButton.gameObject.SetActive(true);
+            timerParentObject.gameObject.SetActive(true);
         }
 
         public void ProvideSceneData(IPlayerBuildingService buildingService, IBuildingStoreService buildingStore)
@@ -103,6 +105,7 @@ namespace HighVoltage.UI.GameWindows
                 _delayTimeLeft = 0;
                 NextWaveTimerIsUp(null, null);
                 nextWaveTimer.gameObject.SetActive(false);
+                timerParentObject.gameObject.SetActive(false);
             }
 
             UpdateTimerDisplay();
