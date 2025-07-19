@@ -5,22 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/HealthBar.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/HealthBar.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Fast.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Fast.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Heavy.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Heavy.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Medium.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Mobs/Medium.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryRifle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryRifle.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryShotgun.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentryShotgun.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentrySniper.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Sentries/SentrySniper.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/WorldUI/World Canvas Prefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/WorldUI/World Canvas Prefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerCore.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Mobs/MobBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Mobs/MobBrain.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/IHealthOwner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/IHealthOwner.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/SentryTower.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Sentry/SentryTower.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -210,6 +197,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs</url>
+          <line>39</line>
+          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\UI\GameWindows\InGameHUD.cs" containingFunctionPresentation="Method 'ToggleBuildingHUD'">
+            <startOffsets>
+              <option value="1535" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1536" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.BuildingStore;
-using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.Services;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,6 +16,11 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private Transform buildingCardParent;
         [SerializeField] private Transform timerParentObject;
         [SerializeField] private Button timerSkipButton;
+        [SerializeField] private Button collapseButton;
+        [SerializeField] private Button[] openCollapsedButtons;
+        [SerializeField] private Transform collapsedParent;
+        [SerializeField] private Transform openedParent;
+        
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
         private List<BuildingCard> _buildingCards;
@@ -28,6 +31,15 @@ namespace HighVoltage.UI.GameWindows
         {
             base.OnStart();
             timerSkipButton.onClick.AddListener(HandlePreparationTimeSkip);
+            collapseButton.onClick.AddListener(() => ToggleBuildingHUD(true));
+            foreach (Button openCollapsedButton in openCollapsedButtons)
+                openCollapsedButton.onClick.AddListener(() => ToggleBuildingHUD(false));
+        }
+
+        private void ToggleBuildingHUD(bool isCollapsed)
+        {
+            collapsedParent.gameObject.SetActive(isCollapsed);
+            openedParent.gameObject.SetActive(!isCollapsed);
         }
 
         protected override void Initialize()
