@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace HighVoltage
@@ -18,6 +17,13 @@ namespace HighVoltage
         public void AttachToSource(ICurrentSource currentProvider)
         {
             CurrentSource = currentProvider;
+            if (currentProvider != null)
+                currentProvider.OnOverload += Overload;
+        }
+
+        private void Overload(object sender, EventArgs e)
+        {
+            
         }
     }
 }

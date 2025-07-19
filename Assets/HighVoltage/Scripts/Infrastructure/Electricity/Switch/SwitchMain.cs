@@ -45,7 +45,6 @@ namespace HighVoltage
         public void Switch()
         {
             _enabled = !_enabled;
-            output.ChangeState(_enabled);
         }
 
         private void ChangeSprite()
