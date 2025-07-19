@@ -8,6 +8,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
 {
     public interface IMobSpawnerService : IService
     {
+        event EventHandler AnotherMobDiedNoReward;
         event EventHandler<int> AnotherMobDied;
         List<MobBrain> CurrentlyAliveMobs { get; }
         bool IsWaveOngoing { get; }

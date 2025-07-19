@@ -1,9 +1,8 @@
 using System;
-using System.Linq;
-using System.Linq.Expressions;
 using HighVoltage.Enemy;
 using HighVoltage.Infrastructure.Sentry;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
 
 namespace HighVoltage.Infrastructure.Mobs
@@ -11,6 +10,7 @@ namespace HighVoltage.Infrastructure.Mobs
     public class MobBrain : MonoBehaviour, IHealthOwner
     {
         public event EventHandler<MobBrain> OnMobDied = delegate { };
+        public event EventHandler<MobBrain> OnMobHitCore = delegate { };
         public MobConfig Config => _config;
         
         private const float MinDistanceToWaypoint = 0.01f;
@@ -38,10 +38,11 @@ namespace HighVoltage.Infrastructure.Mobs
         public Image HealthBarFiller => healthBarFiller;
         public int CoreDamage => _config.Damage;
 
-        private void HandleMobDeath()
+        private void HandleMobDeath(bool sendEvent = true)
         {
             Destroy(gameObject);
-            OnMobDied(this, this);
+            if (sendEvent)
+                OnMobDied(this, this);
         }
         
 
@@ -53,8 +54,18 @@ namespace HighVoltage.Infrastructure.Mobs
         public void TakeHealth(int medicine) 
             => CurrentHealth += medicine;
 
-        public void TakeDamage(int damage) 
-            => CurrentHealth -= damage;
+        public void TakeDamage(int damage)
+        {
+            if (damage == int.MaxValue)
+            {
+                OnMobHitCore(this, this);
+                HandleMobDeath(sendEvent: false);
+            }
+            else
+            {
+                CurrentHealth -= damage;
+            }
+        }
 
         public void Initialize(Transform[] waypoints, MobConfig config)
         {

@@ -14,6 +14,7 @@ namespace HighVoltage.Infrastructure.MobSpawning
     {
         public List<MobBrain> CurrentlyAliveMobs => _currentlyAliveMobs;
         public event EventHandler<int> AnotherMobDied = delegate { };
+        public event EventHandler AnotherMobDiedNoReward = delegate { };
         
         private readonly IStaticDataService _staticDataService;
         private readonly IGameFactory _factory;
@@ -100,8 +101,15 @@ namespace HighVoltage.Infrastructure.MobSpawning
             MobBrain mob = _factory.CreateMobOn(which.EnemyPrefab, where);
             mob.Initialize(pathFromGate, which);
             mob.OnMobDied += HandleMobDeath;
+            mob.OnMobHitCore += HandleMobDeathFromCore;
             mob.name = $"{which.name} [{nameIndex}]";
             _currentlyAliveMobs.Add(mob);
+        }
+
+        private void HandleMobDeathFromCore(object sender, MobBrain mob)
+        {
+            _currentlyAliveMobs.Remove(mob);
+            AnotherMobDiedNoReward(null, EventArgs.Empty);
         }
 
         private void HandleMobDeath(object sender, MobBrain mob)
