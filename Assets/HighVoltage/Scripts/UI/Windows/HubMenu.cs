@@ -9,7 +9,6 @@ namespace HighVoltage.UI.Windows
     {
         [SerializeField] private Button startGame;
         [SerializeField] private Button allLevels;
-        [SerializeField] private Button settings;
         [SerializeField] private Button exit;
 
         public event EventHandler PlayerLaunchedGame = delegate { };
@@ -18,7 +17,6 @@ namespace HighVoltage.UI.Windows
         {
             startGame.onClick.AddListener(LaunchGame);
             allLevels.onClick.AddListener(DisplayAllLevelsWindow);
-            settings.onClick.AddListener(DisplaySettingsWindow);
             exit.onClick.AddListener(CloseGame);
         }
 
@@ -27,12 +25,6 @@ namespace HighVoltage.UI.Windows
 
         private void CloseGame() 
             => Application.Quit();
-
-        private void DisplaySettingsWindow()
-        {
-            return; // Temporary solution. 
-            WindowService.Open(WindowId.Settings);
-        }
 
         private void LaunchGame() 
             => PlayerLaunchedGame(null, null);
