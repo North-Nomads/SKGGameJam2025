@@ -449,8 +449,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startGame: {fileID: 2723908115268252423}
   allLevels: {fileID: 3806808907348448079}
-  settings: {fileID: 0}
   exit: {fileID: 4685663470985414289}
+  displayAnimationType: 6
+  animationTime: 0.7
 --- !u!1 &2209892204825129482
 GameObject:
   m_ObjectHideFlags: 0

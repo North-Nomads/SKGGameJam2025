@@ -52,6 +52,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonsParent: {fileID: 4076889670276849881}
   exitButton: {fileID: 498626464127661300}
+  displayAnimationType: 6
+  animationTime: 0.7
 --- !u!1 &1996123080969740378
 GameObject:
   m_ObjectHideFlags: 0

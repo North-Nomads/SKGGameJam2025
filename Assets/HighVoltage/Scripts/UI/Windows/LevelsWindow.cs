@@ -15,12 +15,35 @@ namespace HighVoltage.UI.Windows
     {
         [SerializeField] private Transform buttonsParent;
         [SerializeField] private Button exitButton;
+        [SerializeField] private LeanTweenType displayAnimationType;
+        [SerializeField] private float animationTime = 0.5f;
 
         public event EventHandler<int> LevelLaunched = delegate { };
 
         private void Awake()
         {
             exitButton.onClick.AddListener(() => WindowService.Open(WindowId.Hub));
+        }
+
+        public override void OnOpened()
+        {
+            base.OnOpened();
+            AnimateDisplay();
+        }
+
+        public override void OnClosed()
+        {
+            base.OnClosed();
+            LeanTween
+                .moveLocal(gameObject, new Vector3(Screen.width + Screen.width / 2, 0, 0), animationTime)
+                .setEase(displayAnimationType)
+                .setOnComplete(() => gameObject.SetActive(false));
+        }
+
+        private void AnimateDisplay()
+        {
+            RectTransform.localPosition = new Vector3(Screen.width, 0, 0);
+            LeanTween.moveLocal(gameObject, Vector3.zero, animationTime).setEase(displayAnimationType);
         }
 
         public override void ConstructWindow(IPlayerProgressService progressService, WindowId windowId, IWindowService windowService,

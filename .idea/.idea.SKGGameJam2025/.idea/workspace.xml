@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Levels.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Levels.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" afterDir="false" />

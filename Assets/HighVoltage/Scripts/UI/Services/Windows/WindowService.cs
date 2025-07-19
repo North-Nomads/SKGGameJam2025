@@ -68,8 +68,8 @@ namespace HighVoltage.UI.Services.Windows
             // Hide all windows except hub and target window
             foreach (var windowPair in _windows)
             {
-                if (windowPair.Key != windowID)    
-                    windowPair.Value.gameObject.SetActive(false);
+                if (windowPair.Key != windowID)
+                    windowPair.Value.OnClosed();
             }
 
             _previousWindow = _currentWindow;

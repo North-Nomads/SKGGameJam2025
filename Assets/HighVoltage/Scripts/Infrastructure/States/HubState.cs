@@ -10,7 +10,6 @@ using HighVoltage.UI.Windows;
 using System;
 using HighVoltage.Services;
 using HighVoltage.UI.Elements;
-using UnityEngine.SceneManagement;
 
 namespace HighVoltage.Infrastructure.States
 {

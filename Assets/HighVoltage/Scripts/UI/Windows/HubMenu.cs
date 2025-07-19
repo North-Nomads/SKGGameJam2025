@@ -10,6 +10,9 @@ namespace HighVoltage.UI.Windows
         [SerializeField] private Button startGame;
         [SerializeField] private Button allLevels;
         [SerializeField] private Button exit;
+        [SerializeField] private LeanTweenType displayAnimationType;
+        [SerializeField] private float animationTime = 0.5f;
+        
 
         public event EventHandler PlayerLaunchedGame = delegate { };
 
@@ -18,6 +21,34 @@ namespace HighVoltage.UI.Windows
             startGame.onClick.AddListener(LaunchGame);
             allLevels.onClick.AddListener(DisplayAllLevelsWindow);
             exit.onClick.AddListener(CloseGame);
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            AnimateDisplay();
+        }
+
+        public override void OnOpened()
+        {
+            base.OnOpened();
+            AnimateDisplay();
+            Debug.Break();
+        }
+
+        public override void OnClosed()
+        {
+            base.OnClosed();
+            LeanTween
+                .moveLocal(gameObject, new Vector3(-(Screen.width + Screen.width / 2), 0, 0), animationTime)
+                .setEase(displayAnimationType)
+                .setOnComplete(() => gameObject.SetActive(false));
+        }
+
+        private void AnimateDisplay()
+        {
+            RectTransform.localPosition = new Vector3(-Screen.width, 0, 0);
+            LeanTween.moveLocal(gameObject, Vector3.zero, animationTime).setEase(displayAnimationType);
         }
 
         private void DisplayAllLevelsWindow() 

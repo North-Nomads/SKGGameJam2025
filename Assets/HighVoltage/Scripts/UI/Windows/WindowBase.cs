@@ -16,6 +16,7 @@ namespace HighVoltage.UI.Windows
         protected ISaveLoadService SaveLoad;
         protected IGameFactory GameFactory;
         protected IUIFactory UIFactory;
+        protected RectTransform RectTransform;
 
         public virtual void ConstructWindow(IPlayerProgressService progressService,
             WindowId windowId, IWindowService windowService, ISaveLoadService saveLoadService, IGameFactory gameFactory,
@@ -27,26 +28,38 @@ namespace HighVoltage.UI.Windows
             SaveLoad = saveLoadService;
             GameFactory = gameFactory;
             UIFactory = uiFactory;
+            RectTransform = GetComponent<RectTransform>();
         }
 
-        public virtual void OnOpened() { }
-        protected void CloseWindow() 
+        public virtual void OnOpened()
+        {
+        }
+
+        protected void CloseWindow()
             => WindowService.ReturnToPreviousWindow();
+
         protected void ReturnToHub()
             => WindowService.Open(WindowId.Hub);
+
         protected virtual void OnStart()
         {
             Initialize();
             SubscribeUpdates();
         }
+
         protected virtual void CleanUp() { }
+
         protected virtual void Initialize() { }
+
         protected virtual void SubscribeUpdates() { }
-        
-        private void Start() 
+
+        private void Start()
             => OnStart();
 
         private void OnDestroy()
             => CleanUp();
+
+        public virtual void OnClosed() { }
+
     }
 }
