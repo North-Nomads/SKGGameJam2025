@@ -17,7 +17,6 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private TextMeshProUGUI playerWallet;
         [SerializeField] private Transform buildingCardParent;
         [SerializeField] private Button timerSkipButton;
-        [SerializeField] private Image playerCoreHealthBar;
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
         private List<BuildingCard> _buildingCards;
@@ -48,11 +47,9 @@ namespace HighVoltage.UI.GameWindows
             timerSkipButton.gameObject.SetActive(true);
         }
 
-        public void ProvideSceneData(PlayerCore playerCore, IPlayerBuildingService buildingService, 
-            IBuildingStoreService buildingStore)
+        public void ProvideSceneData(IPlayerBuildingService buildingService, IBuildingStoreService buildingStore)
         {
             _buildingCards = new List<BuildingCard>();
-            SetupPlayerCoreObserver();
             BuildBuildingUI();
             playerWallet.text = buildingStore.MoneyPlayerHas.ToString();
             
@@ -74,7 +71,7 @@ namespace HighVoltage.UI.GameWindows
                     {
                         foreach (BuildingCard card in _buildingCards)
                         {
-                            card.ToggleSelection(false);    
+                            card.ToggleSelection(false);
                         }
 
                         ((BuildingCard)sender).ToggleSelection(true);
@@ -83,17 +80,7 @@ namespace HighVoltage.UI.GameWindows
                     _buildingCards.Add(buildingCard);
                 }
             }
-
-            void SetupPlayerCoreObserver()
-            {
-                _playerCore = playerCore;
-                playerCoreHealthBar.fillAmount = 1;
-                _playerCore.OnCoreHealthChanged += HandleCoreHealthChanged;
-            }
         }
-
-        private void HandleCoreHealthChanged(object sender, int currentHealth) 
-            => playerCoreHealthBar.fillAmount = (float)currentHealth / _playerCore.MaxCoreHealth;
 
         private void Update()
         {

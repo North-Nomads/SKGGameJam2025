@@ -79,7 +79,7 @@ namespace HighVoltage.Infrastructure.States
             InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
             InitializeBuilder();
-            InitializeInGameHUD(playerCore);
+            InitializeInGameHUD();
             InitializeCamera();
             _buildingStore.AddMoney(config.InitialMoney);
             _gameStateMachine.Enter<GameLoopState>();
@@ -103,12 +103,12 @@ namespace HighVoltage.Infrastructure.States
             return playerCore;
         }
 
-        private void InitializeInGameHUD(PlayerCore playerCore)
+        private void InitializeInGameHUD()
         {
             _uiFactory.CreateUIRoot();
             _gameWindowService.GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .ProvideSceneData(playerCore, _buildingService, _buildingStore);
+                .ProvideSceneData(_buildingService, _buildingStore);
             _gameWindowService.GetWindow(GameWindowId.EndGame);
             _gameWindowService.GetWindow(GameWindowId.BeforeGameHUD);
             InitializePauseMenu();
