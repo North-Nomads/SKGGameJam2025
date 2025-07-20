@@ -21,10 +21,13 @@ namespace HighVoltage
         private EditingMode _editingMode;
 
 
+
         private void Update()
         {
             _cursorPosition = _inputActions.Editing.Cursor.ReadValue<Vector2>();
             //TODO: tile highlight
+            if (_editingMode == EditingMode.Wiring)
+                _buildingService.SetCursorPosition(Camera.main.ScreenToWorldPoint(_cursorPosition));
         }
 
         private Vector3 GetSelectedCellWorldPosition()

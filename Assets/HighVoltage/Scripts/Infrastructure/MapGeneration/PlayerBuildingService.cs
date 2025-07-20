@@ -4,9 +4,7 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
-using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -25,6 +23,7 @@ namespace HighVoltage
 
 
         private readonly List<LineRenderer> _wires = new();
+        private LineRenderer _previewWire;
 
         public Tilemap MapTilemap { get; set; }
 
@@ -36,6 +35,7 @@ namespace HighVoltage
             _mobSpawnerService = mobSpawnerService;
             _buildingStoreService = buildingStoreService;
             _selectedBuildingID = 1;
+            
         }
 
         public void BuildStructure(Vector3 worldCoordinates)
@@ -72,6 +72,8 @@ namespace HighVoltage
 
         public void SelectTargetForWiring(ICurrentObject building)
         {
+            _previewWire.enabled = true;
+            _previewWire.SetPosition(0, (building as MonoBehaviour).transform.position);
             if(building is ICurrentReceiver receiver)
                 _selectedReceiver = receiver;
             else if(building is ICurrentSource source)
@@ -86,7 +88,8 @@ namespace HighVoltage
                 if(_selectedReceiver.Wire != null)
                 {
                     _selectedReceiver.CurrentSource.Wires.Remove(_selectedReceiver.Wire);
-                    UnityEngine.Object.Destroy(_selectedReceiver.Wire);
+                    _wires.Remove(_selectedReceiver.Wire);
+                    Object.Destroy(_selectedReceiver.Wire);
                 }
                 _selectedReceiver.CurrentSource?.DetachReceiver(_selectedReceiver);
 
@@ -94,6 +97,7 @@ namespace HighVoltage
                 _selectedSource.AttachReceiver(_selectedReceiver);
                 AddWire();
 
+                _previewWire.enabled = false;
                 _selectedReceiver = null;
                 _selectedSource = null;
             }
@@ -125,9 +129,16 @@ namespace HighVoltage
         public void ChangedEditingMode(EditingMode newMode)
         {
             if (newMode == EditingMode.Wiring)
+            {
                 _wires.ForEach(x => x.enabled = true);
+            }
             else
+            {
                 _wires.ForEach(x => x.enabled = false);
+                _previewWire.enabled = false;
+                _selectedReceiver = null;
+                _selectedSource = null;
+            }
         }
 
         public void SelectTargetForUnwiring(ICurrentObject building)
@@ -135,14 +146,21 @@ namespace HighVoltage
             //I went for 2in1 approach on deselction
             //not the best Idea, oh well
             if(building == _selectedReceiver)
+            {
                 _selectedReceiver = null;
-            if(building == _selectedSource)
+                _previewWire.enabled = false;
+            }
+
+            if (building == _selectedSource)
+            {
                 _selectedSource = null;
+                _previewWire.enabled = false;
+            }
 
             if (building is ICurrentSource source)
             {
                 source.DetachAllReceivers();
-                source.Wires.ForEach(x => UnityEngine.Object.Destroy(x));
+                source.Wires.ForEach(x => Object.Destroy(x));
                 source.Wires.Clear();
             }
             else if (building is ICurrentReceiver receiver)
@@ -150,7 +168,7 @@ namespace HighVoltage
                 //i didn't feel like adding DetachFromSource, mb
                 _wires.Remove(receiver.Wire);
                 receiver.CurrentSource.Wires.Remove(receiver.Wire);
-                UnityEngine.Object.Destroy(receiver.Wire);
+                Object.Destroy(receiver.Wire);
 
                 receiver.CurrentSource.DetachReceiver(receiver);
                 receiver.AttachToSource(null);
@@ -161,17 +179,26 @@ namespace HighVoltage
             var outPos = (_selectedReceiver as MonoBehaviour).gameObject.transform.position;
             var inPos = (_selectedSource as MonoBehaviour).gameObject.transform.position;
 
-            var wire = UnityEngine.Object.Instantiate(_staticDataService.GetWirePrefab());
+            var wire = Object.Instantiate(_staticDataService.GetWirePrefab());
             wire.SetPositions(new Vector3[] { outPos, inPos });
             _selectedReceiver.Wire = wire;
             _selectedSource.Wires.Add(wire);
             _wires.Add(wire);
         }
 
-        public void CleanUp()
+        public void OnSceneLoaded()
         {
-            _wires.ForEach(wire => UnityEngine.Object.Destroy(wire));
+            _wires.ForEach(wire => Object.Destroy(wire));
             _wires.Clear();
+            _previewWire = Object.Instantiate(_staticDataService.GetWirePrefab());
+            ChangedEditingMode(EditingMode.Building);
         }
+
+        public void SetCursorPosition(Vector2 cursorPosition)
+        {
+            if(_previewWire.enabled)
+                _previewWire.SetPosition(1, cursorPosition);
+        }
+        
     }
 }

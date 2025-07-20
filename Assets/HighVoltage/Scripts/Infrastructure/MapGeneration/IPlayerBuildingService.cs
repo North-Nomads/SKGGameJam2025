@@ -13,7 +13,7 @@ namespace HighVoltage.Map.Building
         public void SelectTargetForWiring(ICurrentObject building);
         public void SelectTargetForUnwiring(ICurrentObject building);
         public void ChangedEditingMode(EditingMode mode);
-
-        public void CleanUp();
+        public void OnSceneLoaded();
+        void SetCursorPosition(Vector2 cursorPosition);
     }
 }

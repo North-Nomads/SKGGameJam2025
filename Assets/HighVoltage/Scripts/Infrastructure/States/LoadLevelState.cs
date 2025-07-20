@@ -75,6 +75,7 @@ namespace HighVoltage.Infrastructure.States
             _buildingStore.ResetMoney();
             InitializeMobSpawners();
             _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
+            _buildingService.OnSceneLoaded();
             InitializeBuilder();
             InitializeInGameHUD();
             InitializeCamera();
