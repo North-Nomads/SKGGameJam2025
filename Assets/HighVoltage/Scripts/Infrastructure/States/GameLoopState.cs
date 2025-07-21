@@ -4,6 +4,7 @@ using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
 using HighVoltage.Level;
+using HighVoltage.Map.Building;
 using HighVoltage.Services.Progress;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
@@ -20,17 +21,20 @@ namespace HighVoltage.Infrastructure.States
         private readonly IGameWindowService _gameWindowService;
         private readonly ILevelProgress _levelProgress;
         private readonly IMobSpawnerService _mobSpawnerService;
+        private readonly IPlayerBuildingService _playerBuilding;
         private InGameHUD _inGameHUD;
         private bool _isWaveOngoing;
 
         public GameLoopState(GameStateMachine gameStateMachine, ISaveLoadService saveLoad,
-            IGameWindowService gameWindowService, ILevelProgress levelProgress, IMobSpawnerService mobSpawnerService)
+            IGameWindowService gameWindowService, ILevelProgress levelProgress, IMobSpawnerService mobSpawnerService,
+            IPlayerBuildingService playerBuilding)
         {
             _gameStateMachine = gameStateMachine;
             _saveLoad = saveLoad;
             _gameWindowService = gameWindowService;
             _levelProgress = levelProgress;
             _mobSpawnerService = mobSpawnerService;
+            _playerBuilding = playerBuilding;
             _timeService = AllServices.Container.Single<IInGameTimeService>();
         }
 
@@ -41,6 +45,7 @@ namespace HighVoltage.Infrastructure.States
             beforeGameHUD.PlayerReadyToStart += (_, __) =>
             {
                 StartGame();
+                _playerBuilding.ToggleBuildingAllowance(true);
             };
 
             _inGameHUD.NextWaveTimerIsUp += (_, __) =>
@@ -57,6 +62,7 @@ namespace HighVoltage.Infrastructure.States
             _levelProgress.LevelCleared += (_, __) =>
             {
                 _mobSpawnerService.UpdateWaveOngoingStatus(false);
+                _playerBuilding.ToggleBuildingAllowance(false);
                 _gameStateMachine.Enter<GameFinishedState>();
             };
             _levelProgress.PlayerCoreDestroyed += (_, __) =>

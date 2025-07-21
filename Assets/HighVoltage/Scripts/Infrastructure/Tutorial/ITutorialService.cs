@@ -8,5 +8,6 @@ namespace HighVoltage.Infrastructure.Tutorial
         event EventHandler<TutorialMessage> UserRequiresNewTutorialStep;
         void StartTutorial();
         void TutorialStepCompleted();
+        event EventHandler AllTutorialStepsFinished;
     }
 }

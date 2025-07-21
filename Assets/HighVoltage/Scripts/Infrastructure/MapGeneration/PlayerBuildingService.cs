@@ -26,6 +26,7 @@ namespace HighVoltage
 
         private readonly List<LineRenderer> _wires = new();
         private LineRenderer _previewWire;
+        private bool _canBuild;
 
         public Tilemap MapTilemap { get; set; }
 
@@ -42,8 +43,16 @@ namespace HighVoltage
             
         }
 
+        public void ToggleBuildingAllowance(bool isBuildingAllowed)
+        {
+            _canBuild = isBuildingAllowed;
+        }
+
         public void BuildStructure(Vector3 worldCoordinates)
         {
+            if (!_canBuild)
+                return;
+            
             TileBase tile = MapTilemap.GetTile(MapTilemap.WorldToCell(worldCoordinates));
             if (tile is not BuildableTile { isBuildable: true })
                 return;

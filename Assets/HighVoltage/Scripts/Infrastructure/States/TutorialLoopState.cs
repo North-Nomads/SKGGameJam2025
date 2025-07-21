@@ -1,3 +1,4 @@
+using System;
 using HighVoltage.Infrastructure.Tutorial;
 
 namespace HighVoltage.Infrastructure.States
@@ -16,8 +17,14 @@ namespace HighVoltage.Infrastructure.States
         public void Enter()
         {
             _tutorialService.StartTutorial();
+            _tutorialService.AllTutorialStepsFinished += HandleUserFinishedTutorial;
         }
-        
+
+        private void HandleUserFinishedTutorial(object sender, EventArgs e)
+        {
+            _gameStateMachine.Enter<LoadLevelState, string>("Level1");
+        }
+
         public void Exit()
         {
             

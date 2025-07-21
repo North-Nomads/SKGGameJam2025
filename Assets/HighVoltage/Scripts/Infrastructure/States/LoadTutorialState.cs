@@ -143,6 +143,8 @@ namespace HighVoltage.Infrastructure.States
                 {
                     tutorialWindow.DisplayMessage(tutorialMessage);
                     hudInstance.EnableHUDPart(tutorialMessage.DisplayHUDPart);
+                    if (tutorialMessage.DisplayHUDPart == InGameHUDOptions.HUD)
+                        _buildingService.ToggleBuildingAllowance(true);
                 };
         }
 
