@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using HighVoltage.Infrastructure.Tutorial;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 namespace HighVoltage
 {
@@ -241,27 +242,28 @@ namespace HighVoltage
                 if(connection is ICurrentSource)
                     source = connection as ICurrentSource;
             }
-            try
+            if (source != null)
             {
-                if (source != null)
+                source.DetachAllReceivers();
+                foreach (var wire in source.Wires.ToList())
                 {
-                    source.DetachAllReceivers();
-                    source.Wires.ForEach(x => _wires.Remove(x));
-                    source.Wires.ForEach(x => Object.Destroy(x));
-                }
-                if (receiver != null)
-                {
-                    //Debug.Log($"{receiver}. {receiver.CurrentSource}, {receiver.Wire}, {receiver.CurrentSource.Wires}");
-                    receiver.CurrentSource.Wires.Remove(receiver.Wire);
-                    receiver.CurrentSource.DetachReceiver(receiver);
-                    _wires.Remove(receiver.Wire);
-                    Object.Destroy(receiver.Wire);
+                    _wires.Remove(wire);
+                    Object.Destroy(wire);
                 }
             }
-            catch (System.Exception)
+
+            if (receiver?.CurrentSource != null)
             {
-                //yeah, whatever
+                receiver.CurrentSource.Wires.Remove(receiver.Wire);
+                receiver.CurrentSource.DetachReceiver(receiver);
             }
+
+            if (receiver?.Wire != null)
+            {
+                _wires.Remove(receiver.Wire);
+                Object.Destroy(receiver.Wire);
+            }
+
             Object.Destroy(structure);
         }
     }
