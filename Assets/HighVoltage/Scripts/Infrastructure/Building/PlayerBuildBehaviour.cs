@@ -74,7 +74,7 @@ namespace HighVoltage
                     _buildingService.BuildStructure(GetSelectedCellWorldPosition());
                     break;
                 case EditingMode.Demolition:
-                    Destroy(GetSelectedBuilding());
+                    _buildingService.DemolishStructure(GetSelectedBuilding());
                     _eventSender.NotifyEventHappened(TutorialEventType.SentryDestroyed);
                     break;
                 case EditingMode.Wiring:
