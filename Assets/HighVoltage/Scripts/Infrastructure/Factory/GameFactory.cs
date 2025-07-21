@@ -41,10 +41,10 @@ namespace HighVoltage.Infrastructure.Factory
         public Bullet CreateBullet(Transform at, Bullet which) 
             => _assets.Instantiate(which, at.position);
 
-        public SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig) 
+        public SentryTower CreateSentry(Vector3 spawnPosition, SentryConfig sentryConfig) 
             => _assets.Instantiate(sentryConfig.Prefab, spawnPosition);
 
-        public SwitchMain CreateSwitch(Vector3Int spawnPosition, SwitchConfig thingToBuild)
+        public SwitchMain CreateSwitch(Vector3 spawnPosition, SwitchConfig thingToBuild)
             => _assets.Instantiate(thingToBuild.SwitchPrefab, spawnPosition);
 
         public PlayerCamera CreateCamera(Vector3 spawnPosition) 

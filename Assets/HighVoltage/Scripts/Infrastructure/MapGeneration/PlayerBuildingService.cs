@@ -5,6 +5,7 @@ using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -55,11 +56,11 @@ namespace HighVoltage
             if (sentryConfig == null)
             {
                 SwitchMain switchMain =
-                    _gameFactory.CreateSwitch(MapTilemap.WorldToCell(worldCoordinates), switchConfig);
+                    _gameFactory.CreateSwitch(worldCoordinates, switchConfig);
             }
             else
             {
-                SentryTower sentryTower = _gameFactory.CreateSentry(MapTilemap.WorldToCell(worldCoordinates), sentryConfig);
+                SentryTower sentryTower = _gameFactory.CreateSentry(worldCoordinates, sentryConfig);
                 sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);    
             }
             
