@@ -147,7 +147,6 @@ namespace HighVoltage.Infrastructure.States
 
         private void InitializeTutorialWindow(InGameHUD hudInstance)
         {
-            foreach (TutorialMessage message in tutorialScenario.TutorialMessages)
             _hudInstance = hudInstance;
             _currentTutorialWindow = _uiFactory.InstantiateTutorialMessageBox();
             _currentTutorialScenario = _staticDataService.GetTutorialScenario();
