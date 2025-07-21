@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Building/PlayerBuildBehaviour.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Electricity/Switch/SwitchMain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Electricity/Switch/SwitchMain.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,22 +70,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.43457943&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;new-ui&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "XThreadsFramesViewSplitterKey": "0.43457943",
+    "git-widget-placeholder": "new-ui-no-lean-twean",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.4f1\Editor\Unity.exe" />
@@ -113,10 +113,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="2872">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="2872" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -141,6 +141,7 @@
       <workItem from="1752686075022" duration="3503000" />
       <workItem from="1752770389574" duration="9283000" />
       <workItem from="1752903595311" duration="17000" />
+      <workItem from="1753086054304" duration="1669000" />
     </task>
     <servers />
   </component>
