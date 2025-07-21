@@ -220,6 +220,8 @@ namespace HighVoltage
 
         public void DemolishStructure(GameObject structure)
         {
+            if (structure == null || structure.CompareTag("PlayerCore"))
+                return;
             ICurrentReceiver receiver = null;
             ICurrentSource source = null;
             if(structure.TryGetComponent(out SwitchInput input))
