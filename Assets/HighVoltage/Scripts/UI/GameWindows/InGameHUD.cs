@@ -4,6 +4,7 @@ using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Map.Building;
 using HighVoltage.Services;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +21,7 @@ namespace HighVoltage.UI.GameWindows
         [SerializeField] private Button[] openCollapsedButtons;
         [SerializeField] private Transform collapsedParent;
         [SerializeField] private Transform openedParent;
+        [SerializeField] private TutorialInGameHUD[] hudParents;
         
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
@@ -34,6 +36,22 @@ namespace HighVoltage.UI.GameWindows
             collapseButton.onClick.AddListener(() => ToggleBuildingHUD(true));
             foreach (Button openCollapsedButton in openCollapsedButtons)
                 openCollapsedButton.onClick.AddListener(() => ToggleBuildingHUD(false));
+        }
+
+        public void HideAllHUD()
+        {
+            foreach (TutorialInGameHUD tutorialInGameHUD in hudParents)
+                tutorialInGameHUD.ParentObject.gameObject.SetActive(false);
+        }
+
+        public void EnableHUDPart(InGameHUDOptions option)
+        {
+            if (option == InGameHUDOptions.None)
+                return;
+            
+            foreach (TutorialInGameHUD tutorialInGameHUD in hudParents)
+                if (tutorialInGameHUD.Option == option)
+                    tutorialInGameHUD.ParentObject.gameObject.SetActive(true);
         }
 
         private void ToggleBuildingHUD(bool isCollapsed)
@@ -128,5 +146,23 @@ namespace HighVoltage.UI.GameWindows
             int seconds = Mathf.FloorToInt(_delayTimeLeft % 60f);
             nextWaveTimer.text = $"{seconds + 1:00}";
         }
+    }
+
+    [Serializable]
+    public class TutorialInGameHUD
+    {
+        [SerializeField] private InGameHUDOptions option;
+        [SerializeField] private Transform parentObject;
+
+        public InGameHUDOptions Option => option;
+        public Transform ParentObject => parentObject;
+    }
+
+    public enum InGameHUDOptions
+    {
+        None,
+        Currency,
+        Timer,
+        HUD
     }
 }

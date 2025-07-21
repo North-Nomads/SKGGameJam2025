@@ -1,4 +1,5 @@
 using System;
+using HighVoltage.UI.GameWindows;
 using UnityEngine;
 
 namespace HighVoltage.Infrastructure.Tutorial
@@ -17,13 +18,13 @@ namespace HighVoltage.Infrastructure.Tutorial
         [SerializeField] private string message;
         [SerializeField] private Sprite[] sprites;
         [SerializeField] private TutorialEventType waitingForEvent;
+        [SerializeField] private InGameHUDOptions displayHUDPart;
         [SerializeField] private float timeToWaitIfNotForEvent;
 
         public string Message => message;
         public Sprite[] Sprites => sprites;
-
         public TutorialEventType WaitingForEvent => waitingForEvent;
-
+        public InGameHUDOptions DisplayHUDPart => displayHUDPart;
         public float TimeToWaitIfNotForEvent => timeToWaitIfNotForEvent;
     }
 

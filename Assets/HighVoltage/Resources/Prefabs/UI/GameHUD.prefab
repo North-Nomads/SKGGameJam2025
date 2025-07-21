@@ -1157,6 +1157,13 @@ MonoBehaviour:
   - {fileID: 2246924870017265446}
   collapsedParent: {fileID: 4095103286270765982}
   openedParent: {fileID: 899747432069995373}
+  hudParents:
+  - option: 1
+    parentObject: {fileID: 4539324234103264739}
+  - option: 2
+    parentObject: {fileID: 1434181672751240843}
+  - option: 3
+    parentObject: {fileID: 899747432069995373}
 --- !u!1 &3841132255368023683
 GameObject:
   m_ObjectHideFlags: 0

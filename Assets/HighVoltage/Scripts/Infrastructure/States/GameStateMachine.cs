@@ -75,7 +75,14 @@ namespace HighVoltage.Infrastructure.States
                     services.Single<IStaticDataService>(),
                     services.Single<ITutorialService>(),
                     sceneLoader,
-                    services.Single<ICameraService>()),
+                    services.Single<ICameraService>(),
+                    services.Single<IGameWindowService>(),
+                    services.Single<IPlayerBuildingService>(),
+                services.Single<IBuildingStoreService>(),
+                    services.Single<ILevelProgress>(),
+                    services.Single<IPlayerProgressService>(),
+                    services.Single<IGameFactory>(),
+                    services.Single<IMobSpawnerService>()),
             };
         }
 
