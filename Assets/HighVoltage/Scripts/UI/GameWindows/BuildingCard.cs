@@ -54,6 +54,7 @@ namespace HighVoltage.UI.GameWindows
 
         public void ToggleSelection(bool isSelected)
         {
+            Debug.Log($"For {name} toggle selection {isSelected}");
             _isSelected = isSelected;
             outline.enabled = isSelected;
         }

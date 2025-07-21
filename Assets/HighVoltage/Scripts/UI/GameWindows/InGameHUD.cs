@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using HighVoltage.Infrastructure.BuildingStore;
+using HighVoltage.Infrastructure.Services;
 using HighVoltage.Map.Building;
 using HighVoltage.Services;
 using TMPro;
@@ -26,8 +27,14 @@ namespace HighVoltage.UI.GameWindows
         private PlayerCore _playerCore;
         private float _delayTimeLeft;
         private List<BuildingCard> _buildingCards;
-        
+        private IPlayerBuildingService _buildingService;
+
         public event EventHandler NextWaveTimerIsUp = delegate { };
+
+        private void Awake()
+        {
+            _buildingService = AllServices.Container.Single<IPlayerBuildingService>();
+        }
 
         protected override void OnStart()
         {
@@ -58,12 +65,6 @@ namespace HighVoltage.UI.GameWindows
         {
             collapsedParent.gameObject.SetActive(isCollapsed);
             openedParent.gameObject.SetActive(!isCollapsed);
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            _buildingCards = new List<BuildingCard>();
         }
 
         private void HandlePreparationTimeSkip()
@@ -105,19 +106,19 @@ namespace HighVoltage.UI.GameWindows
                 foreach (BuildingConfig building in b)
                 {
                     BuildingCard buildingCard = GameWindowService.CreateBuildingCard(building, buildingCardParent);
-                    buildingCard.OnCardSelected += (sender, selectedSentry) =>
-                    {
-                        foreach (BuildingCard card in _buildingCards)
-                        {
-                            card.ToggleSelection(false);
-                        }
-
-                        ((BuildingCard)sender).ToggleSelection(true);
-                        buildingService.SelectedSentryChanged(selectedSentry);
-                    };
+                    buildingCard.OnCardSelected += OnPlayerChangedSelectedSentry;
                     _buildingCards.Add(buildingCard);
                 }
             }
+        }
+
+        private void OnPlayerChangedSelectedSentry(object sender, int selectedSentryID)
+        {
+            foreach (BuildingCard card in _buildingCards)
+                card.ToggleSelection(false);
+
+            ((BuildingCard)sender).ToggleSelection(true);
+            _buildingService.SelectedSentryChanged(selectedSentryID);
         }
 
         private void OnBuildingStoreOnCurrencyChanged(object _, int newMoney)
