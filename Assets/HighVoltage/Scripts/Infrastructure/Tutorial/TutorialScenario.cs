@@ -32,15 +32,14 @@ namespace HighVoltage.Infrastructure.Tutorial
     {
         None,
         WASD,
-        LMB,
-        RMB,
-        MWL,
         Q,
         E,
         TAB,
         SentryEnabled,
         SentryDisabled,
         SentryDestroyed,
-        FuseBoxPlaced
+        FuseBoxPlaced,
+        FuseBoxChanged,
+        SentryPlaced
     }
 }

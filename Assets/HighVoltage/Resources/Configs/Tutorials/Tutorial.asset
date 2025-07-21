@@ -37,13 +37,13 @@ MonoBehaviour:
   - message: Use them to build your first sentry. Press Q for "Building" mode
     sprites:
     - {fileID: 21300000, guid: 9553ccc058aafb8409b535e0ba636e78, type: 3}
-    waitingForEvent: 5
+    waitingForEvent: 2
     displayHUDPart: 3
     timeToWaitIfNotForEvent: 0
   - message: Now, select the sentry and use LMB to build the sentry
     sprites:
     - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
-    waitingForEvent: 2
+    waitingForEvent: 10
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: But the tower doesn't work yet. You need to connect it with the core.
@@ -51,7 +51,7 @@ MonoBehaviour:
     sprites:
     - {fileID: 21300000, guid: 668d0a48134963a4a82aa516689c71f8, type: 3}
     - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
-    waitingForEvent: 8
+    waitingForEvent: 5
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: Nice! The sentry is ready and waiting for the enemy
@@ -63,13 +63,13 @@ MonoBehaviour:
       on sentry
     sprites:
     - {fileID: 21300000, guid: 25bcbc60a0b371c4285bc1343695feac, type: 3}
-    waitingForEvent: 6
+    waitingForEvent: 3
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: Now LMB on sentry to destroy it
     sprites:
     - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
-    waitingForEvent: 10
+    waitingForEvent: 7
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: The sentries consume energy from the core when enabled. Be careful and
@@ -83,7 +83,7 @@ MonoBehaviour:
       Let's build it.
     sprites:
     - {fileID: 21300000, guid: 9553ccc058aafb8409b535e0ba636e78, type: 3}
-    waitingForEvent: 11
+    waitingForEvent: 2
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: Now destroy the current wires. Switch to wiring mode and use RMB on
@@ -91,7 +91,7 @@ MonoBehaviour:
     sprites:
     - {fileID: 21300000, guid: 668d0a48134963a4a82aa516689c71f8, type: 3}
     - {fileID: 21300000, guid: a29635ceb582d5149ade6239fd8695f1, type: 3}
-    waitingForEvent: 8
+    waitingForEvent: 6
     displayHUDPart: 0
     timeToWaitIfNotForEvent: 0
   - message: Press mouse wheel on fuse box to disable it

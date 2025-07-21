@@ -14,6 +14,7 @@ using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -67,10 +68,12 @@ namespace HighVoltage.Infrastructure.States
             PlayerCore playerCore = InitializeGameWorld(config);
             _levelProgress.LoadLevelConfig(config, playerCore);
 
+            _buildingService.MapTilemap = Object.FindObjectOfType<Tilemap>(); //if it works
+            _buildingService.OnSceneLoaded();
             InitializeBuilder();
             InitializeCamera();
             InitializeUI();
-            
+            _buildingStore.AddMoney(config.InitialMoney);
             _gameStateMachine.Enter<TutorialLoopState>();
         }
         

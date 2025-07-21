@@ -5,6 +5,7 @@ using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
 using System.Collections.Generic;
+using HighVoltage.Infrastructure.Tutorial;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,6 +21,7 @@ namespace HighVoltage
         private readonly IGameFactory _gameFactory;
         private readonly IMobSpawnerService _mobSpawnerService;
         private readonly IBuildingStoreService _buildingStoreService;
+        private readonly IEventSenderService _eventSender;
 
 
         private readonly List<LineRenderer> _wires = new();
@@ -28,12 +30,14 @@ namespace HighVoltage
         public Tilemap MapTilemap { get; set; }
 
         public PlayerBuildingService(IStaticDataService staticDataService, IGameFactory gameFactory,
-            IMobSpawnerService mobSpawnerService, IBuildingStoreService buildingStoreService)
+            IMobSpawnerService mobSpawnerService, IBuildingStoreService buildingStoreService,
+            IEventSenderService eventSender)
         {
             _staticDataService = staticDataService;
             _gameFactory = gameFactory;
             _mobSpawnerService = mobSpawnerService;
             _buildingStoreService = buildingStoreService;
+            _eventSender = eventSender;
             _selectedBuildingID = 1;
             
         }
@@ -56,11 +60,13 @@ namespace HighVoltage
             {
                 SwitchMain switchMain =
                     _gameFactory.CreateSwitch(MapTilemap.WorldToCell(worldCoordinates), switchConfig);
+                _eventSender.NotifyEventHappened(TutorialEventType.FuseBoxPlaced);   
             }
             else
             {
                 SentryTower sentryTower = _gameFactory.CreateSentry(MapTilemap.WorldToCell(worldCoordinates), sentryConfig);
-                sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);    
+                sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);
+                _eventSender.NotifyEventHappened(TutorialEventType.SentryPlaced);
             }
             
             
@@ -74,28 +80,28 @@ namespace HighVoltage
         {
             _previewWire.enabled = true;
             _previewWire.SetPosition(0, (building as MonoBehaviour).transform.position);
-            if(building is ICurrentReceiver receiver)
+            if (building is ICurrentReceiver receiver)
                 _selectedReceiver = receiver;
-            else if(building is ICurrentSource source)
+            else if (building is ICurrentSource source)
                 _selectedSource = source;
 
-            if(_selectedSource != null && _selectedReceiver != null)
+            if (_selectedSource != null && _selectedReceiver != null)
             {
                 if (ConnectionHasLoops(_selectedReceiver))
                     return;
-
                 
-                if(_selectedReceiver.Wire != null)
+                if (_selectedReceiver.Wire != null)
                 {
                     _selectedReceiver.CurrentSource.Wires.Remove(_selectedReceiver.Wire);
                     _wires.Remove(_selectedReceiver.Wire);
                     Object.Destroy(_selectedReceiver.Wire);
                 }
+                
                 _selectedReceiver.CurrentSource?.DetachReceiver(_selectedReceiver);
-
                 _selectedReceiver.AttachToSource(_selectedSource);
                 _selectedSource.AttachReceiver(_selectedReceiver);
                 AddWire();
+                _eventSender.NotifyEventHappened(TutorialEventType.SentryEnabled);
 
                 _previewWire.enabled = false;
                 _selectedReceiver = null;
@@ -135,7 +141,8 @@ namespace HighVoltage
             else
             {
                 _wires.ForEach(x => x.enabled = false);
-                _previewWire.enabled = false;
+                if (_previewWire)
+                    _previewWire.enabled = false;
                 _selectedReceiver = null;
                 _selectedSource = null;
             }

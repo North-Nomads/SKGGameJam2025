@@ -1,10 +1,10 @@
 using System;
-using System.IO;
 using System.Linq;
 using HighVoltage.Infrastructure.Factory;
 using HighVoltage.Infrastructure.MobSpawning;
+using HighVoltage.Infrastructure.Services;
+using HighVoltage.Infrastructure.Tutorial;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HighVoltage.Infrastructure.Sentry
 {
@@ -41,13 +41,18 @@ namespace HighVoltage.Infrastructure.Sentry
         protected int Damage;
         protected int DecayPerSecond;
 
-        private const float OneSecond = 1;
+        private IEventSenderService _eventSender;
         private ICurrentSource _currentProvider;
         private float _decayCooldownTimeLeft;
+        private const float OneSecond = 1;
         private float _buildingTimeLeft;
         private float _stunnedTimeLeft;
         private int _currentHealth;
 
+        private void Awake()
+        {
+            _eventSender = AllServices.Container.Single<IEventSenderService>();
+        }
 
         public void Initialize(SentryConfig config, IMobSpawnerService mobSpawnerService, IGameFactory gameFactory)
         {
@@ -155,6 +160,8 @@ namespace HighVoltage.Infrastructure.Sentry
             _currentProvider = currentProvider;
             if(currentProvider != null)
                 _currentProvider.OnOverload += HandleOverload;
+            else
+                _eventSender.NotifyEventHappened(TutorialEventType.SentryDisabled);
         }
 
         private void HandleOverload(object sender, EventArgs e) 
