@@ -1,4 +1,5 @@
 ﻿using HighVoltage.HighVoltage.Scripts.UI.GameWindows;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.InGameTime;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
@@ -22,12 +23,13 @@ namespace HighVoltage.Infrastructure.States
         private readonly ILevelProgress _levelProgress;
         private readonly IMobSpawnerService _mobSpawnerService;
         private readonly IPlayerBuildingService _playerBuilding;
+        private readonly IBuildingStoreService _buildingStore;
         private InGameHUD _inGameHUD;
         private bool _isWaveOngoing;
 
         public GameLoopState(GameStateMachine gameStateMachine, ISaveLoadService saveLoad,
             IGameWindowService gameWindowService, ILevelProgress levelProgress, IMobSpawnerService mobSpawnerService,
-            IPlayerBuildingService playerBuilding)
+            IPlayerBuildingService playerBuilding, IBuildingStoreService buildingStore)
         {
             _gameStateMachine = gameStateMachine;
             _saveLoad = saveLoad;
@@ -35,6 +37,7 @@ namespace HighVoltage.Infrastructure.States
             _levelProgress = levelProgress;
             _mobSpawnerService = mobSpawnerService;
             _playerBuilding = playerBuilding;
+            _buildingStore = buildingStore;
             _timeService = AllServices.Container.Single<IInGameTimeService>();
         }
 
@@ -80,6 +83,10 @@ namespace HighVoltage.Infrastructure.States
         public void Exit()
         {
             _timeService.RestoreTimePassage();
+            _gameWindowService
+                .GetWindow(GameWindowId.InGameHUD)
+                .GetComponent<InGameHUD>()
+                .OnLevelCompleted(_buildingStore);
         }
     }
 }

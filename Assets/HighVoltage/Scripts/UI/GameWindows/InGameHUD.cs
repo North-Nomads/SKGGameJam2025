@@ -85,18 +85,18 @@ namespace HighVoltage.UI.GameWindows
             timerParentObject.gameObject.SetActive(true);
         }
 
+        public void OnLevelCompleted(IBuildingStoreService buildingStore)
+        {
+            buildingStore.CurrencyChanged -= OnBuildingStoreOnCurrencyChanged;
+        }
+
         public void ProvideSceneData(IPlayerBuildingService buildingService, IBuildingStoreService buildingStore)
         {
             _buildingCards = new List<BuildingCard>();
             BuildBuildingUI();
             playerWallet.text = buildingStore.MoneyPlayerHas.ToString();
-            
-            buildingStore.CurrencyChanged += (_, newMoney) =>
-            {
-                playerWallet.text = newMoney.ToString();
-                foreach (BuildingCard buildingCard in _buildingCards) 
-                    buildingCard.UpdatePurchasableStatus(newMoney);
-            };  
+
+            buildingStore.CurrencyChanged += OnBuildingStoreOnCurrencyChanged;  
             return;
 
             void BuildBuildingUI()
@@ -118,6 +118,12 @@ namespace HighVoltage.UI.GameWindows
                     _buildingCards.Add(buildingCard);
                 }
             }
+        }
+
+        private void OnBuildingStoreOnCurrencyChanged(object _, int newMoney)
+        {
+            playerWallet.text = newMoney.ToString();
+            foreach (BuildingCard buildingCard in _buildingCards) buildingCard.UpdatePurchasableStatus(newMoney);
         }
 
         private void Update()

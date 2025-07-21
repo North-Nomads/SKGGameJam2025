@@ -53,12 +53,6 @@ namespace HighVoltage.Infrastructure.States
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
 
             _allServices.RegisterSingle<IEventSenderService>(new EventSenderService());
-            _allServices.RegisterSingle<ITutorialService>(new TutorialService(
-                _allServices.Single<IStaticDataService>(),
-                _allServices.Single<IEventSenderService>(),
-                _coroutineRunner,
-                _allServices.Single<IPlayerProgressService>(),
-                _allServices.Single<IPlayerBuildingService>()));
             _allServices.RegisterSingle<IGameFactory>(new GameFactory(
                 _allServices.Single<IAssetProvider>(),
                 _allServices.Single<IPlayerProgressService>()));
@@ -91,6 +85,12 @@ namespace HighVoltage.Infrastructure.States
                 _allServices.Single<IMobSpawnerService>(),
                 _allServices.Single<IBuildingStoreService>(),
                 _allServices.Single<IEventSenderService>()));
+            _allServices.RegisterSingle<ITutorialService>(new TutorialService(
+                _allServices.Single<IStaticDataService>(),
+                _allServices.Single<IEventSenderService>(),
+                _coroutineRunner,
+                _allServices.Single<IPlayerProgressService>(),
+                _allServices.Single<IPlayerBuildingService>()));
         }
 
         private void RegisterStaticDataService()

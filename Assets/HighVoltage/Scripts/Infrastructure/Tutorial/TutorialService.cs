@@ -21,7 +21,8 @@ namespace HighVoltage.Infrastructure.Tutorial
         private int _scenarioStepIndex;
 
         public TutorialService(IStaticDataService staticDataService, IEventSenderService eventSenderService, 
-            ICoroutineRunner coroutineRunner, IPlayerProgressService playerProgress, IPlayerBuildingService buildingService)
+            ICoroutineRunner coroutineRunner, IPlayerProgressService playerProgress, 
+            IPlayerBuildingService buildingService)
         {
             _coroutineRunner = coroutineRunner;
             _playerProgress = playerProgress;

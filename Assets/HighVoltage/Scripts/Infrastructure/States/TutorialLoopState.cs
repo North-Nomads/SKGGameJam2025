@@ -1,5 +1,9 @@
 using System;
+using HighVoltage.Infrastructure.BuildingStore;
 using HighVoltage.Infrastructure.Tutorial;
+using HighVoltage.UI.GameWindows;
+using HighVoltage.UI.Services;
+using HighVoltage.UI.Services.GameWindows;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -7,11 +11,16 @@ namespace HighVoltage.Infrastructure.States
     {
         private readonly GameStateMachine _gameStateMachine;
         private readonly ITutorialService _tutorialService;
+        private readonly IGameWindowService _gameWindowService;
+        private readonly IBuildingStoreService _buildingStore;
 
-        public TutorialLoopState(GameStateMachine gameStateMachine, ITutorialService tutorialService)
+        public TutorialLoopState(GameStateMachine gameStateMachine, ITutorialService tutorialService,
+            IGameWindowService gameWindowService, IBuildingStoreService buildingStore)
         {
             _gameStateMachine = gameStateMachine;
             _tutorialService = tutorialService;
+            _gameWindowService = gameWindowService;
+            _buildingStore = buildingStore;
         }
 
         public void Enter()
@@ -27,7 +36,10 @@ namespace HighVoltage.Infrastructure.States
 
         public void Exit()
         {
-            
+            _gameWindowService
+                .GetWindow(GameWindowId.InGameHUD)
+                .GetComponent<InGameHUD>()
+                .OnLevelCompleted(_buildingStore);
         }
     }
 }
