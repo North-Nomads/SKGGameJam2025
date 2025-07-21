@@ -80,6 +80,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MiddleMouseButtonClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""b6816157-ffc3-43ef-a1f6-571c30f1dd8e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -214,6 +223,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MoveCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51445e31-ddf8-460d-bd18-da48bc0e0de6"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MiddleMouseButtonClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -228,6 +248,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Editing_Cursor = m_Editing.FindAction("Cursor", throwIfNotFound: true);
         m_Editing_OpenPauseMenu = m_Editing.FindAction("OpenPauseMenu", throwIfNotFound: true);
         m_Editing_MoveCamera = m_Editing.FindAction("MoveCamera", throwIfNotFound: true);
+        m_Editing_MiddleMouseButtonClick = m_Editing.FindAction("MiddleMouseButtonClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +316,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Editing_Cursor;
     private readonly InputAction m_Editing_OpenPauseMenu;
     private readonly InputAction m_Editing_MoveCamera;
+    private readonly InputAction m_Editing_MiddleMouseButtonClick;
     public struct EditingActions
     {
         private @PlayerInput m_Wrapper;
@@ -305,6 +327,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Cursor => m_Wrapper.m_Editing_Cursor;
         public InputAction @OpenPauseMenu => m_Wrapper.m_Editing_OpenPauseMenu;
         public InputAction @MoveCamera => m_Wrapper.m_Editing_MoveCamera;
+        public InputAction @MiddleMouseButtonClick => m_Wrapper.m_Editing_MiddleMouseButtonClick;
         public InputActionMap Get() { return m_Wrapper.m_Editing; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -332,6 +355,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MoveCamera.started += instance.OnMoveCamera;
             @MoveCamera.performed += instance.OnMoveCamera;
             @MoveCamera.canceled += instance.OnMoveCamera;
+            @MiddleMouseButtonClick.started += instance.OnMiddleMouseButtonClick;
+            @MiddleMouseButtonClick.performed += instance.OnMiddleMouseButtonClick;
+            @MiddleMouseButtonClick.canceled += instance.OnMiddleMouseButtonClick;
         }
 
         private void UnregisterCallbacks(IEditingActions instance)
@@ -354,6 +380,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MoveCamera.started -= instance.OnMoveCamera;
             @MoveCamera.performed -= instance.OnMoveCamera;
             @MoveCamera.canceled -= instance.OnMoveCamera;
+            @MiddleMouseButtonClick.started -= instance.OnMiddleMouseButtonClick;
+            @MiddleMouseButtonClick.performed -= instance.OnMiddleMouseButtonClick;
+            @MiddleMouseButtonClick.canceled -= instance.OnMiddleMouseButtonClick;
         }
 
         public void RemoveCallbacks(IEditingActions instance)
@@ -379,5 +408,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnCursor(InputAction.CallbackContext context);
         void OnOpenPauseMenu(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
+        void OnMiddleMouseButtonClick(InputAction.CallbackContext context);
     }
 }

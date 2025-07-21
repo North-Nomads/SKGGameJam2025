@@ -109,6 +109,15 @@ namespace HighVoltage
             _inputActions.Editing.EditingActionMain.performed += OnEditingMainAction;
             _inputActions.Editing.EditingActionSecondary.performed += OnEditingSecondaryAction;
             _inputActions.Editing.SwitchEditingMode.performed += OnEditingModeChanged;
+            _inputActions.Editing.MiddleMouseButtonClick.performed += SwitchSelectedSwitch;
+        }
+
+        private void SwitchSelectedSwitch(InputAction.CallbackContext obj)
+        {
+            var selectedSwitch = GetSelectedBuilding();
+            if (selectedSwitch == null || !selectedSwitch.TryGetComponent(out SwitchMain sw))
+                return;
+            sw.Switch();
         }
 
         private void OnEditingModeChanged(InputAction.CallbackContext obj)
