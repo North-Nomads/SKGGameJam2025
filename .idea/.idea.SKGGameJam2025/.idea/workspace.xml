@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/GameHUD.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/GameStateMachine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadTutorialState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadTutorialState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialScenario.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialScenario.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/GameWindows/InGameHUD.cs" afterDir="false" />
-    </list>
+    <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,22 +67,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "XThreadsFramesViewSplitterKey": "0.43457943",
-    "git-widget-placeholder": "tutorial",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.43457943&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;tutorial&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="C:\Program Files\Unity\Hub\Editor\2022.3.4f1\Editor\Unity.exe" />
@@ -209,10 +201,10 @@
           <line>132</line>
           <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\States\LoadTutorialState.cs" containingFunctionPresentation="Lambda expression inside Method 'InitializeTutorialWindow'">
             <startOffsets>
-              <option value="5795" />
+              <option value="5789" />
             </startOffsets>
             <endOffsets>
-              <option value="5842" />
+              <option value="5847" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="13" />

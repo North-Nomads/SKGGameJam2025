@@ -38,7 +38,7 @@ MonoBehaviour:
     sprites:
     - {fileID: 21300000, guid: 9553ccc058aafb8409b535e0ba636e78, type: 3}
     waitingForEvent: 5
-    displayHUDPart: 0
+    displayHUDPart: 3
     timeToWaitIfNotForEvent: 0
   - message: Now, select the sentry and use LMB to build the sentry
     sprites:

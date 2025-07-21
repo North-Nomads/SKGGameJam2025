@@ -66,11 +66,18 @@ namespace HighVoltage.Infrastructure.States
             LevelConfig config = _staticDataService.ForLevel(Constants.TutorialLevelIndex);
             PlayerCore playerCore = InitializeGameWorld(config);
             _levelProgress.LoadLevelConfig(config, playerCore);
-            
+
+            InitializeBuilder();
             InitializeCamera();
             InitializeUI();
             
             _gameStateMachine.Enter<TutorialLoopState>();
+        }
+        
+        private void InitializeBuilder()
+        {
+            PlayerBuildBehaviour playerBuildBehaviour = _gameFactory.CreateBuilder();
+            playerBuildBehaviour.Initialize(_staticDataService, _buildingService, _gameWindowService);
         }
         
         private PlayerCore InitializeGameWorld(LevelConfig config)
@@ -96,12 +103,14 @@ namespace HighVoltage.Infrastructure.States
         
         private InGameHUD InitializeInGameHUD()
         {
-            InGameHUD inGameHUD = _gameWindowService.GetWindow(GameWindowId.InGameHUD)
+            InGameHUD inGameHUD = _gameWindowService
+                .GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>();
+            
             inGameHUD.ProvideSceneData(_buildingService, _buildingStore);
-            inGameHUD.HideAllHUD();
             _gameWindowService.GetWindow(GameWindowId.EndGame);
             _gameWindowService.Open(GameWindowId.InGameHUD);
+            inGameHUD.HideAllHUD();
             return inGameHUD;
         }
         
