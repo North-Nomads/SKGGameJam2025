@@ -18,8 +18,8 @@ namespace HighVoltage.Infrastructure.Factory
         void CleanUp();
         PlayerBuildBehaviour CreateBuilder();
         Bullet CreateBullet(Transform at, Bullet which);
-        SentryTower CreateSentry(Vector3Int spawnPosition, SentryConfig sentryConfig);
-        SwitchMain CreateSwitch(Vector3Int spawnPosition, SwitchConfig thingToBuild);
+        SentryTower CreateSentry(Vector3 spawnPosition, SentryConfig sentryConfig);
+        SwitchMain CreateSwitch(Vector3 spawnPosition, SwitchConfig thingToBuild);
         PlayerCamera CreateCamera(Vector3 spawnPosition);
         ICoroutineRunner CreateCoroutineRunner();
     }

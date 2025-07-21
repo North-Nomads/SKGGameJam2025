@@ -9,6 +9,7 @@ TagManager:
   - CoreSpawnPoint
   - Mob
   - DEBUG_SentrySpawn
+  - PlayerCore
   layers:
   - Default
   - TransparentFX

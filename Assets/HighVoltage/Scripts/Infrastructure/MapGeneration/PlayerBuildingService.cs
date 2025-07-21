@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using HighVoltage.Infrastructure.Tutorial;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 namespace HighVoltage
 {
@@ -68,12 +69,12 @@ namespace HighVoltage
             if (sentryConfig == null)
             {
                 SwitchMain switchMain =
-                    _gameFactory.CreateSwitch(MapTilemap.WorldToCell(worldCoordinates), switchConfig);
+                    _gameFactory.CreateSwitch(worldCoordinates, switchConfig);
                 _eventSender.NotifyEventHappened(TutorialEventType.FuseBoxPlaced);   
             }
             else
             {
-                SentryTower sentryTower = _gameFactory.CreateSentry(MapTilemap.WorldToCell(worldCoordinates), sentryConfig);
+                SentryTower sentryTower = _gameFactory.CreateSentry(worldCoordinates, sentryConfig);
                 sentryTower.Initialize(sentryConfig, _mobSpawnerService, _gameFactory);
                 _eventSender.NotifyEventHappened(TutorialEventType.SentryPlaced);
             }
@@ -81,6 +82,7 @@ namespace HighVoltage
             
             _buildingStoreService.SpendMoneyOn(thingToBuild);
         }
+
 
         public void SelectedSentryChanged(int selectedSentry)
             => _selectedBuildingID = selectedSentry;
@@ -215,6 +217,56 @@ namespace HighVoltage
             if(_previewWire.enabled)
                 _previewWire.SetPosition(1, cursorPosition);
         }
-        
+
+        public void DemolishStructure(GameObject structure)
+        {
+            if (structure == null || structure.CompareTag("PlayerCore"))
+                return;
+            ICurrentReceiver receiver = null;
+            ICurrentSource source = null;
+            if(structure.TryGetComponent(out SwitchInput input))
+            {
+                structure = input.SwitchMain.gameObject;
+            }
+            else if(structure.TryGetComponent(out SwitchOutput output))
+            {
+                structure = output.SwitchMain.gameObject;
+            }
+            if(structure.TryGetComponent(out SwitchMain switchMain))
+            {
+                receiver = switchMain.Input;
+                source = switchMain.Output;
+            }
+            else if (structure.TryGetComponent(out ICurrentObject connection))
+            {
+                if (connection is ICurrentReceiver)
+                    receiver = connection as ICurrentReceiver;
+                if(connection is ICurrentSource)
+                    source = connection as ICurrentSource;
+            }
+            if (source != null)
+            {
+                source.DetachAllReceivers();
+                foreach (var wire in source.Wires.ToList())
+                {
+                    _wires.Remove(wire);
+                    Object.Destroy(wire);
+                }
+            }
+
+            if (receiver?.CurrentSource != null)
+            {
+                receiver.CurrentSource.Wires.Remove(receiver.Wire);
+                receiver.CurrentSource.DetachReceiver(receiver);
+            }
+
+            if (receiver?.Wire != null)
+            {
+                _wires.Remove(receiver.Wire);
+                Object.Destroy(receiver.Wire);
+            }
+
+            Object.Destroy(structure);
+        }
     }
 }
