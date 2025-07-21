@@ -20,7 +20,6 @@ namespace HighVoltage.Infrastructure.States
         public TutorialLoopState(GameStateMachine gameStateMachine, ITutorialService tutorialService,
             IGameWindowService gameWindowService, IBuildingStoreService buildingStore, IInGameTimeService timeService)
         {
-            Debug.Log($"Passed time service {timeService}");
             _gameStateMachine = gameStateMachine;
             _tutorialService = tutorialService;
             _gameWindowService = gameWindowService;
@@ -38,7 +37,7 @@ namespace HighVoltage.Infrastructure.States
 
         private void HandleUserFinishedTutorial(object sender, EventArgs e)
         {
-            _gameStateMachine.Enter<LoadLevelState, string>("Level1");
+            _gameStateMachine.Enter<LoadProgressState>();
         }
 
         public void Exit()

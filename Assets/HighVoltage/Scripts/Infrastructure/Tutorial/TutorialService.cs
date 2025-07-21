@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Map.Building;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
@@ -15,6 +16,7 @@ namespace HighVoltage.Infrastructure.Tutorial
         private readonly IEventSenderService _eventSenderService;
         private readonly IPlayerBuildingService _buildingService;
         private readonly IPlayerProgressService _playerProgress;
+        private readonly ISaveLoadService _saveLoad;
         private readonly ICoroutineRunner _coroutineRunner;
         private readonly TutorialScenario _scenario;
         private TutorialMessage _currentScenarioStep;
@@ -23,11 +25,12 @@ namespace HighVoltage.Infrastructure.Tutorial
 
         public TutorialService(IStaticDataService staticDataService, IEventSenderService eventSenderService, 
             ICoroutineRunner coroutineRunner, IPlayerProgressService playerProgress, 
-            IPlayerBuildingService buildingService)
+            IPlayerBuildingService buildingService, ISaveLoadService saveLoad)
         {
             _coroutineRunner = coroutineRunner;
             _playerProgress = playerProgress;
             _buildingService = buildingService;
+            _saveLoad = saveLoad;
             _eventSenderService = eventSenderService;
             _eventSenderService.OnEventHappened += OnGameEventOccured;
             _scenario = staticDataService.GetTutorialScenario();
@@ -60,7 +63,6 @@ namespace HighVoltage.Infrastructure.Tutorial
 
         public void TutorialStepCompleted()
         {
-            Debug.Log("Tutorial step completed");
             _scenarioStepIndex++;
             if (_scenarioStepIndex >= _scenario.TutorialMessages.Length)
             {
@@ -79,6 +81,7 @@ namespace HighVoltage.Infrastructure.Tutorial
         private void TutorialFinished()
         {
             _playerProgress.Progress.HasFinishedTutorial = true;
+            _saveLoad.SaveProgress();
             _buildingService.ToggleBuildingAllowance(false);
             if (_runningCoroutine != null)
                 _coroutineRunner.StopCoroutine(_runningCoroutine);

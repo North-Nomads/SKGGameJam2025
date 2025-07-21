@@ -90,7 +90,8 @@ namespace HighVoltage.Infrastructure.States
                 _allServices.Single<IEventSenderService>(),
                 _coroutineRunner,
                 _allServices.Single<IPlayerProgressService>(),
-                _allServices.Single<IPlayerBuildingService>()));
+                _allServices.Single<IPlayerBuildingService>(),
+                _allServices.Single<ISaveLoadService>()));
         }
 
         private void RegisterStaticDataService()
