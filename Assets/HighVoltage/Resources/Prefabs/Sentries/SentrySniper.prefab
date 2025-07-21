@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 502827662028249600}
   - component: {fileID: 376189782751003696}
   - component: {fileID: 3293749472009735155}
-  - component: {fileID: 6073343875962706350}
+  - component: {fileID: 7302629395426775356}
   m_Layer: 9
   m_Name: SentrySniper
   m_TagString: Untagged
@@ -220,8 +220,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: -8056474331501318046, guid: 4bff9a68a8608e545a57d58ef2438abd, type: 3}
   scanRadius: 6
   bulletSpawnPoint: {fileID: 6663315526061819139}
---- !u!58 &6073343875962706350
-CircleCollider2D:
+--- !u!61 &7302629395426775356
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -253,8 +253,18 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1001 &6926288201298931239
 PrefabInstance:
   m_ObjectHideFlags: 0

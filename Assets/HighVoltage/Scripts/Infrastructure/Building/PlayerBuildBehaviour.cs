@@ -71,7 +71,8 @@ namespace HighVoltage
             switch (_editingMode)
             {
                 case EditingMode.Building:
-                    _buildingService.BuildStructure(GetSelectedCellWorldPosition());
+                    if (GetSelectedBuilding() == null)
+                        _buildingService.BuildStructure(GetSelectedCellWorldPosition());
                     break;
                 case EditingMode.Demolition:
                     _buildingService.DemolishStructure(GetSelectedBuilding());
