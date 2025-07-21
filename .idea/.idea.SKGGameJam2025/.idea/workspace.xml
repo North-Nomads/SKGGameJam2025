@@ -6,8 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/TutorialLoopState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/TutorialLoopState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial backup.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial backup.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Configs/Tutorials/Tutorial.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Settings/UniversalRP.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Settings/UniversalRP.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,43 +206,30 @@
           <option name="timeStamp" value="15" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/MapGeneration/PlayerBuildingService.cs</url>
-          <line>214</line>
-          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\MapGeneration\PlayerBuildingService.cs" containingFunctionPresentation="Method 'SetCursorPosition'">
-            <startOffsets>
-              <option value="7967" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7991" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialService.cs</url>
-          <line>79</line>
-          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\Tutorial\TutorialService.cs" containingFunctionPresentation="Method 'TutorialFinished'">
-            <startOffsets>
-              <option value="3087" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3139" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/Tutorial/TutorialService.cs</url>
-          <line>61</line>
+          <line>64</line>
           <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\Infrastructure\Tutorial\TutorialService.cs" containingFunctionPresentation="Method 'TutorialStepCompleted'">
             <startOffsets>
-              <option value="2487" />
+              <option value="2644" />
             </startOffsets>
             <endOffsets>
-              <option value="2488" />
+              <option value="2645" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubMenu.cs</url>
+          <line>32</line>
+          <properties documentPath="Z:\Code\UnityProjects\SKGGameJam2025\SKGGameJam2025\Assets\HighVoltage\Scripts\UI\Windows\HubMenu.cs" containingFunctionPresentation="Method 'ConstructWindow'">
+            <startOffsets>
+              <option value="1225" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1274" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="23" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
