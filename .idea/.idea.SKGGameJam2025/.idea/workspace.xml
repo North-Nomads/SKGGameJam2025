@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c5e06fe9-f810-4446-8155-952862bd34f1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SKGGameJam2025/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/UI/Hub.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Data/PlayerProgress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Data/PlayerProgress.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/HubState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadProgressState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Infrastructure/States/LoadProgressState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/Constants.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/Services/Constants.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/LevelSelectButton.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Elements/LevelSelectButton.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Services/Factory/UIFactory.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Scripts/UI/Windows/HubMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Prefabs/Buildings/Core.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Textures/Tiles/core.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/HighVoltage/Resources/Textures/Tiles/core.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +76,7 @@
     "Attach to Unity Editor.Attach to Unity Editor.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.43457943",
-    "git-widget-placeholder": "new-ui-no-lean-twean",
+    "git-widget-placeholder": "tutorial",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -148,7 +141,7 @@
       <workItem from="1752686075022" duration="3503000" />
       <workItem from="1752770389574" duration="9283000" />
       <workItem from="1752903595311" duration="17000" />
-      <workItem from="1753086054304" duration="3429000" />
+      <workItem from="1753086054304" duration="4726000" />
     </task>
     <servers />
   </component>
