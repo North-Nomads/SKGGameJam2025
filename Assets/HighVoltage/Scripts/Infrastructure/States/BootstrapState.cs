@@ -50,33 +50,41 @@ namespace HighVoltage.Infrastructure.States
             _allServices.RegisterSingle<IBuildingStoreService>(new BuildingStoreService());
             _allServices.RegisterSingle<IInputService>(new DesktopInputService());
             _allServices.RegisterSingle<IAssetProvider>(new AssetProvider());
-            
-            _allServices.RegisterSingle<ITutorialService>(new TutorialService(_allServices.Single<IStaticDataService>()));
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
-            _allServices.RegisterSingle<IGameFactory>(new GameFactory(_allServices.Single<IAssetProvider>(),
-                                                                      _allServices.Single<IPlayerProgressService>()));
-            
-            _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawnerService(_allServices.Single<IGameFactory>(),
+
+            _allServices.RegisterSingle<IEventSenderService>(new EventSenderService());
+            _allServices.RegisterSingle<ITutorialService>(new TutorialService(
+                _allServices.Single<IStaticDataService>(),
+                _allServices.Single<IEventSenderService>(),
+                _coroutineRunner));
+            _allServices.RegisterSingle<IGameFactory>(new GameFactory(
+                _allServices.Single<IAssetProvider>(),
+                _allServices.Single<IPlayerProgressService>()));
+            _allServices.RegisterSingle<IMobSpawnerService>(new MobSpawnerService(
+                _allServices.Single<IGameFactory>(),
                 _allServices.Single<IStaticDataService>()));
-            
-            _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(_allServices.Single<IMobSpawnerService>(),
-                _allServices.Single<IStaticDataService>(), _allServices.Single<IBuildingStoreService>()));
-            
-            _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(_allServices.Single<IPlayerProgressService>(),
-                                                                                         _allServices.Single<IGameFactory>(),
-                                                                                         _allServices.SaveWriterServices));
+            _allServices.RegisterSingle<ILevelProgress>(new LevelProgress(
+                _allServices.Single<IMobSpawnerService>(),
+                _allServices.Single<IStaticDataService>(),
+                _allServices.Single<IBuildingStoreService>()));
+            _allServices.RegisterSingle<ISaveLoadService>(new PlayerPrefsSaveLoadService(
+                _allServices.Single<IPlayerProgressService>(),
+                _allServices.Single<IGameFactory>(),
+                _allServices.SaveWriterServices));
             _allServices.RegisterSingle<IUIFactory>(new UIFactory(_allServices.Single<IAssetProvider>(),
-                                                                  _allServices.Single<IPlayerProgressService>(),
-                                                                  _allServices.Single<IStaticDataService>()));
+                _allServices.Single<IPlayerProgressService>(),
+                _allServices.Single<IStaticDataService>()));
             _allServices.RegisterSingle<IGameWindowService>(new GameWindowService(_allServices.Single<IUIFactory>(),
                 _allServices.Single<ILevelProgress>()));
-            _allServices.RegisterSingle<ICameraService>(new CinemachineCameraService(_allServices.Single<IGameFactory>()));
+            _allServices.RegisterSingle<ICameraService>(
+                new CinemachineCameraService(_allServices.Single<IGameFactory>()));
             _allServices.RegisterSingle<IWindowService>(new WindowService(_allServices.Single<IUIFactory>(),
-                                                                          _allServices.Single<IPlayerProgressService>(),
-                                                                          _allServices.Single<ISaveLoadService>(),
-                                                                          _allServices.Single<IGameFactory>(),
-                                                                          _allServices.Single<ICameraService>()));
-            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService(_allServices.Single<IStaticDataService>(),
+                _allServices.Single<IPlayerProgressService>(),
+                _allServices.Single<ISaveLoadService>(),
+                _allServices.Single<IGameFactory>(),
+                _allServices.Single<ICameraService>()));
+            _allServices.RegisterSingle<IPlayerBuildingService>(new PlayerBuildingService(
+                _allServices.Single<IStaticDataService>(),
                 _allServices.Single<IGameFactory>(), _allServices.Single<IMobSpawnerService>(),
                 _allServices.Single<IBuildingStoreService>()));
         }

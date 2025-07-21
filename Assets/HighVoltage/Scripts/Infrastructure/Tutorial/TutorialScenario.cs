@@ -16,8 +16,28 @@ namespace HighVoltage.Infrastructure.Tutorial
     {
         [SerializeField] private string message;
         [SerializeField] private Sprite[] sprites;
+        [SerializeField] private TutorialEventType waitingForEvent;
+        [SerializeField] private float timeToWaitIfNotForEvent;
 
         public string Message => message;
         public Sprite[] Sprites => sprites;
+
+        public TutorialEventType WaitingForEvent => waitingForEvent;
+
+        public float TimeToWaitIfNotForEvent => timeToWaitIfNotForEvent;
+    }
+
+    public enum TutorialEventType
+    {
+        None,
+        WASD,
+        LMB,
+        RMB,
+        MWL,
+        Q,
+        E,
+        TAB,
+        SentryEnabled,
+        SentryDisabled
     }
 }

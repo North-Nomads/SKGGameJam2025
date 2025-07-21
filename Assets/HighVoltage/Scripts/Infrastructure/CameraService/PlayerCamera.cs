@@ -1,4 +1,6 @@
 using Cinemachine;
+using HighVoltage.Infrastructure.Services;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Services;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +12,7 @@ namespace HighVoltage.Infrastructure.CameraService
     {
         [SerializeField] private float cameraMoveSpeed = 5f;
 
+        private IEventSenderService _eventSenderService;
         private CinemachineVirtualCamera _virtualCamera;
         private InputAction _moveCameraAction;
         private CameraBounds _cameraBounds;
@@ -19,6 +22,7 @@ namespace HighVoltage.Infrastructure.CameraService
 
         private void Awake()
         {
+            _eventSenderService = AllServices.Container.Single<IEventSenderService>();
             _virtualCamera = GetComponent<CinemachineVirtualCamera>();
             _cameraBounds = FindObjectOfType<CameraBounds>();
             _runner = new GameObject
@@ -57,6 +61,7 @@ namespace HighVoltage.Infrastructure.CameraService
         private void OnMoveCamera(InputAction.CallbackContext context)
         {
             _moveInput = context.ReadValue<Vector2>();
+            _eventSenderService.NotifyEventHappened(TutorialEventType.WASD);
         }
 
         private void Update()
