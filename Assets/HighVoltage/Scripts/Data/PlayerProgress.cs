@@ -5,18 +5,10 @@ namespace HighVoltage.Data
     [Serializable]
     public class PlayerProgress
     {
-        public int CurrentLevel;
-        public int RemainingTasks;
-
-        public bool IsLastLevel => RemainingTasks <= 0;
-
-        public PlayerProgress(int defaultWeaponID)
-        {
-            CurrentLevel = 1;
-            RemainingTasks = 4;
-        }
+        public bool HasFinishedTutorial = false;
+        public int CurrentLevel = 1;
 
         public override string ToString() 
-            => $"Level={CurrentLevel};LevelsRemain={RemainingTasks}";
+            => $"Level={CurrentLevel};";
     } 
 }

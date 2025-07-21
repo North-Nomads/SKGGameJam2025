@@ -447,9 +447,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c4cd66b54335d4d9b71ec90484fe55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startGameButtonText: {fileID: 4558668182195327090}
   startGame: {fileID: 2723908115268252423}
   allLevels: {fileID: 3806808907348448079}
-  settings: {fileID: 0}
   exit: {fileID: 4685663470985414289}
 --- !u!1 &2209892204825129482
 GameObject:

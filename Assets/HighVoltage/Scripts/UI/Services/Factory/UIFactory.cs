@@ -135,6 +135,11 @@ namespace HighVoltage.UI.Services.Factory
         public List<LevelSelectButton> InstantiateLevelButtons(int totalLevels, Transform parent)
         {
             List<LevelSelectButton> buttons = new();
+            
+            LevelSelectButton tutorialButton = _assets.Instantiate<LevelSelectButton>(AssetPath.LevelSelectButton, parent);
+            tutorialButton.Construct();
+            buttons.Add(tutorialButton);
+            
             for (int i = 1; i < totalLevels + 1; i++)
             {
                 LevelSelectButton button = _assets.Instantiate<LevelSelectButton>(AssetPath.LevelSelectButton, parent);
