@@ -8,8 +8,6 @@ using HighVoltage.Services.Progress;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.GameWindows;
-using TMPro;
-using UnityEngine;
 
 namespace HighVoltage.Infrastructure.States
 {

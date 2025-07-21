@@ -6,6 +6,7 @@ using HighVoltage.Infrastructure.InGameTime;
 using HighVoltage.Infrastructure.MobSpawning;
 using HighVoltage.Infrastructure.SaveLoad;
 using HighVoltage.Infrastructure.Services;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Level;
 using HighVoltage.Map.Building;
 using HighVoltage.Services.Inputs;
@@ -48,8 +49,9 @@ namespace HighVoltage.Infrastructure.States
             _allServices.RegisterSingle<IInGameTimeService>(new InGameTimeService());
             _allServices.RegisterSingle<IBuildingStoreService>(new BuildingStoreService());
             _allServices.RegisterSingle<IInputService>(new DesktopInputService());
-            
             _allServices.RegisterSingle<IAssetProvider>(new AssetProvider());
+            
+            _allServices.RegisterSingle<ITutorialService>(new TutorialService(_allServices.Single<IStaticDataService>()));
             _allServices.RegisterSingle<IPlayerProgressService>(new PlayerProgressService());
             _allServices.RegisterSingle<IGameFactory>(new GameFactory(_allServices.Single<IAssetProvider>(),
                                                                       _allServices.Single<IPlayerProgressService>()));
@@ -91,6 +93,7 @@ namespace HighVoltage.Infrastructure.States
             staticData.LoadBuildingConfigs();
             staticData.LoadBuildingPrefabs();
             staticData.LoadWirePrefab();
+            staticData.LoadTutorialScenario();
             _allServices.RegisterSingle<IStaticDataService>(staticData);
         }
     }

@@ -1,6 +1,7 @@
 using HighVoltage.Enemy;
 using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Infrastructure.Services;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
@@ -25,5 +26,7 @@ namespace HighVoltage.StaticData
         void LoadBuildingConfigs();
         LineRenderer GetWirePrefab();
         void LoadWirePrefab();
+        void LoadTutorialScenario();
+        TutorialScenario GetTutorialScenario();
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using HighVoltage.Enemy;
 using HighVoltage.Infrastructure.Sentry;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Level;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
@@ -19,6 +20,7 @@ namespace HighVoltage.StaticData
         private Dictionary<int, SwitchConfig> _switchConfigs;
         private Texture2D _tileAtlas;
         private LineRenderer _wirePrefab;
+        private TutorialScenario _tutorialScenario;
 
         public void LoadLevels()
             => _levels = Resources.LoadAll<LevelConfig>("Configs/Levels").ToDictionary(x => x.LevelID, x => x);
@@ -65,9 +67,14 @@ namespace HighVoltage.StaticData
 
         public LineRenderer GetWirePrefab() => _wirePrefab;
 
-        public void LoadWirePrefab()
-        {
-            _wirePrefab = Resources.Load<LineRenderer>("Prefabs/Wire/Wire");
-        }
+        public void LoadWirePrefab() 
+            => _wirePrefab = Resources.Load<LineRenderer>("Prefabs/Wire/Wire");
+
+        public void LoadTutorialScenario()
+            => _tutorialScenario = Resources.Load<TutorialScenario>("Configs/Tutorials/Tutorial");
+
+        public TutorialScenario GetTutorialScenario()
+            => _tutorialScenario;
+
     }
 }

@@ -9,5 +9,7 @@
         public const string LevelSelectButton = "Prefabs/UI/LevelSelectButton";
         public const string CameraPrefabPath = "Prefabs/Camera/Camera";
         public const string MobCoroutineRunner = "Prefabs/Other/MobCoroutineRunner";
+        public const string TutorialImagePath = "Prefabs/Tutorial/TutorialImage";
+        public const string TutorialWindowPath = "Prefabs/Tutorial/TutorialWindow";
     }
 }

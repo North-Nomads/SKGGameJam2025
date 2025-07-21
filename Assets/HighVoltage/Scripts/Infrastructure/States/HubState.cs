@@ -102,16 +102,18 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLevelLaunched(object sender, int levelIndex)
         {
-            _stateMachine.Enter<LoadLevelState, string>(levelIndex == Constants.TutorialLevelIndex
-                ? "Tutorial"
-                : $"Level{levelIndex}");
+            if (levelIndex == Constants.TutorialLevelIndex)
+                _stateMachine.Enter<LoadTutorialState>();
+            else
+                _stateMachine.Enter<LoadLevelState, string>($"Level{levelIndex}");
         }
 
         private void OnPlayerLaunchedGame(object sender, EventArgs e)
         {
-            _stateMachine.Enter<LoadLevelState, string>(_progressService.Progress.HasFinishedTutorial
-                ? "Level1"
-                : "Tutorial");
+            if (!_progressService.Progress.HasFinishedTutorial)
+                _stateMachine.Enter<LoadTutorialState>();
+            else
+                _stateMachine.Enter<LoadLevelState, string>("Level1");
         }
     }
 }

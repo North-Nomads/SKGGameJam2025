@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using HighVoltage.Infrastructure.AssetManagement;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Services.Progress;
 using HighVoltage.StaticData;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services.GameWindows;
 using HighVoltage.UI.Services.Windows;
 using HighVoltage.UI.Windows;
+using UnityEngine.UI;
 using PopupWindow = HighVoltage.UI.PopUps.PopupWindow;
 
 namespace HighVoltage.UI.Services.Factory
@@ -149,6 +151,21 @@ namespace HighVoltage.UI.Services.Factory
 
             return buttons;
         }
+
+        public List<Image> CreateTutorialImages(Sprite[] messageSprites, Transform parent)
+        {
+            List<Image> tutorialImages = new();
+            foreach (Sprite sprite in messageSprites)
+            {
+                Image tutorialImageInstance = _assets.Instantiate<Image>(AssetPath.TutorialImagePath, parent);
+                tutorialImageInstance.sprite = sprite;
+                tutorialImages.Add(tutorialImageInstance);
+            }
+            return tutorialImages;
+        }
+
+        public TutorialWindow InstantiateTutorialMessageBox() 
+            => _assets.Instantiate<TutorialWindow>(AssetPath.TutorialWindowPath, _uiRoot);
 
         private GameWindowBase CreateEndGame()
         {

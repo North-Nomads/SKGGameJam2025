@@ -13,5 +13,6 @@ namespace HighVoltage.Services
         public const string TilemapTagName = "Tilemap";
         public const float TimeLeftAfterPreparationTimeSkip = 3f;
         public const int TutorialLevelIndex = 0;
+        public const string TutorialSceneName = "Tutorial";
     }
 }
