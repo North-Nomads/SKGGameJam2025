@@ -1,3 +1,4 @@
+using HighVoltage.Infrastructure.CameraService;
 using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Services;
 using HighVoltage.StaticData;
@@ -14,9 +15,11 @@ namespace HighVoltage.Infrastructure.States
         private readonly IUIFactory _uiFactory;
         private readonly Canvas _loadingCurtain;
         private readonly SceneLoader _sceneLoader;
+        private readonly ICameraService _cameraService;
 
         public LoadTutorialState(GameStateMachine gameStateMachine, IUIFactory uiFactory, Canvas loadingCurtain,
-            IStaticDataService staticDataService, ITutorialService tutorialService, SceneLoader sceneLoader)
+            IStaticDataService staticDataService, ITutorialService tutorialService, SceneLoader sceneLoader, 
+            ICameraService cameraService)
         {
             _staticDataService = staticDataService;
             _gameStateMachine = gameStateMachine;
@@ -24,6 +27,7 @@ namespace HighVoltage.Infrastructure.States
             _loadingCurtain = loadingCurtain;
             _uiFactory = uiFactory;
             _sceneLoader = sceneLoader;
+            _cameraService = cameraService;
         }
 
         public void Enter()
@@ -34,6 +38,19 @@ namespace HighVoltage.Infrastructure.States
         private void OnLoaded()
         {
             _uiFactory.CreateUIRoot();
+            InitializeTutorialWindow();
+            InitializeCamera();
+            _gameStateMachine.Enter<TutorialLoopState>();
+        }
+        
+        private void InitializeCamera()
+        {
+            GameObject cameraSpawnPoint = GameObject.FindGameObjectWithTag(Constants.CameraSpawnPoint);
+            _cameraService.InitializeCamera(cameraSpawnPoint.transform.position);
+        }
+
+        private void InitializeTutorialWindow()
+        {
             TutorialWindow tutorialWindow = _uiFactory.InstantiateTutorialMessageBox();
             TutorialScenario tutorialScenario = _staticDataService.GetTutorialScenario();
             foreach (TutorialMessage message in tutorialScenario.TutorialMessages)
@@ -43,7 +60,6 @@ namespace HighVoltage.Infrastructure.States
                 {
                     tutorialWindow.DisplayMessage(tutorialMessage);
                 };
-            _gameStateMachine.Enter<TutorialLoopState>();
         }
 
         public void Exit()

@@ -74,7 +74,8 @@ namespace HighVoltage.Infrastructure.States
                     loadingCurtain, 
                     services.Single<IStaticDataService>(),
                     services.Single<ITutorialService>(),
-                    sceneLoader),
+                    sceneLoader,
+                    services.Single<ICameraService>()),
             };
         }
 

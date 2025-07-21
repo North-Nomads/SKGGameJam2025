@@ -38,6 +38,8 @@ namespace HighVoltage.Infrastructure.Tutorial
         E,
         TAB,
         SentryEnabled,
-        SentryDisabled
+        SentryDisabled,
+        SentryDestroyed,
+        FuseBoxPlaced
     }
 }
