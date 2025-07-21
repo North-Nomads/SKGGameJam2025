@@ -34,6 +34,6 @@ namespace HighVoltage.Infrastructure.States
         }
 
         private PlayerProgress NewProgress() 
-            => new(1);
+            => new();
     }
 }

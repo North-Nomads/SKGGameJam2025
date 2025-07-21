@@ -15,5 +15,6 @@ namespace HighVoltage.Map.Building
         public void ChangedEditingMode(EditingMode mode);
         public void OnSceneLoaded();
         void SetCursorPosition(Vector2 cursorPosition);
+        void ToggleBuildingAllowance(bool isBuildingAllowed);
     }
 }

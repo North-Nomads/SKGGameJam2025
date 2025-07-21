@@ -62,10 +62,8 @@ namespace HighVoltage.Infrastructure.States
             _sceneLoader.Load(sceneName, onLoaded: OnLoaded);
         }
 
-        public void Exit()
-        {
-            _loadingCurtain.gameObject.SetActive(false);
-        }
+        public void Exit() 
+            => _loadingCurtain.gameObject.SetActive(false);
 
         private void OnLoaded()
         {

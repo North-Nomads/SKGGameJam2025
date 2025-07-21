@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using HighVoltage.Infrastructure.Sentry;
 using HighVoltage.Level;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HighVoltage.UI.Services
 {

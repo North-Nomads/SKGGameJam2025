@@ -1,4 +1,6 @@
 using System;
+using HighVoltage.Infrastructure.Services;
+using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.Map.Building;
 using HighVoltage.StaticData;
 using HighVoltage.UI.Services;
@@ -12,15 +14,13 @@ namespace HighVoltage
 {
     public class PlayerBuildBehaviour : MonoBehaviour
     {
-        private Tilemap _tilemap;
-        private IPlayerBuildingService _buildingService;
-        private Vector2 _cursorPosition;
-        private PlayerInput _inputActions;
-        private IStaticDataService _dataService;
         private IGameWindowService _gameWindowService;
+        private IPlayerBuildingService _buildingService;
+        private IEventSenderService _eventSender;
+        private PlayerInput _inputActions;
         private EditingMode _editingMode;
-
-
+        private Vector2 _cursorPosition;
+        private Tilemap _tilemap;
 
         private void Update()
         {
@@ -52,6 +52,7 @@ namespace HighVoltage
         private void Awake()
         {
             _inputActions = new();
+            _eventSender = AllServices.Container.Single<IEventSenderService>();
         }
 
         private void OnDestroy()
@@ -74,6 +75,7 @@ namespace HighVoltage
                     break;
                 case EditingMode.Demolition:
                     Destroy(GetSelectedBuilding());
+                    _eventSender.NotifyEventHappened(TutorialEventType.SentryDestroyed);
                     break;
                 case EditingMode.Wiring:
                     var building = GetSelectedBuilding();
@@ -101,7 +103,6 @@ namespace HighVoltage
         public void Initialize(IStaticDataService dataService, IPlayerBuildingService buildingService,
             IGameWindowService gameWindowService)
         {
-            _dataService = dataService;
             _buildingService = buildingService;
             _gameWindowService = gameWindowService;
             _tilemap = _buildingService.MapTilemap;
@@ -117,6 +118,7 @@ namespace HighVoltage
             var selectedSwitch = GetSelectedBuilding();
             if (selectedSwitch == null || !selectedSwitch.TryGetComponent(out SwitchMain sw))
                 return;
+            _eventSender.NotifyEventHappened(TutorialEventType.FuseBoxChanged);
             sw.Switch();
         }
 
@@ -125,13 +127,21 @@ namespace HighVoltage
             if (obj.control is not KeyControl control)
                 return;
 
-
-            if (control.keyCode == Key.Q)
-                _editingMode = EditingMode.Building;
-            else if(control.keyCode == Key.Tab)
-                _editingMode = EditingMode.Wiring;
-            else if(control.keyCode == Key.E)
-                _editingMode = EditingMode.Demolition;
+            switch (control.keyCode)
+            {
+                case Key.Q:
+                    _editingMode = EditingMode.Building;
+                    _eventSender.NotifyEventHappened(TutorialEventType.Q);
+                    break;
+                case Key.Tab:
+                    _editingMode = EditingMode.Wiring;
+                    _eventSender.NotifyEventHappened(TutorialEventType.TAB);
+                    break;
+                case Key.E:
+                    _editingMode = EditingMode.Demolition;
+                    _eventSender.NotifyEventHappened(TutorialEventType.E);
+                    break;
+            }
 
             _buildingService.ChangedEditingMode(_editingMode);
         }

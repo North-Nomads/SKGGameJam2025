@@ -1,0 +1,108 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ff8add0d23497a8209968aa1cb033b, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: 
+  tutorialMessages:
+  - message: Here is your core. Your task is to protect it
+    sprites: []
+    waitingForEvent: 0
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 5
+  - message: Move your camera to the top left corner of the map. You can see the
+      mob path
+    sprites:
+    - {fileID: 21300000, guid: b12bea888d06ea541a7996f76aeaf1bc, type: 3}
+    - {fileID: 21300000, guid: e44fcbe744d99674891640c98451d385, type: 3}
+    - {fileID: 21300000, guid: 833b158b64f46904ea75c153a82a405f, type: 3}
+    - {fileID: 21300000, guid: e688efc24c19ddb499c3be3369028b68, type: 3}
+    waitingForEvent: 1
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: You have money on level start.
+    sprites:
+    - {fileID: 21300000, guid: 851d7a96697403f4bb042a616fdab271, type: 3}
+    waitingForEvent: 0
+    displayHUDPart: 1
+    timeToWaitIfNotForEvent: 5
+  - message: Use them to build your first sentry. Press Q for "Building" mode
+    sprites:
+    - {fileID: 21300000, guid: 9553ccc058aafb8409b535e0ba636e78, type: 3}
+    waitingForEvent: 2
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: Now, select the sentry and use LMB to build the sentry
+    sprites:
+    - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
+    waitingForEvent: 10
+    displayHUDPart: 3
+    timeToWaitIfNotForEvent: 0
+  - message: But the tower doesn't work yet. You need to connect it with the core.
+      Switch to "Wiring" mode and use LMB on core and on sentry.
+    sprites:
+    - {fileID: 21300000, guid: 668d0a48134963a4a82aa516689c71f8, type: 3}
+    - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
+    waitingForEvent: 5
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: Nice! The sentry is ready and waiting for the enemy
+    sprites: []
+    waitingForEvent: 0
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 3
+  - message: Let's destroy the sentry. Press E to switch to "Destroying" and click
+      on sentry
+    sprites:
+    - {fileID: 21300000, guid: 25bcbc60a0b371c4285bc1343695feac, type: 3}
+    waitingForEvent: 3
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: Now LMB on sentry to destroy it
+    sprites:
+    - {fileID: 21300000, guid: 4f85f773b0ba157479f8efb3e6576dae, type: 3}
+    waitingForEvent: 7
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: The sentries consume energy from the core when enabled. Be careful and
+      don't enable too much or the core would overload. All the sentries will be
+      stunned
+    sprites: []
+    waitingForEvent: 0
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 7
+  - message: You can't disable the single sentry but you can turn off the fuse box.
+      Let's build it.
+    sprites:
+    - {fileID: 21300000, guid: 9553ccc058aafb8409b535e0ba636e78, type: 3}
+    waitingForEvent: 2
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: Now destroy the current wires. Switch to wiring mode and use RMB on
+      wire.
+    sprites:
+    - {fileID: 21300000, guid: 668d0a48134963a4a82aa516689c71f8, type: 3}
+    - {fileID: 21300000, guid: a29635ceb582d5149ade6239fd8695f1, type: 3}
+    waitingForEvent: 6
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: Press mouse wheel on fuse box to disable it
+    sprites:
+    - {fileID: 21300000, guid: 6cd780367dbd6f345bf56784235adc0e, type: 3}
+    waitingForEvent: 9
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 0
+  - message: 'The last thing: the building is instant before wave started. Once mobs
+      start coming to you - building stuff will cost some time!'
+    sprites: []
+    waitingForEvent: 0
+    displayHUDPart: 0
+    timeToWaitIfNotForEvent: 7

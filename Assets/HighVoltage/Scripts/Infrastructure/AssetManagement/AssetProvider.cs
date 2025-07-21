@@ -16,6 +16,9 @@ namespace HighVoltage.Infrastructure.AssetManagement
 
         public T Instantiate<T>(T prefab, Vector3 position) where T : MonoBehaviour
             => Object.Instantiate(prefab, position, quaternion.identity);
+        
+        public T Instantiate<T>(T prefab, Transform parent) where T : MonoBehaviour
+            => Object.Instantiate(prefab, parent);
 
         public GameObject Instantiate(string path) 
             => Object.Instantiate(Resources.Load<GameObject>(path));

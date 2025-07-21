@@ -102,18 +102,18 @@ namespace HighVoltage.Infrastructure.States
 
         private void OnLevelLaunched(object sender, int levelIndex)
         {
-            _stateMachine.Enter<LoadLevelState, string>($"Level{levelIndex}");
-        }
-
-        private void OnMuteToggled(object sender, bool e)
-        {
-            var audio = UnityEngine.Object.FindAnyObjectByType<AudioManager>();
-            audio.IsMuted = e;
+            if (levelIndex == Constants.TutorialLevelIndex)
+                _stateMachine.Enter<LoadTutorialState>();
+            else
+                _stateMachine.Enter<LoadLevelState, string>($"Level{levelIndex}");
         }
 
         private void OnPlayerLaunchedGame(object sender, EventArgs e)
         {
-            _stateMachine.Enter<LoadLevelState, string>("Level1");
+            if (!_progressService.Progress.HasFinishedTutorial)
+                _stateMachine.Enter<LoadTutorialState>();
+            else
+                _stateMachine.Enter<LoadLevelState, string>("Level1");
         }
     }
 }
