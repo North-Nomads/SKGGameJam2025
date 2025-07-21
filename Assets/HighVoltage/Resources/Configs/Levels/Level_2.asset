@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996d20da51e4ca6459d31a01ec21bb36, type: 3}
+  m_Name: Level_2
+  m_EditorClassIdentifier: 
+  levelID: 2
+  initialMoney: 400
+  coreHealth: 100
+  generatorCurrentGenerationPerSecond: 15
+  deltaBetweenSpawns: 0.5
+  sentryIDs: 010000000200000003000000
+  buildingIDs: 00000000
+  mobWaves:
+  - secondsDelayBeforeWave: 5
+    gates:
+    - levelEnemies:
+      - quantity: 1
+        enemyID: 1
+    - levelEnemies:
+      - quantity: 2
+        enemyID: 2
+      - quantity: 1
+        enemyID: 3
+    - levelEnemies:
+      - quantity: 3
+        enemyID: 1
+      - quantity: 1
+        enemyID: 2
+  - secondsDelayBeforeWave: 10
+    gates:
+    - levelEnemies:
+      - quantity: 3
+        enemyID: 1
+      - quantity: 2
+        enemyID: 2
+      - quantity: 1
+        enemyID: 3
+    - levelEnemies:
+      - quantity: 4
+        enemyID: 2
+    - levelEnemies: []
