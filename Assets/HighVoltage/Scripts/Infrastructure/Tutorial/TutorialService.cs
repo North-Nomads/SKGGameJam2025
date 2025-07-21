@@ -19,6 +19,7 @@ namespace HighVoltage.Infrastructure.Tutorial
         private readonly TutorialScenario _scenario;
         private TutorialMessage _currentScenarioStep;
         private int _scenarioStepIndex;
+        private Coroutine _runningCoroutine;
 
         public TutorialService(IStaticDataService staticDataService, IEventSenderService eventSenderService, 
             ICoroutineRunner coroutineRunner, IPlayerProgressService playerProgress, 
@@ -48,7 +49,13 @@ namespace HighVoltage.Infrastructure.Tutorial
             
             if (_currentScenarioStep.WaitingForEvent != TutorialEventType.None)
                 return;
-            _coroutineRunner.StartCoroutine(WaitForNextTutorialStep());
+            _runningCoroutine = _coroutineRunner.StartCoroutine(WaitForNextTutorialStep());
+        }
+
+        public void InterruptTutorial()
+        {
+            if (_runningCoroutine != null)
+                _coroutineRunner.StopCoroutine(_runningCoroutine);
         }
 
         public void TutorialStepCompleted()
@@ -73,6 +80,8 @@ namespace HighVoltage.Infrastructure.Tutorial
         {
             _playerProgress.Progress.HasFinishedTutorial = true;
             _buildingService.ToggleBuildingAllowance(false);
+            if (_runningCoroutine != null)
+                _coroutineRunner.StopCoroutine(_runningCoroutine);
             AllTutorialStepsFinished(this, null);
         }
 

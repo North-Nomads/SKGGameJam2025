@@ -9,5 +9,6 @@ namespace HighVoltage.Infrastructure.Tutorial
         void StartTutorial();
         void TutorialStepCompleted();
         event EventHandler AllTutorialStepsFinished;
+        void InterruptTutorial();
     }
 }

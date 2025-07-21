@@ -86,7 +86,7 @@ namespace HighVoltage.UI.GameWindows
             timerParentObject.gameObject.SetActive(true);
         }
 
-        public void OnLevelCompleted(IBuildingStoreService buildingStore)
+        public void OnLevelEnded(IBuildingStoreService buildingStore)
         {
             buildingStore.CurrencyChanged -= OnBuildingStoreOnCurrencyChanged;
         }
@@ -124,7 +124,8 @@ namespace HighVoltage.UI.GameWindows
         private void OnBuildingStoreOnCurrencyChanged(object _, int newMoney)
         {
             playerWallet.text = newMoney.ToString();
-            foreach (BuildingCard buildingCard in _buildingCards) buildingCard.UpdatePurchasableStatus(newMoney);
+            foreach (BuildingCard buildingCard in _buildingCards) 
+                buildingCard.UpdatePurchasableStatus(newMoney);
         }
 
         private void Update()

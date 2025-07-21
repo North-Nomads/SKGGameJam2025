@@ -1,9 +1,11 @@
 using System;
 using HighVoltage.Infrastructure.BuildingStore;
+using HighVoltage.Infrastructure.InGameTime;
 using HighVoltage.Infrastructure.Tutorial;
 using HighVoltage.UI.GameWindows;
 using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.GameWindows;
+using UnityEngine;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -13,18 +15,23 @@ namespace HighVoltage.Infrastructure.States
         private readonly ITutorialService _tutorialService;
         private readonly IGameWindowService _gameWindowService;
         private readonly IBuildingStoreService _buildingStore;
+        private readonly IInGameTimeService _timeService;
 
         public TutorialLoopState(GameStateMachine gameStateMachine, ITutorialService tutorialService,
-            IGameWindowService gameWindowService, IBuildingStoreService buildingStore)
+            IGameWindowService gameWindowService, IBuildingStoreService buildingStore, IInGameTimeService timeService)
         {
+            Debug.Log($"Passed time service {timeService}");
             _gameStateMachine = gameStateMachine;
             _tutorialService = tutorialService;
             _gameWindowService = gameWindowService;
             _buildingStore = buildingStore;
+            _timeService = timeService;
         }
 
         public void Enter()
         {
+            Debug.Log($"Using time service {_timeService}");
+            _timeService.RestoreTimePassage();
             _tutorialService.StartTutorial();
             _tutorialService.AllTutorialStepsFinished += HandleUserFinishedTutorial;
         }
@@ -39,7 +46,8 @@ namespace HighVoltage.Infrastructure.States
             _gameWindowService
                 .GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .OnLevelCompleted(_buildingStore);
+                .OnLevelEnded(_buildingStore);
+            _gameWindowService.CleanUp();
         }
     }
 }

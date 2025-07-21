@@ -29,7 +29,7 @@ namespace HighVoltage.Infrastructure.States
         public GameStateMachine(SceneLoader sceneLoader, Canvas loadingCurtain, AllServices services,
             ICoroutineRunner coroutineRunner)
         {
-            _states = new Dictionary<Type, IExitableState>()
+            _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services, coroutineRunner),
                 [typeof(LoadProgressState)] = new LoadProgressState(this,
@@ -73,7 +73,8 @@ namespace HighVoltage.Infrastructure.States
                 [typeof(TutorialLoopState)] = new TutorialLoopState(this,
                     services.Single<ITutorialService>(),
                     services.Single<IGameWindowService>(),
-                    services.Single<IBuildingStoreService>()),
+                    services.Single<IBuildingStoreService>(),
+                    services.Single<IInGameTimeService>()),
                 [typeof(LoadTutorialState)] = new LoadTutorialState(this,
                     services.Single<IUIFactory>(),
                     loadingCurtain, 
@@ -83,7 +84,7 @@ namespace HighVoltage.Infrastructure.States
                     services.Single<ICameraService>(),
                     services.Single<IGameWindowService>(),
                     services.Single<IPlayerBuildingService>(),
-                services.Single<IBuildingStoreService>(),
+                    services.Single<IBuildingStoreService>(),
                     services.Single<ILevelProgress>(),
                     services.Single<IPlayerProgressService>(),
                     services.Single<IGameFactory>(),

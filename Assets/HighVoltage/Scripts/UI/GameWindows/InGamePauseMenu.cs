@@ -59,5 +59,8 @@ namespace HighVoltage.UI.GameWindows
         {
             GameWindowService.ReturnToPreviousWindow();
         }
+
+        public void HideRestartButton() 
+            => restartButton.gameObject.SetActive(false);
     }
 }

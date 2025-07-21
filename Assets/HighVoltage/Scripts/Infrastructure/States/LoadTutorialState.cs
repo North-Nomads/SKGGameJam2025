@@ -13,8 +13,8 @@ using HighVoltage.UI.Services;
 using HighVoltage.UI.Services.Factory;
 using HighVoltage.UI.Services.GameWindows;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using Object = UnityEngine.Object;
 
 namespace HighVoltage.Infrastructure.States
 {
@@ -34,6 +34,10 @@ namespace HighVoltage.Infrastructure.States
         private readonly IPlayerProgressService _playerProgress;
         private readonly IGameFactory _gameFactory;
         private readonly IMobSpawnerService _mobSpawnerService;
+        
+        private TutorialWindow _currentTutorialWindow;
+        private TutorialScenario _currentTutorialScenario;
+        private InGameHUD _hudInstance;
 
         public LoadTutorialState(GameStateMachine gameStateMachine, IUIFactory uiFactory, Canvas loadingCurtain,
             IStaticDataService staticDataService, ITutorialService tutorialService, SceneLoader sceneLoader, 
@@ -60,6 +64,7 @@ namespace HighVoltage.Infrastructure.States
         public void Enter()
         {
             _sceneLoader.Load(Constants.TutorialSceneName, onLoaded: OnLoaded);
+            _tutorialService.UserRequiresNewTutorialStep -= OnUserRequiresNewTutorialStep;
         }
 
         private void OnLoaded()
@@ -121,9 +126,17 @@ namespace HighVoltage.Infrastructure.States
         {
             InGamePauseMenu pauseMenu = _gameWindowService.GetWindow(GameWindowId.InGamePauseMenu)
                 .GetComponent<InGamePauseMenu>();
+            pauseMenu.HideRestartButton();
             pauseMenu.RestartButtonPressed += (_, _) =>
-                _gameStateMachine.Enter<LoadLevelState, string>(SceneManager.GetActiveScene().name);
-            pauseMenu.ReturnToMenuButtonPressed += (_, _) => _gameStateMachine.Enter<HubState>();
+            {
+                _tutorialService.InterruptTutorial();
+                _gameStateMachine.Enter<LoadTutorialState>();
+            };
+            pauseMenu.ReturnToMenuButtonPressed += (_, _) =>
+            {
+                _tutorialService.InterruptTutorial();
+                _gameStateMachine.Enter<HubState>();
+            };
         }
 
         private void InitializeCamera()
@@ -134,18 +147,21 @@ namespace HighVoltage.Infrastructure.States
 
         private void InitializeTutorialWindow(InGameHUD hudInstance)
         {
-            TutorialWindow tutorialWindow = _uiFactory.InstantiateTutorialMessageBox();
-            TutorialScenario tutorialScenario = _staticDataService.GetTutorialScenario();
             foreach (TutorialMessage message in tutorialScenario.TutorialMessages)
-                tutorialWindow.InitializeMessage(message);
-            _tutorialService.UserRequiresNewTutorialStep +=
-                (_, tutorialMessage) =>
-                {
-                    tutorialWindow.DisplayMessage(tutorialMessage);
-                    hudInstance.EnableHUDPart(tutorialMessage.DisplayHUDPart);
-                    if (tutorialMessage.DisplayHUDPart == InGameHUDOptions.HUD)
-                        _buildingService.ToggleBuildingAllowance(true);
-                };
+            _hudInstance = hudInstance;
+            _currentTutorialWindow = _uiFactory.InstantiateTutorialMessageBox();
+            _currentTutorialScenario = _staticDataService.GetTutorialScenario();
+            foreach (TutorialMessage message in _currentTutorialScenario.TutorialMessages)
+                _currentTutorialWindow.InitializeMessage(message);
+            _tutorialService.UserRequiresNewTutorialStep += OnUserRequiresNewTutorialStep;
+        }
+
+        private void OnUserRequiresNewTutorialStep(object sender, TutorialMessage tutorialMessage)
+        {
+            _currentTutorialWindow.DisplayMessage(tutorialMessage);
+            _hudInstance.EnableHUDPart(tutorialMessage.DisplayHUDPart);
+            if (tutorialMessage.DisplayHUDPart == InGameHUDOptions.HUD)
+                _buildingService.ToggleBuildingAllowance(true);
         }
 
         public void Exit()

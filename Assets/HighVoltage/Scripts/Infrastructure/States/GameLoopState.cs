@@ -86,7 +86,7 @@ namespace HighVoltage.Infrastructure.States
             _gameWindowService
                 .GetWindow(GameWindowId.InGameHUD)
                 .GetComponent<InGameHUD>()
-                .OnLevelCompleted(_buildingStore);
+                .OnLevelEnded(_buildingStore);
         }
     }
 }
